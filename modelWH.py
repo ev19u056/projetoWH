@@ -21,7 +21,7 @@ nrows_stopWt = 277816
 nrows_ttbar = 4168037
 nrows_Wjets = 16650877
 
-nrowsWjets = 10000
+nrowsWjets = 16650877
 nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
 nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
 nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
