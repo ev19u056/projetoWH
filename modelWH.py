@@ -21,7 +21,7 @@ nrows_stopWt = 277816
 nrows_ttbar = 4168037
 nrows_Wjets = 16650877
 
-nrowsWjets = 10000
+nrowsWjets = 16650877
 nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
 nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
 nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
@@ -42,13 +42,7 @@ for var in trainvars:
     plt.hist(df_sinal[var],density=True,stacked=True,histtype='bar',label='sinal')
     plt.hist(df_stopWt[var],density=True,stacked=True,histtype='bar',label='stopWt')
     plt.legend(prop={'size': 10})
-    '''
-    plt.hist(df_WJets[var],label='WJets')
-    plt.hist(df_ttbar[var],label='ttbar')
-    plt.hist(df_sinal[var],label='sinal')
-    plt.hist(df_stopWt[var],label='stopWt')
-    plt.legend(prop={'size': 10})
-    '''
+
     plt.grid(True)
     plt.title(var)
     plt.savefig('figures/'+var+'.png')
