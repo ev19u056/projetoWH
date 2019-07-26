@@ -16,6 +16,7 @@ from keras.layers import Dense, Activation, Dropout, BatchNormalization, Input, 
 from keras.optimizers import Adam
 from keras.callbacks import EarlyStopping, ModelCheckpoint, History
 
+'''
 nrows_sinal = 991141
 nrows_stopWt = 277816
 nrows_ttbar = 4168037
@@ -25,30 +26,41 @@ nrowsWjets = 16650877
 nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
 nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
 nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
+'''
 
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv', nrows=nrowsSinal)
+df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv')#, nrows=nrowsSinal)
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows=nrowsStopWt)
+df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv')#,nrows=nrowsStopWt)
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=nrowsTtbar)
+df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv')#,nrows=nrowsTtbar)
 
+print("Reading -> 'WlvZqq_Sh221_ade.csv'")
+df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv')
+
+print("Reading -> 'WqqWlv_Sh221_ade.csv'")
+df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv')
+print("'WqqWlv_Sh221_ade.csv' -> reading over")
+
+'''
 print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=nrowsWjets)
 print("'WJets_Sh221.csv' has been read")
-
+'''
 trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavour', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'EventFlavor','eventFlagMerged/l','eventFlagResolved/l']]
 
 for var in trainvars:
 
     print("Plotting: " + var)
     plt.figure()
-    plt.hist(df_WJets[var],density=True,stacked=True,histtype='bar',label='WJets')
+    #plt.hist(df_WJets[var],density=True,stacked=True,histtype='bar',label='WJets')
     plt.hist(df_ttbar[var],density=True,stacked=True,histtype='bar',label='ttbar')
     plt.hist(df_sinal[var],density=True,stacked=True,histtype='bar',label='sinal')
     plt.hist(df_stopWt[var],density=True,stacked=True,histtype='bar',label='stopWt')
+    plt.hist(df_WlvZqq[var],density=True,stacked=True,histtype='bar',label='stopWt')
+    plt.hist(df_WqqWlv[var],density=True,stacked=True,histtype='bar',label='stopWt')
     plt.legend(prop={'size': 10})
 
     plt.grid(True)
