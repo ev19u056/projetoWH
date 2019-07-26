@@ -26,14 +26,20 @@ nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
 nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
 nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
 
+print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv', nrows=nrowsSinal)
+
+print("Reading -> 'stopWt_PwPy8_ade.csv'")
 df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows=nrowsStopWt)
+
+print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
 df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=nrowsTtbar)
+
+print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=nrowsWjets)
 
 trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavour', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'EventFlavor','eventFlagMerged/l','eventFlagResolved/l']]
 
-i = 0
 for var in trainvars:
 
     print("Plotting: " + var)
