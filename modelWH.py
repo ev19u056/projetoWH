@@ -56,7 +56,7 @@ df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=nrowsWjets)
 print("'WJets_Sh221.csv' has been read")
 
 end = time.time()
-print("Reading time: " + (end - start) + "s")
+print("Reading time: ", (end - start), "s")
 
 trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavour', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'EventFlavor','eventFlagMerged/l','eventFlagResolved/l']]
 
