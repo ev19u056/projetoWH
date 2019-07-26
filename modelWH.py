@@ -35,8 +35,9 @@ trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', '
 
 i = 0
 for var in trainvars:
-    plt.figure()
 
+    print("Plotting: " + var)
+    plt.figure()
     plt.hist(df_WJets[var],density=True,stacked=True,histtype='bar',label='WJets')
     plt.hist(df_ttbar[var],density=True,stacked=True,histtype='bar',label='ttbar')
     plt.hist(df_sinal[var],density=True,stacked=True,histtype='bar',label='sinal')
