@@ -61,21 +61,17 @@ print("Reading time: ", (end - start), "s")
 trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavour', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'EventFlavor','eventFlagMerged/l','eventFlagResolved/l']]
 
 for var in trainvars:
-
     print("Plotting: " + var)
     plt.figure()
     plt.hist(df_WJets[var],density=True,stacked=True,histtype='bar',label='WJets')
     plt.hist(df_ttbar[var],density=True,stacked=True,histtype='bar',label='ttbar')
-    plt.hist(df_sinal[var],density=True,stacked=True,histtype='bar',label='sinal')
+    plt.hist(df_sinal[var],density=True,stacked=True,histtype='bar',label='signal')
     plt.hist(df_stopWt[var],density=True,stacked=True,histtype='bar',label='stopWt')
-    plt.hist(df_WlvZqq[var],density=True,stacked=True,histtype='bar',label='stopWt')
-    plt.hist(df_WqqWlv[var],density=True,stacked=True,histtype='bar',label='stopWt')
+    plt.hist(df_WlvZqq[var],density=True,stacked=True,histtype='bar',label='WlvZqq')
+    plt.hist(df_WqqWlv[var],density=True,stacked=True,histtype='bar',label='WqqWlv')
     plt.legend(prop={'size': 10})
 
     plt.grid(True)
     plt.title(var)
     plt.savefig('figures/'+var+'.png')
     plt.clf()
-    #    if i==5:
-    #       break
-    #    i += 1
