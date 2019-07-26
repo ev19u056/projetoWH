@@ -37,6 +37,7 @@ df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=nrowsTtbar)
 
 print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=nrowsWjets)
+print("'WJets_Sh221.csv' has been read")
 
 trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavour', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'EventFlavor','eventFlagMerged/l','eventFlagResolved/l']]
 
