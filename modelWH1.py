@@ -12,14 +12,16 @@ import pandas
 #from keras.layers import Dense, Dropout, AlphaDropout
 from sklearn.metrics import confusion_matrix, cohen_kappa_score
 
-''' copy commonFunctions.py '''
+''' copy to your folder and adapt commonFunctions.py'''
 #from commonFunctions import getYields, FullFOM, myClassifier, gridClassifier, getDefinedClassifier, assure_path_exists
 #from scipy.stats import ks_2samp
 
-''' copy localConfig.py '''
+''' copy to your folder and adapt localConfig.py '''
 #import localConfig as cfg
 import pickle
-from prepareDATA import *
+
+''' copy to your folder and adapt prepareDATA.py '''
+#from prepareDATA import *
 
 if __name__ == "__main__":
     import argparse
