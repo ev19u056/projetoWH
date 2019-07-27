@@ -26,17 +26,19 @@ nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
 
-for i in np.linspace(0.1,0.2,20):
+for i in np.linspace(0.01,0.1157,20):
 
     nrowsWjets = int(i*nrows_Wjets)
     print "Import ", i, "% of data"
+    '''
     nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
     nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
     nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
     nrowsWlvZqq = int((nrows_WlvZqq/nrows_Wjets)*nrowsWjets)
     nrowsWqqWlv = int((nrows_WqqWlv/nrows_Wjets)*nrowsWjets)
-
+    '''
     start = time.time()
+    '''
     print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
     df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv', nrows=nrowsSinal)
 
@@ -56,6 +58,26 @@ for i in np.linspace(0.1,0.2,20):
     print("Reading -> 'WJets_Sh221.csv'")
     df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=nrowsWjets)
     print("'WJets_Sh221.csv' has been read")
+    '''
+
+    print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
+    df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv', nrows=int(i*nrows_sinal))
+
+    print("Reading -> 'stopWt_PwPy8_ade.csv'")
+    df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows=int(i*nrows_stopWt))
+
+    print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
+    df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=int(i*nrows_ttbar))
+
+    print("Reading -> 'WlvZqq_Sh221_ade.csv'")
+    df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows=int(i*nrows_WlvZqq)
+
+    print("Reading -> 'WqqWlv_Sh221_ade.csv'")
+    df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows=int(i*nrows_WqqWlv))
+
+    print("Reading -> 'WJets_Sh221.csv'")
+    df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=int(i*nrows_Wjets))
+    print("'WJets_Sh221.csv' has been read")
 
     print "Reading time: ", (time.time() - start), "s ", i, "% of data"
 
@@ -63,7 +85,8 @@ for i in np.linspace(0.1,0.2,20):
 
 '''
 trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavour', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'EventFlavor','eventFlagMerged/l','eventFlagResolved/l']]
-
+'''
+'''
 for var in trainvars:
     print("Plotting: " + var)
     plt.figure()
