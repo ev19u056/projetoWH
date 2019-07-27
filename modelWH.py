@@ -26,13 +26,13 @@ nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
 
-nrowsWjets = 10000
+nrowsWjets = 0.1*nrows_Wjets
+print("Tentativa de importar 10% dos dados")
 nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
 nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
 nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
 nrowsWlvZqq = int((nrows_WlvZqq/nrows_Wjets)*nrowsWjets)
 nrowsWqqWlv = int((nrows_WqqWlv/nrows_Wjets)*nrowsWjets)
-
 
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
