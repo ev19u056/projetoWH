@@ -70,7 +70,7 @@ for i in np.linspace(0.01,0.1157,20):
     df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=int(i*nrows_ttbar))
 
     print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-    df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows=int(i*nrows_WlvZqq)
+    df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows=int(i*nrows_WlvZqq))
 
     print("Reading -> 'WqqWlv_Sh221_ade.csv'")
     df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows=int(i*nrows_WqqWlv))
