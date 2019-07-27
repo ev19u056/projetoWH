@@ -26,7 +26,7 @@ nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
 
-for i in np.linspace(0.2,0.8,13):
+for i in np.linspace(0.1,0.2,20):
 
     nrowsWjets = int(i*nrows_Wjets)
     print "Import ", i, "% of data"
