@@ -11,9 +11,13 @@ import pandas
 #from keras.models import Sequential
 #from keras.layers import Dense, Dropout, AlphaDropout
 from sklearn.metrics import confusion_matrix, cohen_kappa_score
+
+''' copy commonFunctions.py '''
 #from commonFunctions import getYields, FullFOM, myClassifier, gridClassifier, getDefinedClassifier, assure_path_exists
 #from scipy.stats import ks_2samp
-import localConfig as cfg
+
+''' copy localConfig.py '''
+#import localConfig as cfg
 import pickle
 from prepareDATA import *
 
