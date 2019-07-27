@@ -26,38 +26,42 @@ nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
 
-nrowsWjets = 0.1*nrows_Wjets
-print("Tentativa de importar 10% dos dados")
-nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
-nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
-nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
-nrowsWlvZqq = int((nrows_WlvZqq/nrows_Wjets)*nrowsWjets)
-nrowsWqqWlv = int((nrows_WqqWlv/nrows_Wjets)*nrowsWjets)
+for i in np.linspace(0.2,0.8,13):
 
-start = time.time()
-print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv', nrows=nrowsSinal)
+    nrowsWjets = int(i*nrows_Wjets)
+    print "Import ", i, "% of data"
+    nrowsStopWt = int((nrows_stopWt/nrows_Wjets)*nrowsWjets)
+    nrowsSinal = int((nrows_sinal/nrows_Wjets)*nrowsWjets)
+    nrowsTtbar = int((nrows_ttbar/nrows_Wjets)*nrowsWjets)
+    nrowsWlvZqq = int((nrows_WlvZqq/nrows_Wjets)*nrowsWjets)
+    nrowsWqqWlv = int((nrows_WqqWlv/nrows_Wjets)*nrowsWjets)
 
-print("Reading -> 'stopWt_PwPy8_ade.csv'")
-df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows=nrowsStopWt)
+    start = time.time()
+    print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
+    df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv', nrows=nrowsSinal)
 
-print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=nrowsTtbar)
+    print("Reading -> 'stopWt_PwPy8_ade.csv'")
+    df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows=nrowsStopWt)
 
-print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows=nrowsWlvZqq)
+    print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
+    df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=nrowsTtbar)
 
-print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows=nrowsWqqWlv)
-#print("'WqqWlv_Sh221_ade.csv' -> reading over")
+    print("Reading -> 'WlvZqq_Sh221_ade.csv'")
+    df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows=nrowsWlvZqq)
 
-print("Reading -> 'WJets_Sh221.csv'")
-df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=nrowsWjets)
-print("'WJets_Sh221.csv' has been read")
+    print("Reading -> 'WqqWlv_Sh221_ade.csv'")
+    df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows=nrowsWqqWlv)
+    #print("'WqqWlv_Sh221_ade.csv' -> reading over")
 
-end = time.time()
-print("Reading time: ", (end - start), "s")
+    print("Reading -> 'WJets_Sh221.csv'")
+    df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=nrowsWjets)
+    print("'WJets_Sh221.csv' has been read")
 
+    print "Reading time: ", (time.time() - start), "s ", i, "% of data"
+
+    del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
+
+'''
 trainvars=[var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavour', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'EventFlavor','eventFlagMerged/l','eventFlagResolved/l']]
 
 for var in trainvars:
@@ -75,3 +79,4 @@ for var in trainvars:
     plt.title(var)
     plt.savefig('figures/'+var+'.png')
     plt.clf()
+'''
