@@ -77,9 +77,8 @@ for i in np.linspace(0.01,0.1157,20):
 
     print("Reading -> 'WJets_Sh221.csv'")
     df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=int(i*nrows_Wjets))
-    print("'WJets_Sh221.csv' has been read")
 
-    print "Reading time: ", (time.time() - start), "s ", i, "% of data"
+    print "Reading time: ", (time.time() - start), "s  of", i, "% of data"
 
     del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
