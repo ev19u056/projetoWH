@@ -149,9 +149,9 @@ if __name__ == "__main__":
     # trainParams = {'epochs': n_epochs, 'batch_size': batch_size, 'verbose': verbose}
 
     acc = history.history["acc"]
-    val_acc = history.history['val_acc']
+    #val_acc = history.history['val_acc']
     loss = history.history['loss']
-    val_loss = history.history['val_loss']
+    #val_loss = history.history['val_loss']
 
     # assure_path_exists() is defined in commonFunctions.py
     assure_path_exists(filepath+"accuracy/")
@@ -160,8 +160,8 @@ if __name__ == "__main__":
     # Saving accuracy and loss values in a pickle file for later plotting
     pickle.dump(acc, open(filepath+"accuracy/acc_"+name+".pickle", "wb"))
     pickle.dump(loss, open(filepath+"loss/loss_"+name+".pickle", "wb"))
-    pickle.dump(val_acc, open(filepath+"accuracy/val_acc_"+name+".pickle", "wb"))
-    pickle.dump(val_loss, open(filepath+"loss/val_loss_"+name+".pickle", "wb"))
+    #pickle.dump(val_acc, open(filepath+"accuracy/val_acc_"+name+".pickle", "wb"))
+    #pickle.dump(val_loss, open(filepath+"loss/val_loss_"+name+".pickle", "wb"))
 
     # Time of the training
     if args.verbose:
