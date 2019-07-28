@@ -124,7 +124,7 @@ if __name__ == "__main__":
     numpy.random.seed(seed)
 
     # load dataset
-    dataframe = pandas.read_csv("iris.data", header=None)
+    dataframe = pandas.read_csv("/home/t3atlas/ev19u056/projetoWH/iris.data", header=None)
     dataset = dataframe.values
     X = dataset[:,0:4].astype(float)
     Y = dataset[:,4]
