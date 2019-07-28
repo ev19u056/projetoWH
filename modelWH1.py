@@ -68,7 +68,7 @@ if __name__ == "__main__":
     ## Model compile arguments, training parameters and optimizer.
 
     # compile(optimizer, loss=None, metrics=None, loss_weights=None, sample_weight_mode=None, weighted_metrics=None, target_tensors=None)
-    compileArgs = {'loss': 'categorical_crossentropy'', 'optimizer': 'adam', 'metrics': ["accuracy"]}  # compileArgs is a dictionary that contains parameters for model.compile()
+    compileArgs = {'loss': 'categorical_crossentropy', 'optimizer': 'adam', 'metrics': ["accuracy"]}  # compileArgs is a dictionary that contains parameters for model.compile()
     trainParams = {'epochs': n_epochs, 'batch_size': batch_size, 'verbose': verbose}
     myOpt = Adam(lr=learning_rate)#, decay=my_decay)
     compileArgs['optimizer'] = myOpt
