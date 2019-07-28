@@ -1,0 +1,110 @@
+-- Variables do not used for NN training:
+
+1 PUWeight
+Values:  0.869453, 0.916476, 0.651448, 0.869453, 1.189831, 0.985280 ...
+
+2 flavB1
+Values:  4, 5, 0, 5, 5, 5, ...
+
+3 flavB2
+Values: 4, 5, 0, 5, 5, 5, ...
+
+4 EventNumber
+Values: 3968890, 3966406, 3966585, 3966137, 3968618, 3966817 ...
+
+5 EventRegime
+Values: 3, 3, 3, 3, 3 ...
+
+6 AverageMu
+Values: 31.500000, 30.500000, 34.500000, 31.500000, 24.500000 ...
+
+7 EventWeight
+Values: 0.208530, 0.228962, 0.152402, 0.210497, 0.305580 ...
+
+8 Sample
+Values: stopWt, stopWt, stopWt, stopWt, stopWt ...
+
+9 Description
+Values: SR, SR, SR, SR, SR, NaN ...
+
+10 EventFlavor
+Values:  bc, bb, l, bc, bl ...
+
+11 TriggerSF
+Values:  0.977960, 0.995630, 0.992640, 1.000000, 0.987410 ...
+
+12 ActualMuScaled
+Values: 31.500000, 30.500000, 34.500000, 31.500000, 24.500000 ...
+
+13 AverageMuScaled
+Values: 31.500000, 30.500000, 34.500000, 31.500000, 24.500000 ...
+
+14 eventFlagMerged/l
+Values: 3071, 9215, 3071, 5119, 3071 ...
+
+15 eventFlagResolved/l
+Values:  8191, 8421375, 24575, 24575, 163839 ...
+
+-- Variables used for NN training:
+1 nFats
+2 nJets
+3 nTags
+4 nTaus
+5 nMuons
+6 nbJets
+7 FJ1nTags
+8 nFwdJets
+9 nSigJets
+10 nElectrons
+11 mB1
+12 mB2
+13 mBB
+14 mJ3
+15 mL1
+16 mTW
+17 mVH
+18 met
+19 pTW
+20 FJ1M
+21 dRBB
+22 mBBJ
+23 mVFJ
+24 pTB1
+25 pTB2
+26 pTBB
+27 pTJ3
+28 phiW
+29 ptL1
+30 FJ1C2
+31 FJ1D2
+32 FJ1Pt
+33 etaB1
+34 etaB2
+35 etaBB
+36 etaJ3
+37 etaL1
+38 pTBBJ
+39 phiB1
+40 phiB2
+41 phiBB
+42 phiJ3
+43 phiL1
+44 BTagSF
+45 FJ1Ang
+46 FJ1Eta
+47 FJ1Phi
+48 FJ1T21
+49 dEtaBB
+50 dPhiBB
+51 metSig
+52 FJ1KtDR
+53 dPhiVBB
+54 dPhiVFJ
+55 ActualMu
+56 LeptonSF
+57 MV2c10B1
+58 MV2c10B2
+59 metSig_PU
+60 mindPhilepB
+61 metOverSqrtHT
+62 metOverSqrtSumET
