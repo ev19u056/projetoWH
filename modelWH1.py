@@ -81,7 +81,7 @@ if __name__ == "__main__":
         name = name+"_Ver"+str(iteration)
     '''
     # Naming the Model
-    name ="Model_Ver_"+iteration
+    name ="Model_Ver_"+str(iteration)
 
     ## Directory to save your NN files. Edit lgbk variable in localConfig.py
     # lgbk = "/home/t3atlas/ev19u056/projetoWH/iris_example"
