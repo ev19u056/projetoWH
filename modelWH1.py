@@ -59,6 +59,7 @@ if __name__ == "__main__":
     iteration = args.iteration
 
     act = args.act # activation function for hidden neurons
+    batch_size = args.batchSize
     list = args.list
     architecture = list.split()
     ini = args.initializer
