@@ -223,7 +223,6 @@ if __name__ == "__main__":
         plt.savefig(filepath+name+"Accuracy_Loss_"+compileArgs['loss']+".pdf")
         plt.close()
 
-
         if args.verbose:
             print("Accuraccy and loss plotted at {}".format(filepath))
             print ("Model name: "+name)
