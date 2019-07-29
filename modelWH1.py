@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     ## Directory to save your NN files. Edit lgbk variable in localConfig.py
     # lgbk = "/home/t3atlas/ev19u056/projetoWH/iris_example/"
-    filepath = cfg.lgbk+"SingleNN/"+name
+    filepath = cfg.lgbk+"SingleNN/"+name+"/"
 
     if os.path.exists(filepath) == False:
         os.mkdir(filepath)
