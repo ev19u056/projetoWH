@@ -11,6 +11,8 @@ nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
 
+start = time.time()
+
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv')
 
