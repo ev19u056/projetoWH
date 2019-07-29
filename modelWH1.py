@@ -185,8 +185,12 @@ if __name__ == "__main__":
 
     acc = history.history["acc"]
     val_acc = history.history['val_acc']
+    print("Printing 'val_acc'... ")
+    print(val_acc)
     loss = history.history['loss']
     val_loss = history.history['val_loss']
+    print("Printing 'val_loss'... ")
+    print(val_loss)
 
     # assure_path_exists() is defined in commonFunctions.py
     assure_path_exists(filepath+"accuracy/")
