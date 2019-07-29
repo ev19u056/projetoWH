@@ -4,9 +4,10 @@ Train the Neural Network
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+import keras
+from keras import *
 from keras.optimizers import Adam, Nadam
 import time
-import keras
 import pandas
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, AlphaDropout
