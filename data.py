@@ -31,6 +31,6 @@ df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv')
 print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=int(nrows_Wjets/40))
 
-print "Reading time: ", (time.time() - start), "s  of", i, "% of data"
+print "Reading time: ", (time.time() - start)
 
 del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
