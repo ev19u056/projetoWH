@@ -111,6 +111,7 @@ if __name__ == "__main__":
     model.compile(**compileArgs)
 
     # --- For iris dataset --- #
+    import numpy
     from keras.wrappers.scikit_learn import KerasClassifier
     from keras.utils import np_utils
     from sklearn.model_selection import cross_val_score
