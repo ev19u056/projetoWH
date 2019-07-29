@@ -85,9 +85,12 @@ if __name__ == "__main__":
     # Naming the Model
     name ="Model_Ver_"+str(iteration)
 
+    # Creating the directory where the fileswill be stored
+    testpath =cfg.lgbk + "SingleNN/"
+    filepath = cfg.lgbk+"SingleNN/"+name+"/"
+
     ## Directory to save your NN files. Edit lgbk variable in localConfig.py
     # lgbk = "/home/t3atlas/ev19u056/projetoWH/iris_example/"
-    filepath = cfg.lgbk+"SingleNN/"+name+"/"
 
     if os.path.exists(filepath) == False:
         os.mkdir(filepath)
@@ -203,6 +206,14 @@ if __name__ == "__main__":
     # another file to save model weights ???
     model.save_weights(filepath+name  + "_w.h5")
 
+    # Creating a text file where all of the model's caracteristics are displayed
+    f=open(testpath + "README.md", "a")
+    f.write("\n \n **{}** : Neuron-Layers: 4 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size:{} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, regularizer, ini ))
+    f.close()
+    print("DONE: Creating a text file where all of the model's caracteristics are displayed")
+
+
+
     # Plot accuracy and loss evolution over epochs for both training and validation datasets
     if not args.batch:
         from commonFunctions import plotter
@@ -213,11 +224,13 @@ if __name__ == "__main__":
         plt.subplot(2,1,1)
         plotter(filepath+"accuracy/acc_"+name+".pickle","accuracy",name+"'s accuracy")
         plotter(filepath+"accuracy/val_acc_"+name+".pickle","Val accuracy",name+"'s Accuracy")
+        plt.legend(['train', 'test'], loc='upper left')
         #plt.savefig(filepath+"accuracy/Accuracy.pdf")
 
         plt.subplot(2,1,2)
         plotter(filepath+"loss/loss_"+name+".pickle","loss",name +"loss function")
         plotter(filepath+"loss/val_loss_"+name+".pickle","loss Validation",name+"'s Loss")
+        plt.legend(['train', 'test'], loc='upper left')
         #plt.savefig(filepath + "loss/Loss_Validation.pdf")
 
         plt.savefig(filepath+name+"Accuracy_Loss_"+compileArgs['loss']+".pdf")
