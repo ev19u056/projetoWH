@@ -138,7 +138,7 @@ if __name__ == "__main__":
     # convert integers to dummy variables (i.e. one hot encoded)
     dummy_y = np_utils.to_categorical(encoded_Y)
 
-    history = model.fit(X, dummy_y,validation_split=0.33, shuffle=True, **trainParams)
+    history = model.fit(X, dummy_y,validation_split=0.2, shuffle=True, **trainParams)
 
     '''
     # summarize history for accuracy
