@@ -142,6 +142,13 @@ if __name__ == "__main__":
     loss, accuracy = model.evaluate(X, dummy_y)
     print('Accuracy: %.2f' % (accuracy*100))
     print('Loss: %.2f' % (loss*100))
+
+    # make class predictions with the model
+    predictions = model.predict_classes(X)
+    # summarize the first 5 cases
+    for i in range(5):
+	       print('%s => %d (expected %d)' % (X[i].tolist(), predictions[i], dummy_y[i]))
+
     # --- For iris dataset --- #
 
     ##Fit your model -> TRAINING
