@@ -84,7 +84,7 @@ if __name__ == "__main__":
     name ="Model_Ver_"+str(iteration)
 
     ## Directory to save your NN files. Edit lgbk variable in localConfig.py
-    # lgbk = "/home/t3atlas/ev19u056/projetoWH/iris_example"
+    # lgbk = "/home/t3atlas/ev19u056/projetoWH/iris_example/"
     filepath = cfg.lgbk+"SingleNN/"+name
 
     if os.path.exists(filepath) == False:
@@ -111,7 +111,6 @@ if __name__ == "__main__":
     model.compile(**compileArgs)
 
     # --- For iris dataset --- #
-    import numpy
     from keras.wrappers.scikit_learn import KerasClassifier
     from keras.utils import np_utils
     from sklearn.model_selection import cross_val_score
@@ -137,6 +136,11 @@ if __name__ == "__main__":
     dummy_y = np_utils.to_categorical(encoded_Y)
 
     history = model.fit(X, dummy_y, shuffle=True, **trainParams)
+
+    # evaluate the keras model
+    loss, accuracy = model.evaluate(X, dummy_y)
+    print('Accuracy: %.2f' % (accuracy*100))
+    print('Loss: %.2f' % (loss*100))
     # --- For iris dataset --- #
 
     ##Fit your model -> TRAINING
