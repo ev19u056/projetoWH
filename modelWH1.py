@@ -112,6 +112,7 @@ if __name__ == "__main__":
 
     # --- For iris dataset --- #
     import numpy
+    import matplotlib.pyplot as plt
     from keras.wrappers.scikit_learn import KerasClassifier
     from keras.utils import np_utils
     from sklearn.model_selection import cross_val_score
@@ -138,6 +139,12 @@ if __name__ == "__main__":
 
     history = model.fit(X, dummy_y, shuffle=True, **trainParams)
 
+    plt.plot(history.history['acc'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train'], loc='upper left')
+    plt.show()
     # evaluate the keras model
     loss, accuracy = model.evaluate(X, dummy_y)
     print('Accuracy: %.2f' % (accuracy*100))
@@ -146,9 +153,10 @@ if __name__ == "__main__":
     # make class predictions with the model
     predictions = model.predict_classes(X)
     # summarize the first 5 cases
+    '''
     for i in range(100):
            print("{0} => {1} (expected {2})".format(X[i].tolist(), predictions[i], dummy_y[i]))
-           #print('%s => %d (expected %d)' % X[i].tolist(), predictions[i], dummy_y[i])
+    '''
 
     # --- For iris dataset --- #
 
