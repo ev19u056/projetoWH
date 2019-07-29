@@ -147,7 +147,7 @@ if __name__ == "__main__":
     predictions = model.predict_classes(X)
     # summarize the first 5 cases
     for i in range(5):
-           print("'{0}' => '{1}' (expected '{2}')".format(X[i].tolist(), predictions[i], dummy_y[i]))
+           print("{0} => {1} (expected {2})".format(X[i].tolist(), predictions[i], dummy_y[i]))
            #print('%s => %d (expected %d)' % X[i].tolist(), predictions[i], dummy_y[i])
 
     # --- For iris dataset --- #
