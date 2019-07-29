@@ -137,13 +137,24 @@ if __name__ == "__main__":
     # convert integers to dummy variables (i.e. one hot encoded)
     dummy_y = np_utils.to_categorical(encoded_Y)
 
-    history = model.fit(X, dummy_y, shuffle=True, **trainParams)
+    history = model.fit(X, dummy_y,validation_split=0.33, shuffle=True, **trainParams)
 
+    # summarize history for accuracy
     plt.plot(history.history['acc'])
+    plt.plot(history.history['val_acc'])
     plt.title('model loss')
     plt.ylabel('loss')
     plt.xlabel('epoch')
-    plt.legend(['train'], loc='upper left')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+
+    # summarize history for loss
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
     plt.show()
     # evaluate the keras model
     loss, accuracy = model.evaluate(X, dummy_y)
