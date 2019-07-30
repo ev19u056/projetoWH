@@ -75,4 +75,4 @@ for tmp in [df_sinal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
 del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
-print 'Datasets contain a total of', len(data), '(', data.weight.sum()*luminosity, 'weighted) events:'
+print 'Datasets contain a total of', len(data), '(', data.weight.sum(), 'weighted) events:'
