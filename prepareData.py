@@ -4,12 +4,11 @@ Prepare Data for processing
 
 #!/usr/bin/env python
 
-import root_numpy
 import numpy as np
 import time
-from sklearn.preprocessing import StandardScaler
-from sklearn.externals import joblib
-from sklearn import decomposition
+#from sklearn.preprocessing import StandardScaler
+#from sklearn.externals import joblib
+#from sklearn import decomposition
 
 import pandas as pd
 import localConfig as cfg
