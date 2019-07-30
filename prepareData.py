@@ -104,6 +104,6 @@ XDev = data[trainFeatures].ix[0:Dev_len-1,:]
 YDev = data[["category"]].ix[0:Dev_len-1,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
-print(YVal)
+
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal)
