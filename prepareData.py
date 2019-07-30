@@ -65,6 +65,14 @@ print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = 5)
 print "Reading time: ", (time.time() - start)
 
+
+df_sinal["category"] = 1
+df_stopWt["category"] = 0
+df_ttbar["category"] = 0
+df_WlvZqq["category"] = 0
+df_WqqWlv["category"] = 0
+df_WJets["category"] = 0
+
 data = None
 for tmp in [df_sinal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
@@ -76,3 +84,4 @@ del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
 print 'Datasets contain a total of', len(data), '(', data.EventWeight.sum(), 'weighted) events:'
+print(data)
