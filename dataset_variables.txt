@@ -45,6 +45,10 @@ Values: 3071, 9215, 3071, 5119, 3071 ...
 15 eventFlagResolved/l
 Values:  8191, 8421375, 24575, 24575, 163839 ...
 
+16 BTagSF
+17 ActualMu
+18 LeptonSF
+
 -- Variables used for NN training:
 1 nFats
 2 nJets
@@ -64,21 +68,21 @@ Values:  8191, 8421375, 24575, 24575, 163839 ...
 16 mTW
 17 mVH
 18 met
-19 pTW
-20 FJ1M
-21 dRBB
-22 mBBJ
+19 pTW momento transverso (valor absoluto)
+20 FJ1M = Fat Jet one mass
+21 dRBB = distância radial entre dois B e B 
+22 mBBJ = massa
 23 mVFJ
 24 pTB1
 25 pTB2
 26 pTBB
 27 pTJ3
-28 phiW
+28 phiW = distribuição uniforme entre -pi e pi (tirar do treino todos os phi)
 29 ptL1
-30 FJ1C2
+30 FJ1C2 
 31 FJ1D2
-32 FJ1Pt
-33 etaB1
+32 FJ1Pt 
+33 etaB1 = direcção no plano longitudinal (eixo de propagação do feixe) -> valores positivos e negativos -> simetrica
 34 etaB2
 35 etaBB
 36 etaJ3
@@ -89,22 +93,29 @@ Values:  8191, 8421375, 24575, 24575, 163839 ...
 41 phiBB
 42 phiJ3
 43 phiL1
-44 BTagSF
+
 45 FJ1Ang
 46 FJ1Eta
 47 FJ1Phi
-48 FJ1T21
+48 FJ1T21 = tau21, (probabilidade de ter um subjato)/(prob de ter 2 subjatos) 
 49 dEtaBB
 50 dPhiBB
-51 metSig
-52 FJ1KtDR
-53 dPhiVBB
+51 metSig = significância de energia em falta
+52 FJ1KtDR = ???
+53 dPhiVBB = diferença angular (sempre > 0)
 54 dPhiVFJ
-55 ActualMu
-56 LeptonSF
+
 57 MV2c10B1
 58 MV2c10B2
-59 metSig_PU
-60 mindPhilepB
-61 metOverSqrtHT
-62 metOverSqrtSumET
+59 metSig_PU = ???
+60 mindPhilepB = menor distância ângular entre um leptão e dois subjatos
+61 metOverSqrtHT = ???
+62 metOverSqrtSumET = ???
+
+Matriz de confusão 
+		Wh	ttbar	W+Jets	W
+WH
+ttbar+Wt
+W+Jets
+W
+W
