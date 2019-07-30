@@ -68,9 +68,9 @@ print "Reading time: ", (time.time() - start)
 data = None
 for tmp in ["df_sinal","df_stopWt","df_ttbar","df_WlvZqq","df_WqqWlv","df_WJets"]:
         if data is None:
-            data = pd.DataFrame(tmp)
+            data = tmp
         else:
-            data = data.append(pandas.DataFrame(tmp), ignore_index=True)
+            data = data.append(tmp, ignore_index=True)
 
 del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
