@@ -48,7 +48,7 @@ print "Reading time: ", (time.time() - start)
 
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = 1000)
+df_signal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = 1000)
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
 df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = 1000)
@@ -81,10 +81,8 @@ for tmp in [df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         else:
             bkg = bkg.append(tmp, ignore_index=True)
 
-sig = df_sin
-
-del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
+del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
-print 'Datasets contain a total of', len(bkg)+len(sig), '(', data.EventWeight.sum(), 'weighted) events:'
-XDev = sig[trainFeatures]
+print 'Datasets contain a total of', len(bkg)+len(df_signal), '(', data.EventWeight.sum(), 'weighted) events:'
+XDev = df_signals[trainFeatures]
