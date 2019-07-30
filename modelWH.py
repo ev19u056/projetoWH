@@ -162,7 +162,7 @@ if __name__ == "__main__":
     '''
 
     # evaluate the keras model
-    loss, accuracy = model.evaluate(X, dummy_y)
+    loss, accuracy = model.evaluate(XVal, YVal)
     print('Accuracy: %.2f' % (accuracy*100))
     print('Loss: %.2f' % (loss*100))
     # --- CAlculating FOM ---
