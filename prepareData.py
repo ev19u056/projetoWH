@@ -81,7 +81,7 @@ for tmp in [df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         else:
             bkg = bkg.append(tmp, ignore_index=True)
 
-sig = df_sina
+sig = df_sin
 
 del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
