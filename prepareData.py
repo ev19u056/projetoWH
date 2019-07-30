@@ -78,7 +78,7 @@ for tmp in [df_sinal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
             data = tmp
         else:
-            data = data.append(tmp, ignore_index=True)
+            data = data.append(tmp, ignore_index=False)
 
 del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
