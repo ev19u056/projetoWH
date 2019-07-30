@@ -45,24 +45,25 @@ print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=int(nrows_Wjets/40))
 print "Reading time: ", (time.time() - start)
 '''
+
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = 5)
+df_sinal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = 1000)
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = 5)
+df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = 1000)
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = 5)
+df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = 1000)
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows = 5)
+df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows = 1000)
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows = 5)
+df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows = 1000)
 
 print("Reading -> 'WJets_Sh221.csv'")
-df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = 5)
+df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = 1000)
 print "Reading time: ", (time.time() - start)
 
 
@@ -73,15 +74,17 @@ df_WlvZqq["category"] = 0
 df_WqqWlv["category"] = 0
 df_WJets["category"] = 0
 
-data = None
-for tmp in [df_sinal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
-        if data is None:
-            data = tmp
+bkg = None
+for tmp in [df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
+        if bkg is None:
+            bkg = tmp
         else:
-            data = data.append(tmp, ignore_index=False)
+            bkg = bkg.append(tmp, ignore_index=True)
+
+sig = df_sina
 
 del df_sinal, df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
-print 'Datasets contain a total of', len(data), '(', data.EventWeight.sum(), 'weighted) events:'
-print(data)
+print 'Datasets contain a total of', len(bkg)+len(sig), '(', data.EventWeight.sum(), 'weighted) events:'
+XDev = sig[trainFeatures]
