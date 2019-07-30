@@ -84,8 +84,8 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         else:
             data = data.append(tmp, ignore_index=True)
 
-del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
-np.random.shuffle(data)
+del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
+data = data.sample(frac=1).reset_index(drop=True)
 # Load the Data
 
 nrows_sinal = 1000
