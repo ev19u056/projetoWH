@@ -21,8 +21,7 @@ from commonFunctions import assure_path_exists #getYields, FullFOM, myClassifier
 import localConfig as cfg
 import pickle   # This module is used for serializing and de-serializing a Python object structure
 
-''' copy to your folder and adapt prepareDATA.py '''
-#from prepareDATA import *
+from prepareDATA import *
 
 if __name__ == "__main__":
     import argparse
