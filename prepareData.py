@@ -74,15 +74,16 @@ df_WlvZqq["category"] = 0
 df_WqqWlv["category"] = 0
 df_WJets["category"] = 0
 
-bkg = None
-for tmp in [df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
-        if bkg is None:
-            bkg = tmp
+data = None
+for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
+        if data is None:
+            data = tmp
         else:
-            bkg = bkg.append(tmp, ignore_index=True)
+            data = data.append(tmp, ignore_index=True)
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
-print 'Datasets contain a total of', len(bkg)+len(df_signal), '(', bkg.EventWeight.sum()+df_signal.EventWeight.sum(), 'weighted) events:'
-XDev = df_signal[trainFeatures]
+print 'Datasets contain a total of', len(data), '(', data.EventWeight.sum(), 'weighted) events:'
+XDev = data[trainFeatures]
+YDev = data[["category"]]
