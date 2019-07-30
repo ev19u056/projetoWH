@@ -100,8 +100,8 @@ Dev_len = int(len(data)*Dev)
 Val_len = len(data)-Dev_len
 
 print 'Datasets contain a total of', len(data), '(', data.EventWeight.sum(), 'weighted) events:'
-XDev = data[trainFeatures].ix[0:Dev_len,:]
-YDev = data[["category"]].ix[0:Dev_len,:]
+XDev = data[trainFeatures].ix[0:Dev_len-1,:]
+YDev = data[["category"]].ix[0:Dev_len-1,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
 print(YVal)
