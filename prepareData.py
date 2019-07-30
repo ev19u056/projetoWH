@@ -92,11 +92,12 @@ nrows_WlvZqq = 1000
 nrows_WqqWlv = 1000
 
 Dev = 0.75
-Val = 1-Dev
 Dev_len = int(len(data)*Dev)
 Val_len = len(data)-Dev_len
 
 print 'Datasets contain a total of', len(data), '(', data.EventWeight.sum(), 'weighted) events:'
 XDev = data[trainFeatures].ix[0:Dev_len,:]
-#YDev = data[["category"]]
+YDev = data[["category"]].ix[0:Dev_len,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
+YDev = data[["category"]].ix[Dev_len:,:]
+print(YDev)
