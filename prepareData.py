@@ -84,5 +84,5 @@ for tmp in [df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
-print 'Datasets contain a total of', len(bkg)+len(df_signal), '(', data.EventWeight.sum(), 'weighted) events:'
+print 'Datasets contain a total of', len(bkg)+len(df_signal), '(', bkg.EventWeight.sum()+df_signal.EventWeight.sum(), 'weighted) events:'
 XDev = df_signal[trainFeatures]
