@@ -149,16 +149,16 @@ if __name__ == "__main__":
     if args.verbose:
         print("Getting predictions")
 
-    devPredict = model.predict(XDev) # não se utiliza
-    valPredict = model.predict(XVal) # não se utiliza
+    devPredict = model.predict(XDev) # nao se utiliza
+    valPredict = model.predict(XVal) # nao se utiliza
 
     '''
     # Getting scores
     if args.verbose:
         print("Getting scores")
 
-    scoreDev = model.evaluate(XDev, YDev, verbose = 0) # não se utiliza
-    scoreVal = model.evaluate(XVal, YVal, verbose = 0) # não se utiliza
+    scoreDev = model.evaluate(XDev, YDev, verbose = 0) # nao se utiliza
+    scoreVal = model.evaluate(XVal, YVal, verbose = 0) # nao se utiliza
     '''
 
     # evaluate the keras model
