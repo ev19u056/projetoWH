@@ -66,7 +66,6 @@ print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = 1000)
 print "Reading time: ", (time.time() - start)
 
-
 df_signal["category"] = 1
 df_stopWt["category"] = 0
 df_ttbar["category"] = 0
@@ -84,6 +83,20 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
+
+nrows_sinal = 1000
+nrows_stopWt = 1000
+nrows_ttbar = 1000
+nrows_Wjets = 1000
+nrows_WlvZqq = 1000
+nrows_WqqWlv = 1000
+
+Dev = 0.75
+Val = 1-Dev
+Dev_len = int(len(data)*Dev)
+Val_len = len(data)-Dev_len
+
 print 'Datasets contain a total of', len(data), '(', data.EventWeight.sum(), 'weighted) events:'
-XDev = data[trainFeatures]
-YDev = data[["category"]]
+XDev = data[trainFeatures].ix[0:Dev_len,:]
+#YDev = data[["category"]]
+XVal = data[trainFeatures].ix[Dev_len:,:]
