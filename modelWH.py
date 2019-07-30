@@ -15,6 +15,7 @@ from keras.layers import Dense, Dropout, AlphaDropout
 
 ''' copy to your folder and adapt commonFunctions.py'''
 from commonFunctions import assure_path_exists, plotter #getYields, FullFOM, myClassifier, gridClassifier, getDefinedClassifier,
+import matplotlib.pyplot as plt
 #from scipy.stats import ks_2samp
 
 ''' copy to your folder and adapt localConfig.py '''
