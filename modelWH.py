@@ -21,7 +21,7 @@ from commonFunctions import assure_path_exists, plotter #getYields, FullFOM, myC
 import localConfig as cfg
 import pickle   # This module is used for serializing and de-serializing a Python object structure
 
-from prepareDATA import *
+from prepareData import *
 
 if __name__ == "__main__":
     import argparse
