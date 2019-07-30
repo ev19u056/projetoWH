@@ -10,6 +10,7 @@ loc = "/home/t3cms/dbastos/LSTORE/Stop4Body/"
 #loc = "/home/diogo/LIP/DATA/"
 
 #path to logbook
-lgbk = "/home/t3atlas/ev19u056/projetoWH/iris_example/"
+#lgbk = "/home/t3atlas/ev19u056/projetoWH/iris_example/"
+lgbk = "/home/t3atlas/ev19u056/projetoWH/"
 
 #lgbk = "/lstore/cms/dbastos/LogBook/"
