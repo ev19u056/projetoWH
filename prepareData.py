@@ -67,7 +67,7 @@ df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = 1000)
 print "Reading time: ", (time.time() - start)
 
 
-df_sinal["category"] = 1
+df_signal["category"] = 1
 df_stopWt["category"] = 0
 df_ttbar["category"] = 0
 df_WlvZqq["category"] = 0
@@ -85,4 +85,4 @@ del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
 
 # Load the Data
 print 'Datasets contain a total of', len(bkg)+len(df_signal), '(', data.EventWeight.sum(), 'weighted) events:'
-XDev = df_signals[trainFeatures]
+XDev = df_signal[trainFeatures]
