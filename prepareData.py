@@ -66,7 +66,7 @@ df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = 5)
 print "Reading time: ", (time.time() - start)
 
 data = None
-for tmp in ["df_sinal","df_stopWt","df_ttbar","df_WlvZqq","df_WqqWlv","df_WJets"]:
+for tmp in [df_sinal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
             data = tmp
         else:
