@@ -80,8 +80,10 @@ data = None
 for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
             data = tmp
+            del tmp
         else:
             data = data.append(tmp, ignore_index=True)
+            del tmp
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
 data = data.sample(frac=1).reset_index(drop=True)
@@ -97,5 +99,6 @@ YDev = data[["category"]].ix[0:Dev_len-1,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
 
+del data
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal)
