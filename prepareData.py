@@ -88,7 +88,7 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
             del tmp
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
-data = data.sample(frac=0.9).reset_index(drop=True)
+data = data.sample(frac=1,random_state=seed).reset_index(drop=True)
 # Load the Data
 
 Dev = 0.75
@@ -104,3 +104,10 @@ YVal = data[["category"]].ix[Dev_len:,:]
 del data
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal)
+
+print "Fitting the scaler and scaling the input variables ..."
+scaler = StandardScaler().fit(XDev)
+XDev = scaler.transform(XDev)
+XVal = scaler.transform(XVal)
+#scalerfile = 'scaler_'+train_DM+'.sav'
+#joblib.dump(scaler, scalerfile)
