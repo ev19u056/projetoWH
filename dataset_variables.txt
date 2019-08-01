@@ -54,12 +54,12 @@ Values:
 18 LeptonSF
 Values:
 
-28 phiW = distribuição uniforme entre -pi e pi (tirar do treino todos os phi)
-39 phiB1
-40 phiB2
-41 phiBB
-42 phiJ3
-43 phiL1
+19 phiW = distribuição uniforme entre -pi e pi (tirar do treino todos os phi)
+20 phiB1
+21 phiB2
+22 phiBB
+23 phiJ3
+24 phiL1
 
 -- Variables used for NN training:
 1 nFats
@@ -89,35 +89,32 @@ Values:
 25 pTB2
 26 pTBB
 27 pTJ3
-
-29 ptL1
-30 FJ1C2 
-31 FJ1D2
-32 FJ1Pt 
-33 etaB1 = direcção no plano longitudinal (eixo de propagação do feixe) -> valores positivos e negativos -> simetrica
-34 etaB2
-35 etaBB
-36 etaJ3
-37 etaL1
-38 pTBBJ
-
-45 FJ1Ang
-46 FJ1Eta
-47 FJ1Phi
-48 FJ1T21 = tau21, (probabilidade de ter um subjato)/(prob de ter 2 subjatos) 
-49 dEtaBB
-50 dPhiBB
-51 metSig = significância de energia em falta
-52 FJ1KtDR = ???
-53 dPhiVBB = diferença angular (sempre > 0)
-54 dPhiVFJ
-
-57 MV2c10B1
-58 MV2c10B2
-59 metSig_PU = ???
-60 mindPhilepB = menor distância ângular entre um leptão e dois subjatos
-61 metOverSqrtHT = ???
-62 metOverSqrtSumET = ???
+28 ptL1
+29 FJ1C2 
+30 FJ1D2
+31 FJ1Pt 
+32 etaB1 = direcção no plano longitudinal (eixo de propagação do feixe) -> valores positivos e negativos -> simetrica
+33 etaB2
+34 etaBB
+35 etaJ3
+36 etaL1
+37 pTBBJ
+38 FJ1Ang
+39 FJ1Eta
+40 FJ1Phi
+41 FJ1T21 = tau21, (probabilidade de ter um subjato)/(prob de ter 2 subjatos) 
+42 dEtaBB
+43 dPhiBB
+44 metSig = significância de energia em falta
+45 FJ1KtDR = ???
+46 dPhiVBB = diferença angular (sempre > 0)
+47 dPhiVFJ
+48 MV2c10B1
+49 MV2c10B2
+50 metSig_PU = ???
+51 mindPhilepB = menor distância ângular entre um leptão e dois subjatos
+52 metOverSqrtHT = ???
+53 metOverSqrtSumET = ???
 
 Matriz de confusão 
 		Wh	ttbar	W+Jets	W
