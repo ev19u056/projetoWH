@@ -105,8 +105,10 @@ XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
 
 
-weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:]
-weightVal = data[["EventWeight"]].ix[Dev_len:,:]
+#weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:]
+#weightVal = data[["EventWeight"]].ix[Dev_len:,:]
+weightDev = np.ravel(data.sampleWeight).ix[0:Dev_len-1,:]
+weightVal = np.ravel(dataVal.sampleWeight).ix[Dev_len:,:]
 
 del data
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
