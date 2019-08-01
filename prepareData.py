@@ -106,10 +106,13 @@ YVal = data[["category"]].ix[Dev_len:,:]
 
 weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:]
 weightVal = data[["EventWeight"]].ix[Dev_len:,:]
-weightDev = weightDev["EventWeight"].tolist()
-weightVal = weightVal["EventWeight"].tolist()
-weightDev = np.array(weightVal)
-weightVal = np.array(weightVal)
+weightVal = np.ravel(weightVal.EventWeight)
+weightDev = np.ravel(weightDev.EventWeight)
+
+#weightDev = weightDev["EventWeight"].tolist()
+#weightVal = weightVal["EventWeight"].tolist()
+#weightDev = np.array(weightVal)
+#weightVal = np.array(weightVal)
 
 del data
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
