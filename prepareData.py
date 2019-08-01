@@ -39,7 +39,7 @@ def chunkReader(tmp):
     del tmp, chunk
     return result
 
-fraction = 0.01
+fraction = 0.1
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
@@ -106,13 +106,8 @@ YVal = data[["category"]].ix[Dev_len:,:]
 
 weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:]
 weightVal = data[["EventWeight"]].ix[Dev_len:,:]
-weightVal = np.ravel(weightVal.EventWeight)
 weightDev = np.ravel(weightDev.EventWeight)
-
-#weightDev = weightDev["EventWeight"].tolist()
-#weightVal = weightVal["EventWeight"].tolist()
-#weightDev = np.array(weightVal)
-#weightVal = np.array(weightVal)
+weightVal = np.ravel(weightVal.EventWeight)
 
 del data
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
