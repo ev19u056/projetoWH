@@ -18,30 +18,11 @@ seed = 7
 np.random.seed(seed)
 
 #myFeatures = [var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavor', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'eventFlagMerged/l','eventFlagResolved/l']]
-otherFeatures = ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavor', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'eventFlagMerged/l','eventFlagResolved/l','BTagSF','ActualMu','LeptonSF']
-trainFeatures = ['nFats', 'nJets', 'nTags', 'nTaus', 'nMuons', 'nbJets', 'FJ1nTags', 'nFwdJets', 'nSigJets', 'nElectrons', 'mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW', 'FJ1M', 'dRBB', 'mBBJ', 'mVFJ', 'pTB1', 'pTB2', 'pTBB', 'pTJ3', 'phiW', 'ptL1', 'FJ1C2', 'FJ1D2', 'FJ1Pt', 'etaB1', 'etaB2', 'etaBB', 'etaJ3', 'etaL1', 'pTBBJ', 'phiB1', 'phiB2', 'phiBB', 'phiJ3', 'phiL1', 'FJ1Ang', 'FJ1Eta', 'FJ1Phi', 'FJ1T21', 'dEtaBB', 'dPhiBB', 'metSig', 'FJ1KtDR', 'dPhiVBB', 'dPhiVFJ', 'MV2c10B1', 'MV2c10B2', 'metSig_PU', 'mindPhilepB', 'metOverSqrtHT', 'metOverSqrtSumET']
+otherFeatures = ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavor', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'eventFlagMerged/l','eventFlagResolved/l','BTagSF','ActualMu','LeptonSF', 'phiW', 'phiB1', 'phiB2', 'phiBB', 'phiJ3', 'phiL1']
+trainFeatures = ['nFats', 'nJets', 'nTags', 'nTaus', 'nMuons', 'nbJets', 'FJ1nTags', 'nFwdJets', 'nSigJets', 'nElectrons', 'mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW', 'FJ1M', 'dRBB', 'mBBJ', 'mVFJ', 'pTB1', 'pTB2', 'pTBB', 'pTJ3', 'ptL1', 'FJ1C2', 'FJ1D2', 'FJ1Pt', 'etaB1', 'etaB2', 'etaBB', 'etaJ3', 'etaL1', 'pTBBJ', 'FJ1Ang', 'FJ1Eta', 'FJ1Phi', 'FJ1T21', 'dEtaBB', 'dPhiBB', 'metSig', 'FJ1KtDR', 'dPhiVBB', 'dPhiVFJ', 'MV2c10B1', 'MV2c10B2', 'metSig_PU', 'mindPhilepB', 'metOverSqrtHT', 'metOverSqrtSumET']
 
-'''
-start = time.time()
-print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-df_signal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv')
+scalingFeatures = ['FJ1nTags', 'mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW', 'FJ1M', 'dRBB', 'mBBJ', 'mVFJ', 'pTB1', 'pTB2', 'pTBB', 'pTJ3', 'ptL1', 'FJ1C2', 'FJ1D2', 'FJ1Pt', 'etaB1', 'etaB2', 'etaBB', 'etaJ3', 'etaL1', 'pTBBJ', 'FJ1Ang', 'FJ1Eta', 'FJ1Phi', 'FJ1T21', 'dEtaBB', 'dPhiBB', 'metSig', 'FJ1KtDR', 'dPhiVBB', 'dPhiVFJ', 'MV2c10B1', 'MV2c10B2', 'metSig_PU', 'mindPhilepB', 'metOverSqrtHT', 'metOverSqrtSumET']
 
-print("Reading -> 'stopWt_PwPy8_ade.csv'")
-df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv')
-
-print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows=int(nrows_ttbar/20))
-
-print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv')
-
-print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv')
-
-print("Reading -> 'WJets_Sh221.csv'")
-df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows=int(nrows_Wjets/50))
-print "Reading time: ", (time.time() - start)
-'''
 
 nrows_signal = 991141
 nrows_stopWt = 277816
@@ -58,7 +39,7 @@ def chunkReader(tmp):
     del tmp, chunk
     return result
 
-i = 0.1
+i = 0.01
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
@@ -105,7 +86,6 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
 data = data.sample(frac=1,random_state=seed).reset_index(drop=True)
-# Load the Data
 
 Dev = 0.75
 Dev_len = int(len(data)*Dev)
@@ -122,8 +102,8 @@ print 'XDev: ', len(XDev), ' YDev: ', len(YDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal)
 
 print "Fitting the scaler and scaling the input variables ..."
-scaler = StandardScaler().fit(XDev)
-XDev = scaler.transform(XDev)
-XVal = scaler.transform(XVal)
+scaler = StandardScaler().fit(XDev[scalingFeatures])
+XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
+XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 #scalerfile = 'scaler_'+train_DM+'.sav'
 #joblib.dump(scaler, scalerfile)

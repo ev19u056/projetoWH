@@ -54,6 +54,13 @@ Values:
 18 LeptonSF
 Values:
 
+28 phiW = distribuição uniforme entre -pi e pi (tirar do treino todos os phi)
+39 phiB1
+40 phiB2
+41 phiBB
+42 phiJ3
+43 phiL1
+
 -- Variables used for NN training:
 1 nFats
 2 nJets
@@ -82,7 +89,7 @@ Values:
 25 pTB2
 26 pTBB
 27 pTJ3
-28 phiW = distribuição uniforme entre -pi e pi (tirar do treino todos os phi)
+
 29 ptL1
 30 FJ1C2 
 31 FJ1D2
@@ -93,11 +100,6 @@ Values:
 36 etaJ3
 37 etaL1
 38 pTBBJ
-39 phiB1
-40 phiB2
-41 phiBB
-42 phiJ3
-43 phiL1
 
 45 FJ1Ang
 46 FJ1Eta
