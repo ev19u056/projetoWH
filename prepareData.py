@@ -104,11 +104,10 @@ YDev = data[["category"]].ix[0:Dev_len-1,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
 
-
 weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:]
+weightVal = data[["EventWeight"]].ix[Dev_len:,:]
 weightDev = weightDev["EventWeight"].tolist()
-print(weightDev[:10])
-#weightVal1 = data[["EventWeight"]].ix[Dev_len:,:]
+weightVal = weightVal["EventWeight"].tolist()
 
 del data
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
