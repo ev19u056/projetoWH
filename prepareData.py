@@ -3,7 +3,6 @@ Prepare Data for processing
 """
 
 #!/usr/bin/env python
-
 import numpy as np
 import time
 from sklearn.preprocessing import StandardScaler
@@ -13,6 +12,7 @@ from sklearn import decomposition
 import pandas as pd
 import localConfig as cfg
 
+#preselection =
 # fix random seed for reproducibility
 seed = 7
 np.random.seed(seed)
@@ -50,13 +50,25 @@ nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
 
+def chunkReader(tmp):
+    result = pd.DataFrame()
+    for chunk in tmp:
+        chunk.dropna(axis=0,how='any',subset=trainFeatures, inplace=True) # Dropping all rows with any NaN value
+        result = result.append(chunk)
+    del tmp, chunk
+    return result
+
 i = 0.1
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-df_signal = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*i))
+tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*i))
+df_signal = chunkReader(tmp)
+del tmp
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*i))
+tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*i))
+df_stopWt = chunkReader(tmp)
+del tmp
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
 df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = int(nrows_ttbar*i))
