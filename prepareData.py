@@ -39,7 +39,7 @@ def chunkReader(tmp):
     del tmp, chunk
     return result
 
-i = 0.01
+i = 0.1
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
@@ -63,7 +63,7 @@ tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',chunksize=chunksize,nrows = int(nr
 df_WqqWlv = chunkReader(tmp)
 
 print("Reading -> 'WJets_Sh221.csv'")
-tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(i*nrows_Wjets/40))
+tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(nrows_Wjets/40))
 df_WJets = chunkReader(tmp)
 del tmp
 print "Reading time: ", (time.time() - start)
@@ -105,6 +105,5 @@ print "Fitting the scaler and scaling the input variables ..."
 scaler = StandardScaler().fit(XDev[scalingFeatures])
 XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
 XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
-print(XDev.head(100))
 #scalerfile = 'scaler_'+train_DM+'.sav'
 #joblib.dump(scaler, scalerfile)

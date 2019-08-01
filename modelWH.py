@@ -42,7 +42,7 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--regularizer', type=float, default=0, help='Regularizer')
     parser.add_argument('-i', '--iteration', type=int, default=1, help='Iteration number i')
 
-    parser.add_argument('-l', '--list', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 59, output always 1)')
+    parser.add_argument('-l', '--list', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 53, output always 1)')
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
     parser.add_argument('-ini', '--initializer', type=str, default="glorot_uniform", help='Kernel Initializer for hidden layers')
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     ## EXERCISE 2: Create your NN model
     model = Sequential()
 
-    model.add(Dense(int(architecture[0]), input_dim=59, activation=act , kernel_initializer=ini)) # input + 1st hidden layer
+    model.add(Dense(int(architecture[0]), input_dim=53, activation=act , kernel_initializer=ini)) # input + 1st hidden layer
     i=1
     while i < len(architecture) :
         model.add(Dense(int(architecture[i]), activation=act , kernel_initializer=ini))
@@ -174,7 +174,7 @@ if __name__ == "__main__":
 
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
-    f.write("\n \n **{}** : Neuron-Layers: 59 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size:{} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, regularizer, ini ))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size:{} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, regularizer, ini ))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
