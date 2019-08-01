@@ -117,7 +117,7 @@ if __name__ == "__main__":
 
     # Fitting the Model -> TRAINING
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
-    history = model.fit(XDev, YDev, validation_data=(XVal,YVal),shuffle=True, **trainParams)
+    history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True, **trainParams)
 
     acc = history.history["acc"]
     val_acc = history.history['val_acc']
@@ -153,14 +153,13 @@ if __name__ == "__main__":
     devPredict = model.predict(XDev) # nao se utiliza
     valPredict = model.predict(XVal) # nao se utiliza
 
-    '''
     # Getting scores
     if args.verbose:
         print("Getting scores")
 
-    scoreDev = model.evaluate(XDev, YDev, verbose = 0) # nao se utiliza
-    scoreVal = model.evaluate(XVal, YVal, verbose = 0) # nao se utiliza
-    '''
+    scoreDev = model.evaluate(XDev, YDev,sample_weight=weightDev, verbose = 0) # nao se utiliza
+    scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0) # nao se utiliza
+    print "scoreDev: ", scoreDev, "     scoreVal: ", scoreVal
 
     # evaluate the keras model
     loss, accuracy = model.evaluate(XVal, YVal)
