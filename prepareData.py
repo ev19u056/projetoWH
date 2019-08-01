@@ -59,6 +59,7 @@ def chunkReader(tmp):
     return result
 
 i = 0.1
+chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*i))
@@ -66,7 +67,7 @@ df_signal = chunkReader(tmp)
 del tmp
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*i))
+tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*i))
 df_stopWt = chunkReader(tmp)
 del tmp
 
