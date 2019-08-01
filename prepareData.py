@@ -45,33 +45,33 @@ start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*fraction))
 df_signal = chunkReader(tmp)
-df_signal.EventWeight = df_signal.EventWeight*fraction
+df_signal[["EventWeight"]] = df_signal[["EventWeight"]]*fraction
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
 tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*fraction))
 df_stopWt = chunkReader(tmp)
-df_stopWt.EventWeight = df_stopWt.EventWeight*fraction
+df_stopWt[["EventWeight"]] = df_stopWt[["EventWeight"]]*fraction
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
 tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_ttbar*fraction))
 df_ttbar = chunkReader(tmp)
-df_ttbar.EventWeight = df_ttbar.EventWeight*fraction
+df_ttbar[["EventWeight"]] = df_ttbar[["EventWeight"]]*fraction
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
 tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WlvZqq*fraction))
 df_WlvZqq = chunkReader(tmp)
-df_WlvZqq.EventWeight = df_WlvZqq.EventWeight*fraction
+df_WlvZqq[["EventWeight"]] = df_WlvZqq[["EventWeight"]]*fraction
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
 tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WqqWlv*fraction))
 df_WqqWlv = chunkReader(tmp)
-df_WqqWlv.EventWeight = df_WqqWlv.EventWeight*fraction
+df_WqqWlv[["EventWeight"]] = df_WqqWlv[["EventWeight"]]*fraction
 
 print("Reading -> 'WJets_Sh221.csv'")
 tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(nrows_Wjets/40))
 df_WJets = chunkReader(tmp)
 del tmp
-df_WJets.EventWeight = df_WJets.EventWeight*(fraction/40)
+df_WJets[["EventWeight"]] = df_WJets[["EventWeight"]]*(fraction/40)
 
 print "Reading time: ", (time.time() - start)
 
