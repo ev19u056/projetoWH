@@ -64,24 +64,27 @@ start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*i))
 df_signal = chunkReader(tmp)
-del tmp
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
 tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*i))
 df_stopWt = chunkReader(tmp)
-del tmp
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-df_ttbar = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = int(nrows_ttbar*i))
+tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_ttbar*i))
+df_ttbar = chunkReader(tmp)
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows = int(nrows_WlvZqq*i))
+tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WlvZqq*i))
+df_WlvZqq = chunkReader(tmp)
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows = int(nrows_WqqWlv*i))
+tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WqqWlv*i))
+df_WqqWlv = chunkReader(tmp)
 
 print("Reading -> 'WJets_Sh221.csv'")
-df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = int(nrows_Wjets/40))
+tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(nrows_Wjets/40))
+df_WJets = chunkReader(tmp)
+del tmp
 print "Reading time: ", (time.time() - start)
 
 df_signal["category"] = 1
