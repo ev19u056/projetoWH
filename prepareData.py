@@ -105,10 +105,10 @@ XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
 
 
-weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:].flatten()
-weightVal = data[["EventWeight"]].ix[Dev_len:,:].flatten()
-#weightDev = weightDev.flatten()
-#weightVal = weightVal.flatten()
+weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:]
+weightVal = data[["EventWeight"]].ix[Dev_len:,:]
+weightDev = weightDev.flatten()
+weightVal = weightVal.flatten()
 
 del data
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
