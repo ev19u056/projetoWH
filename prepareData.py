@@ -48,7 +48,7 @@ df_signal = chunkReader(tmp)
 df_signal[["EventWeight"]] = df_signal[["EventWeight"]]/fraction
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*fraction),,usecols=usecols)
+tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*fraction),usecols=usecols)
 df_stopWt = chunkReader(tmp)
 df_stopWt[["EventWeight"]] = df_stopWt[["EventWeight"]]/fraction
 
