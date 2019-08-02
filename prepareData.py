@@ -128,6 +128,7 @@ del Test
 
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal), ' weightVal: ', len(weightVal)
+print 'XTest: ', len(XTest), ' YTest: ', len(YTest), ' weightTest: ', len(weightTest)
 
 print "Fitting the scaler and scaling the input variables ..."
 scaler = StandardScaler().fit(XDev[scalingFeatures])
