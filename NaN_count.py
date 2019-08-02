@@ -14,6 +14,34 @@ nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
 
-fraction = 1
+fraction = 0.1
+start = time.time()
+print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*fraction))
-print(tmp[trainFeatures].isna().sum())
+nan_count = tmp[trainFeatures].isna().sum()
+del tmp
+
+
+print("Reading -> 'stopWt_PwPy8_ade.csv'")
+tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*fraction))
+nan_count = nan_count.append(tmp[trainFeatures].isna().sum())
+del tmp
+print(nan_count)
+
+'''
+print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
+tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_ttbar*fraction))
+del tmp
+
+print("Reading -> 'WlvZqq_Sh221_ade.csv'")
+tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WlvZqq*fraction))
+del tmp
+
+print("Reading -> 'WqqWlv_Sh221_ade.csv'")
+tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WqqWlv*fraction))
+del tmp
+
+print("Reading -> 'WJets_Sh221.csv'")
+del tmp
+'''
+print "Reading time: ", (time.time() - start)
