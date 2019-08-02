@@ -45,7 +45,7 @@ if __name__ == "__main__":
     if args.bk:
         from prepareDATA_2_background import *
     else:
-        from prepareDATA import *
+        from prepareData import *
 
 
     import matplotlib.pyplot as plt
