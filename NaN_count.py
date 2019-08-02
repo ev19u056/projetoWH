@@ -29,7 +29,7 @@ def missing_values_table(df):
 fraction = 0.1
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*fraction),usecols=trainFeatures)
+tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*fraction),usecols=trainFeatures,skipinitialspace=True)
 print tmp.keys()
 '''
 print(missing_values_table(tmp[trainFeatures]))
