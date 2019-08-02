@@ -39,7 +39,7 @@ def chunkReader(tmp):
     del tmp, chunk
     return result
 
-fraction = 0.5
+fraction = 0.1
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
