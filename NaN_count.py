@@ -29,33 +29,33 @@ def missing_values_table(df):
 fraction = 1
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*fraction),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*fraction),usecols=trainFeatures)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*fraction),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*fraction),usecols=trainFeatures)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = int((nrows_ttbar/10)*fraction),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = int((nrows_ttbar/10)*fraction),usecols=trainFeatures)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows = int(nrows_WlvZqq*fraction),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows = int(nrows_WlvZqq*fraction),usecols=trainFeatures)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows = int(nrows_WqqWlv*fraction),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows = int(nrows_WqqWlv*fraction),usecols=trainFeatures)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 
 print("Reading -> 'WJets_Sh221.csv'")
-tmp = pd.read_csv('data/WJets_Sh221.csv',nrows = int(fraction*(nrows_Wjets/40)),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/WJets_Sh221.csv',nrows = int(fraction*(nrows_Wjets/40)),usecols=trainFeatures)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 print "Reading time: ", (time.time() - start)

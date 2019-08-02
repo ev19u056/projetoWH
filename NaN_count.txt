@@ -1,0 +1,48 @@
+Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'
+Your selected dataframe has 54 columns.
+
+         Missing Values  % of Total Values
+FJ1M                  2                0.0
+mVFJ                  2                0.0
+FJ1Pt                 2                0.0
+FJ1Phi                2                0.0
+dPhiVFJ               2                0.0
+
+
+Reading -> 'stopWt_PwPy8_ade.csv'
+Your selected dataframe has 54 columns.
+Empty DataFrame
+Columns: [Missing Values, % of Total Values]
+Index: []
+
+
+Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'
+Your selected dataframe has 54 columns.
+         Missing Values  % of Total Values
+FJ1M                  1                0.0
+mVFJ                  1                0.0
+FJ1Pt                 1                0.0
+FJ1Phi                1                0.0
+dPhiVFJ               1                0.0
+
+
+Reading -> 'WlvZqq_Sh221_ade.csv'
+Your selected dataframe has 54 columns.
+Empty DataFrame
+Columns: [Missing Values, % of Total Values]
+Index: []
+
+
+Reading -> 'WqqWlv_Sh221_ade.csv'
+Your selected dataframe has 54 columns.
+Empty DataFrame
+Columns: [Missing Values, % of Total Values]
+Index: []
+
+
+Reading -> 'WJets_Sh221.csv'
+Your selected dataframe has 54 columns.
+Empty DataFrame
+Columns: [Missing Values, % of Total Values]
+Index: []
+Reading time:  86.4900691509

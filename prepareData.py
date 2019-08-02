@@ -20,7 +20,7 @@ np.random.seed(seed)
 #myFeatures = [var for var in df_sinal.columns if var not in ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavor', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'eventFlagMerged/l','eventFlagResolved/l']]
 otherFeatures = ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavor', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'eventFlagMerged/l','eventFlagResolved/l','BTagSF','ActualMu','LeptonSF', 'phiW', 'phiB1', 'phiB2', 'phiBB', 'phiJ3', 'phiL1']
 trainFeatures = ['nFats', 'nJets', 'nTags', 'nTaus', 'nMuons', 'nbJets', 'FJ1nTags', 'nFwdJets', 'nSigJets', 'nElectrons', 'mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW', 'FJ1M', 'dRBB', 'mBBJ', 'mVFJ', 'pTB1', 'pTB2', 'pTBB', 'pTJ3', 'ptL1', 'FJ1C2', 'FJ1D2', 'FJ1Pt', 'etaB1', 'etaB2', 'etaBB', 'etaJ3', 'etaL1', 'pTBBJ', 'FJ1Ang', 'FJ1Eta', 'FJ1Phi', 'FJ1T21', 'dEtaBB', 'dPhiBB', 'metSig', 'FJ1KtDR', 'dPhiVBB', 'dPhiVFJ', 'MV2c10B1', 'MV2c10B2', 'metSig_PU', 'mindPhilepB', 'metOverSqrtHT', 'metOverSqrtSumET']
-
+usecols = trainFeatures.append("EventWeight")
 scalingFeatures = ['FJ1nTags', 'mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW', 'FJ1M', 'dRBB', 'mBBJ', 'mVFJ', 'pTB1', 'pTB2', 'pTBB', 'pTJ3', 'ptL1', 'FJ1C2', 'FJ1D2', 'FJ1Pt', 'etaB1', 'etaB2', 'etaBB', 'etaJ3', 'etaL1', 'pTBBJ', 'FJ1Ang', 'FJ1Eta', 'FJ1Phi', 'FJ1T21', 'dEtaBB', 'dPhiBB', 'metSig', 'FJ1KtDR', 'dPhiVBB', 'dPhiVFJ', 'MV2c10B1', 'MV2c10B2', 'metSig_PU', 'mindPhilepB', 'metOverSqrtHT', 'metOverSqrtSumET']
 
 
@@ -39,36 +39,36 @@ def chunkReader(tmp):
     del tmp, chunk
     return result
 
-fraction = 0.1
+fraction = 0.01
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*fraction))
+tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*fraction),usecols=usecols)
 df_signal = chunkReader(tmp)
 df_signal[["EventWeight"]] = df_signal[["EventWeight"]]/fraction
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*fraction))
+tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*fraction),,usecols=usecols)
 df_stopWt = chunkReader(tmp)
 df_stopWt[["EventWeight"]] = df_stopWt[["EventWeight"]]/fraction
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_ttbar*fraction))
+tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_ttbar*fraction),usecols=usecols)
 df_ttbar = chunkReader(tmp)
 df_ttbar[["EventWeight"]] = df_ttbar[["EventWeight"]]/fraction
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WlvZqq*fraction))
+tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WlvZqq*fraction),usecols=usecols)
 df_WlvZqq = chunkReader(tmp)
 df_WlvZqq[["EventWeight"]] = df_WlvZqq[["EventWeight"]]/fraction
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WqqWlv*fraction))
+tmp = pd.read_csv('data/WqqWlv_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WqqWlv*fraction),usecols=usecols)
 df_WqqWlv = chunkReader(tmp)
 df_WqqWlv[["EventWeight"]] = df_WqqWlv[["EventWeight"]]/fraction
 
 print("Reading -> 'WJets_Sh221.csv'")
-tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(fraction*nrows_Wjets/40))
+tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(fraction*nrows_Wjets/40),usecols=usecols)
 df_WJets = chunkReader(tmp)
 del tmp
 #df_WJets[["EventWeight"]] = df_WJets[["EventWeight"]]*(fraction/40)
@@ -92,25 +92,40 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
             del tmp
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
+print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
+
+'''
 data = data.sample(frac=1,random_state=seed).reset_index(drop=True)
 
 Dev = 0.8
 Dev_len = int(len(data)*Dev)
 Val_len = len(data)-Dev_len
-#Test_len = int(Val_len*0.5)
 
 print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
+
 XDev = data[trainFeatures].ix[0:Dev_len-1,:]
 YDev = data[["category"]].ix[0:Dev_len-1,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
-
-weightDev = data[["EventWeight"]].ix[0:Dev_len-1,:]
-weightVal = data[["EventWeight"]].ix[Dev_len:,:]
-weightDev = np.ravel(weightDev.EventWeight)
-weightVal = np.ravel(weightVal.EventWeight)
-
+'''
+Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.6*len(data)), int(0.8*len(data))])
 del data
+
+XDev = Dev[trainFeatures]
+YDev = Dev[["category"]]
+weightDev = np.ravel(Dev.EventWeight)
+del Dev
+
+XVal = Val[trainFeatures]
+YVal = Val[["category"]]
+weightVal = np.ravel(Val.EventWeight)
+del Val
+
+XTest = Test[trainFeatures]
+YTest = Test[["category"]]
+weightTest = np.ravel(Test.EventWeight)
+del Test
+
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal), ' weightVal: ', len(weightVal)
 
