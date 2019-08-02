@@ -26,14 +26,14 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--areaUnderROC', action='store_true', help='Area under ROC plot')
     parser.add_argument('-w', '--weights', action='store_true', help='Plot neural network weights')
     parser.add_argument('-z', '--structure', action='store_true', help='Plot neural network structure')
-    parser.add_argument('-l', '--layers', type=int, help='Number of layers')
-    parser.add_argument('-n', '--neurons', type=int, help='Number of neurons per layer')
-    parser.add_argument('-x', '--gridSearch', action='store_true', help='File on grid search')
-    parser.add_argument('-s', '--singleNN', action='store_true', help='Whether this NN is stored in the Searches or SingleNN folder')
+#    parser.add_argument('-l', '--layers', type=int, help='Number of layers')
+#    parser.add_argument('-n', '--neurons', type=int, help='Number of neurons per layer')
+#    parser.add_argument('-x', '--gridSearch', action='store_true', help='File on grid search')
+#    parser.add_argument('-s', '--singleNN', action='store_true', help='Whether this NN is stored in the Searches or SingleNN folder')
     parser.add_argument('-u', '--runNum', type=int, help='Run number')
     parser.add_argument('-k', '--local', action='store_true', help='Local file')
     parser.add_argument('-d', '--preview', action='store_true', help='Preview plots')
-    parser.add_argument('-bk', '--bk', action='store_true', help='Whether or not you choose to load Zinv background samples or only W+jets and TTpow')
+#    parser.add_argument('-bk', '--bk', action='store_true', help='Whether or not you choose to load Zinv background samples or only W+jets and TTpow')
 
 #python plotNN.py -v -f Model_Ver_3 -b -c -o -p -r -s
 
@@ -41,57 +41,25 @@ if __name__ == "__main__":
 #    parser.add_argument('-p', '--dropoutRate', type=float, default=0, help='Dropout Rate')
 #    parser.add_argument('-dc', '--decay', type=float, default=0, help='Learning rate decay')
 
+    from prepareData import *
     args = parser.parse_args()
-    if args.bk:
-        from prepareDATA_2_background import *
-    else:
-        from prepareData import *
-
 
     import matplotlib.pyplot as plt
     from keras.models import model_from_json
     from commonFunctions import assure_path_exists
 
-    loss_path = "loss/"
-    acc_path = "accuracy/"
-
     if args.file != None:
         model_name = args.file
+        #lgbk = "/home/t3atlas/ev19u056/projetoWH/"
+        filepath = cfg.lgbk + "test/" + model_name
+        loss_path = filepath + "/loss/"
+        acc_path = filepath + "/accuracy/"
     else:
         print "Code missing"
-#        model_name = "L"+str(args.layers)+"_N"+str(args.neurons)+"_E"+str(args.epochs)+"_Bs"+str(args.batchSize)+"_Lr"+str(args.learningRate)+"_Dr"+str(args.dropoutRate)+"_De"+str(args.decay)+"_TP"+test_point+"_DT"+suffix
-
-    if args.singleNN:
-        # -f L2_N14_E500_Bs15000_Lr0.003_Dr0.0_De0_TP550_520_DT_skimmed -davs
-        filepath = cfg.lgbk + "test/" + model_name
-        #loss_path = ""
-        #acc_path = ""
-
-
-    elif args.gridSearch:
-        # -f E300_Bs30000_Lr0.01_De0 -davx -l 1 -n 19
-        filepath = cfg.lgbk + "Searches/"+ model_name
-        nLayers = args.layers
-        nNeurons = args.neurons
-        model_name = "L"+str(nLayers)+"_N"+str(nNeurons)+"_"+model_name
-        #model_name = model_name.replace("De","Dr")
-        #model_name = model_name.replace("Lr5_","Lr5.0_")
-        model_name = model_name+"_TP"+test_point+"_DT"+suffix
-    elif args.runNum != None:
-        filepath = cfg.lgbk + "Searches/run" + str(args.runNum)
-        model_name = "L"+str(args.layers)+"_N"+str(args.neurons)+"_"+test_point+"_run"+str(args.runNum)
-    elif args.local:
-        filepath = "/home/diogo/PhD/SingleNN/" + model_name
-
-
-
+        break
 
     os.chdir(filepath+"/")
-    if args.bk:
-        plots_path = filepath+"/plots_"+model_name+"_2bk/"
-    else:
-        plots_path = filepath+"/plots_"+model_name+"/"
-
+    plots_path = filepath+"/plots_"+model_name+"/"
     assure_path_exists(plots_path)
 
     if args.verbose:
@@ -109,23 +77,28 @@ if __name__ == "__main__":
 
     devPredict = model.predict(XDev)
     valPredict = model.predict(XVal)
+    testPredict = model.predict(XTest)
 
     if args.verbose:
         print("Getting scores")
 
     scoreDev = model.evaluate(XDev, YDev, sample_weight=weightDev, verbose = 0)
     scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
+    scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
 
     if args.verbose:
         print "Calculating parameters"
 
+    YDev["NN"] = devPredict
+    YVal["NN"] = valPredict
+    YTest["NN"] = testPredict
+    '''
     dataDev["NN"] = devPredict
     dataVal["NN"] = valPredict
-
-    sig_dataDev=dataDev[dataDev.category==1]
-    bkg_dataDev=dataDev[dataDev.category==0]
-    sig_dataVal=dataVal[dataVal.category==1]
-    bkg_dataVal=dataVal[dataVal.category==0]
+    '''
+    sig_YDev = YDev[YDev.category==1];     bkg_YDev = YDev[YDev.category==0]
+    sig_YVal = YVal[YVal.category==1];    bkg_YVal = YVal[YVal.category==0]
+    sig_YTest = YTest[YTest.category==1];    bkg_YTest = YTest[YTest.category==0]
 
     if args.allPlots:
         args.loss = True
@@ -142,9 +115,9 @@ if __name__ == "__main__":
         loss = pickle.load(open(loss_path+"loss_"+model_name+".pickle", "rb"))
         val_loss = pickle.load(open(loss_path+"val_loss_"+model_name+".pickle", "rb"))
         if args.verbose:
-            print "val_loss = " + str(val_loss[-1])
-            print "loss = " + str(loss[-1])
-            print "dloss = " + str(val_loss[-1]-loss[-1])
+            print "val_loss = " + str(val_loss[-1])          # ???
+            print "loss = " + str(loss[-1])                  # ???
+            print "dloss = " + str(val_loss[-1]-loss[-1])    # ???
 
         plt.plot(loss)
         plt.plot(val_loss)

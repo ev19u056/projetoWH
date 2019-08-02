@@ -48,8 +48,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    #n_layers = args.layers
-    #n_neurons = args.neurons
     n_epochs = args.epochs
     batch_size = args.batchSize
     learning_rate = args.learningRate
@@ -119,7 +117,7 @@ if __name__ == "__main__":
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
     history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True, **trainParams)
 
-    acc = history.history["acc"]
+    acc = history.history['acc']
     val_acc = history.history['val_acc']
     loss = history.history['loss']
     val_loss = history.history['val_loss']
@@ -149,26 +147,63 @@ if __name__ == "__main__":
     # Getting predictions
     if args.verbose:
         print("Getting predictions")
-
-    devPredict = model.predict(XDev) # nao se utiliza
-    valPredict = model.predict(XVal) # nao se utiliza
+    #devPredict = model.predict(XDev) # nao se utiliza
+    testPredict = model.predict(XTest) # generates output predictions based on the input you pass it
 
     # Getting scores
     if args.verbose:
         print("Getting scores")
 
-    scoreDev = model.evaluate(XDev, YDev,sample_weight=weightDev, verbose = 0) # nao se utiliza
-    scoreVal = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0) # nao se utiliza
-    print "scoreDev: ", scoreDev, "     scoreVal: ", scoreVal
+    scoreDev = model.evaluate(XDev, YDev,sample_weight=weightDev, verbose = 0) # computes the loss based on the input you pass it, along with any other metrics that you requested in the metrics param when you compiled your model
+    scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
+    scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
+    print "Dev_loss: ", scoreDev[0], "     Dev_acc: ", scoreDev[1]
+    print "Val_loss: ", scoreVal[0], "     Val_acc: ", scoreVal[1]
+    print "Test_loss: ", scoreTest[0], "     Dev_acc: ", scoreTest[1]
 
-    # evaluate the keras model
-    loss, accuracy = model.evaluate(XTest, YTest)
-    print('Accuracy: %.2f' % (accuracy*100))
-    print('Loss: %.2f' % (loss*100))
     # --- CAlculating FOM ---
-    #
-    #
-    #
+
+    if args.verbose:
+        print "Calculating FOM:"
+    YTest["NN"] = testPredict
+    print(YTest)
+    del testPredict
+    '''
+    tmpSig, tmpBkg = getYields(dataVal)
+    sigYield, sigYieldUnc = tmpSig
+    bkgYield, bkgYieldUnc = tmpBkg
+
+    sigDataVal = dataVal[dataVal.category==1]
+    bkgDataVal = dataVal[dataVal.category==0]
+
+    fomEvo = []
+    fomCut = []
+
+    for cut in np.arange(0.0, 0.9999999, 0.001):
+      sig, bkg = getYields(dataVal, cut=cut)
+      if sig[0] > 0 and bkg[0] > 0:
+        fom, fomUnc = FullFOM(sig, bkg)
+        fomEvo.append(fom)
+        fomCut.append(cut)
+
+    max_FOM=0
+
+    # Maximising FOM
+    if args.verbose:
+        print "Maximizing FOM"
+
+    for k in fomEvo:
+      if k>max_FOM:
+        max_FOM=k
+    if args.verbose:
+        print "Signal@Presel:", sigDataVal.weight.sum() * 35866 * 2
+        print "Background@Presel:", bkgDataVal.weight.sum() * 35866 * 2
+        print "Signal:", sigYield, "+-", sigYieldUnc
+        print "Background:", bkgYield, "+-", bkgYieldUnc
+
+        print "Maximized FOM:", max_FOM
+        print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
+    '''
     # --- CAlculating FOM ---
 
     # Creating a text file where all of the model's caracteristics are displayed
@@ -185,16 +220,16 @@ if __name__ == "__main__":
         plt.subplot(2,1,1)
         plotter(filepath+"accuracy/acc_"+name+".pickle","accuracy",name+"'s accuracy")
         plotter(filepath+"accuracy/val_acc_"+name+".pickle","Val accuracy",name+"'s Accuracy")
-        plt.legend(['train', 'test'], loc='upper left')
+        plt.legend(['train', 'val'], loc='upper left')
         #plt.savefig(filepath+"accuracy/Accuracy.pdf")
 
         plt.subplot(2,1,2)
         plotter(filepath+"loss/loss_"+name+".pickle","loss",name +"loss function")
         plotter(filepath+"loss/val_loss_"+name+".pickle","loss Validation",name+"'s Loss")
-        plt.legend(['train', 'test'], loc='upper left')
+        plt.legend(['train', 'val'], loc='upper left')
         #plt.savefig(filepath + "loss/Loss_Validation.pdf")
 
-        plt.savefig(filepath+name+"Accuracy_Loss_"+compileArgs['loss']+".pdf")
+        plt.savefig(filepath+name+"_Accuracy_Loss_"+compileArgs['loss']+".pdf")
         plt.close()
 
         if args.verbose:
