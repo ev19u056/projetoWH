@@ -23,7 +23,7 @@ del tmp
 
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_stopWt*fraction))
+tmp = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*fraction))
 nan_count = nan_count.append(tmp[trainFeatures].isna().sum())
 del tmp
 print(nan_count)
