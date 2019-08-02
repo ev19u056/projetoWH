@@ -40,7 +40,7 @@ del tmp
 
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = int(nrows_ttbar*fraction),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',nrows = int((nrows_ttbar/10)*fraction),usecols=trainFeatures,skipinitialspace=True)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 
@@ -55,7 +55,7 @@ print(missing_values_table(tmp[trainFeatures]))
 del tmp
 
 print("Reading -> 'WJets_Sh221.csv'")
-tmp = pd.read_csv('data/WJets_Sh221.csv',nrows = int(fraction*nrows_Wjets),usecols=trainFeatures,skipinitialspace=True)
+tmp = pd.read_csv('data/WJets_Sh221.csv',nrows = int(fraction*(nrows_Wjets/40)),usecols=trainFeatures,skipinitialspace=True)
 print(missing_values_table(tmp[trainFeatures]))
 del tmp
 print "Reading time: ", (time.time() - start)
