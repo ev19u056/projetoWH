@@ -39,7 +39,7 @@ def chunkReader(tmp):
     del tmp, chunk
     return result
 
-fraction = 1
+fraction = 0.5
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
@@ -88,7 +88,7 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
             data = tmp
             del tmp
         else:
-            data = data.append(tmp, ignore_index=True)
+            data.append(tmp, ignore_index=True)
             del tmp
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
