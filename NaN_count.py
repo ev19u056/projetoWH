@@ -16,4 +16,4 @@ nrows_WqqWlv = 334495
 
 fraction = 0.1
 tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*fraction))
-print(tmp.isna().sum())
+print(tmp[trainFeatures].isna().sum())
