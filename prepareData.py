@@ -21,7 +21,6 @@ np.random.seed(seed)
 otherFeatures = ['PUWeight','flavB1', 'flavB2', 'EventNumber', 'EventRegime', 'AverageMu', 'EventWeight', 'Sample', 'Description', 'EventFlavor', 'TriggerSF', 'ActualMuScaled', 'AverageMuScaled', 'eventFlagMerged/l','eventFlagResolved/l','BTagSF','ActualMu','LeptonSF', 'phiW', 'phiB1', 'phiB2', 'phiBB', 'phiJ3', 'phiL1']
 trainFeatures = ['nFats', 'nJets', 'nTags', 'nTaus', 'nMuons', 'nbJets', 'FJ1nTags', 'nFwdJets', 'nSigJets', 'nElectrons', 'mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW', 'FJ1M', 'dRBB', 'mBBJ', 'mVFJ', 'pTB1', 'pTB2', 'pTBB', 'pTJ3', 'ptL1', 'FJ1C2', 'FJ1D2', 'FJ1Pt', 'etaB1', 'etaB2', 'etaBB', 'etaJ3', 'etaL1', 'pTBBJ', 'FJ1Ang', 'FJ1Eta', 'FJ1Phi', 'FJ1T21', 'dEtaBB', 'dPhiBB', 'metSig', 'FJ1KtDR', 'dPhiVBB', 'dPhiVFJ', 'MV2c10B1', 'MV2c10B2', 'metSig_PU', 'mindPhilepB', 'metOverSqrtHT', 'metOverSqrtSumET']
 usecols = trainFeatures[:]; usecols.append("EventWeight")
-print " len(trainFeatures): ", len(trainFeatures), " len(usecols): ", len(usecols)
 scalingFeatures = ['FJ1nTags', 'mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW', 'FJ1M', 'dRBB', 'mBBJ', 'mVFJ', 'pTB1', 'pTB2', 'pTBB', 'pTJ3', 'ptL1', 'FJ1C2', 'FJ1D2', 'FJ1Pt', 'etaB1', 'etaB2', 'etaBB', 'etaJ3', 'etaL1', 'pTBBJ', 'FJ1Ang', 'FJ1Eta', 'FJ1Phi', 'FJ1T21', 'dEtaBB', 'dPhiBB', 'metSig', 'FJ1KtDR', 'dPhiVBB', 'dPhiVFJ', 'MV2c10B1', 'MV2c10B2', 'metSig_PU', 'mindPhilepB', 'metOverSqrtHT', 'metOverSqrtSumET']
 
 
@@ -40,7 +39,7 @@ def chunkReader(tmp):
     del tmp, chunk
     return result
 
-fraction = 0.01
+fraction = 1
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
@@ -54,9 +53,9 @@ df_stopWt = chunkReader(tmp)
 df_stopWt[["EventWeight"]] = df_stopWt[["EventWeight"]]/fraction
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int(nrows_ttbar*fraction),usecols=usecols)
+tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int((nrows_ttbar/10)*fraction),usecols=usecols)
 df_ttbar = chunkReader(tmp)
-df_ttbar[["EventWeight"]] = df_ttbar[["EventWeight"]]/fraction
+df_ttbar[["EventWeight"]] = df_ttbar[["EventWeight"]]/(fraction*10)
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
 tmp = pd.read_csv('data/WlvZqq_Sh221_ade.csv',chunksize=chunksize,nrows = int(nrows_WlvZqq*fraction),usecols=usecols)
@@ -69,7 +68,7 @@ df_WqqWlv = chunkReader(tmp)
 df_WqqWlv[["EventWeight"]] = df_WqqWlv[["EventWeight"]]/fraction
 
 print("Reading -> 'WJets_Sh221.csv'")
-tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(fraction*nrows_Wjets/40),usecols=usecols)
+tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(nrows_Wjets/40)*(fraction),usecols=usecols)
 df_WJets = chunkReader(tmp)
 del tmp
 #df_WJets[["EventWeight"]] = df_WJets[["EventWeight"]]*(fraction/40)
