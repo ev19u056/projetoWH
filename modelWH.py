@@ -158,11 +158,11 @@ if __name__ == "__main__":
         print("Getting scores")
 
     scoreDev = model.evaluate(XDev, YDev,sample_weight=weightDev, verbose = 0) # nao se utiliza
-    scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0) # nao se utiliza
+    scoreVal = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0) # nao se utiliza
     print "scoreDev: ", scoreDev, "     scoreVal: ", scoreVal
 
     # evaluate the keras model
-    loss, accuracy = model.evaluate(XVal, YVal)
+    loss, accuracy = model.evaluate(XTest, YTest)
     print('Accuracy: %.2f' % (accuracy*100))
     print('Loss: %.2f' % (loss*100))
     # --- CAlculating FOM ---
