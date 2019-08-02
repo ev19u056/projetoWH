@@ -30,7 +30,7 @@ start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',nrows = int(nrows_signal*fraction))
 #nan_count = tmp[trainFeatures].isna().sum(axis = 0)
-missing_values_table(tmp)
+print(missing_values_table(tmp))
 del tmp
 
 '''
