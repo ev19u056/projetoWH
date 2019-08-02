@@ -68,7 +68,7 @@ df_WqqWlv = chunkReader(tmp)
 df_WqqWlv[["EventWeight"]] = df_WqqWlv[["EventWeight"]]/fraction
 
 print("Reading -> 'WJets_Sh221.csv'")
-tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int(nrows_Wjets/40)*(fraction),usecols=usecols)
+tmp = pd.read_csv('data/WJets_Sh221.csv',chunksize=chunksize,nrows = int((nrows_Wjets/40)*(fraction)),usecols=usecols)
 df_WJets = chunkReader(tmp)
 del tmp
 #df_WJets[["EventWeight"]] = df_WJets[["EventWeight"]]*(fraction/40)
