@@ -72,7 +72,7 @@ if __name__ == "__main__":
     model.compile(loss = 'binary_crossentropy', optimizer = 'adam')
 
     if args.verbose:
-        print("Getting predictions")
+        print("Getting predictions ...")
 
     devPredict = model.predict(XDev)
     valPredict = model.predict(XVal)
@@ -111,9 +111,9 @@ if __name__ == "__main__":
         loss = pickle.load(open(loss_path+"loss_"+model_name+".pickle", "rb"))
         val_loss = pickle.load(open(loss_path+"val_loss_"+model_name+".pickle", "rb"))
         if args.verbose:
-            print "val_loss = ", str(val_loss[-1])          # ???
-            print "loss = ", str(loss[-1])                  # ???
-            print "dloss = ", str(val_loss[-1]-loss[-1])    # ???
+            print "val_loss = ", str(val_loss[-1])
+            print "loss = ", str(loss[-1])
+            print "dloss = ", str(val_loss[-1]-loss[-1])
 
         plt.plot(loss)
         plt.plot(val_loss)
@@ -150,7 +150,6 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
-    quit()
     if args.overtrainingCheck:
         from scipy.stats import ks_2samp
         from sklearn.metrics import cohen_kappa_score
@@ -164,10 +163,10 @@ if __name__ == "__main__":
             print "KS test p-value:", km_value[1]
 
         #plt.yscale('log')
-        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["weight"])
-        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["weight"])
-        plt.hist(sig_dataVal["NN"], 50, color='blue', alpha=1, normed=1, weights=sig_dataVal["weight"], histtype="step")
-        plt.hist(bkg_dataVal["NN"], 50, color='red', alpha=1, normed=1, weights=bkg_dataVal["weight"], histtype="step")
+        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"])
+        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
+        plt.hist(sig_dataVal["NN"], 50, color='blue', alpha=1, normed=1, weights=sig_dataVal["EventWeight"], histtype="step")
+        plt.hist(bkg_dataVal["NN"], 50, color='red', alpha=1, normed=1, weights=bkg_dataVal["EventWeight"], histtype="step")
         plt.xlabel('NN output')
         plt.suptitle("MVA overtraining check for classifier: NN", fontsize=13, fontweight='bold')
         plt.title("Cohen's kappa: {0}\nKolmogorov Smirnov test: {1}".format(cohen_kappa, km_value[1]), fontsize=10)
@@ -177,6 +176,7 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
+    quit()
     if args.prediction:
         both_dataDev=bkg_dataDev.append(sig_dataDev)
         plt.figure(figsize=(7,6))
