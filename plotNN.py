@@ -319,7 +319,6 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
-    quit()
     # PLOTTING the ROC function
     if args.areaUnderROC:
         from sklearn.metrics import roc_auc_score, roc_curve
@@ -343,6 +342,7 @@ if __name__ == "__main__":
         if args.preview:
             plt.show()
         plt.close()
+    quit()
 
     '''        #PLOTTING ROCK ZOOMED
         plt.plot(fprDev, tprDev, '--')
