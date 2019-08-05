@@ -55,8 +55,8 @@ if __name__ == "__main__":
         loss_path = filepath + "/loss/"
         acc_path = filepath + "/accuracy/"
     else:
-        print "Code missing"
-        break
+        print "Missing file name"
+        quit()
 
     os.chdir(filepath+"/")
     plots_path = filepath+"/plots_"+model_name+"/"
