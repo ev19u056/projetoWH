@@ -204,7 +204,7 @@ if __name__ == "__main__":
         print "Maximized FOM:", max_FOM
 
         # To prevent program from crashing if no one fomEvo > 0 was determined
-        if max_FOM == 0.0:
+        if max_FOM != 0.0:
             print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
     # --- CAlculating FOM --- #
 
