@@ -194,8 +194,8 @@ if __name__ == "__main__":
       if k>max_FOM:
           max_FOM=k
     if args.verbose:
-        print "Signal@Presel:", sigDataTest.weight.sum()# * 35866 * 2
-        print "Background@Presel:", bkgDataTest.weight.sum()# * 35866 * 2
+        print "Signal@Presel:", sigDataTest.EventWeight.sum()# * 35866 * 2
+        print "Background@Presel:", bkgDataTest.EventWeight.sum()# * 35866 * 2
         print "Signal:", sigYield, "+-", sigYieldUnc
         print "Background:", bkgYield, "+-", bkgYieldUnc
 
