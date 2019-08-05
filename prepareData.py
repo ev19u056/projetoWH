@@ -12,7 +12,6 @@ from sklearn import decomposition
 import pandas as pd
 import localConfig as cfg
 
-#preselection =
 # fix random seed for reproducibility
 seed = 7
 np.random.seed(seed)
@@ -134,3 +133,10 @@ XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
 XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 #scalerfile = 'scaler_'+train_DM+'.sav'
 #joblib.dump(scaler, scalerfile)
+
+# Linear dimensionality reduction using "Singular Value Decomposition" of the data to project it to a lower dimensional space.
+# The input data is centered but not scaled for each feature before applying the SVD.
+pca = decomposition.PCA(n_components=len(trainFeatures)).fit(XDev)
+XDev = pca.transform(XDev)
+XVal = pca.transform(XVal)
+XTest = pca.ransform(XTest)
