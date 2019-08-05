@@ -25,7 +25,7 @@ scalingFeatures = ['mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW'
 
 nrows_signal = 991141
 nrows_stopWt = 277816
-nrows_ttbar = 4168037
+nrows_ttbar = 4168037.
 nrows_Wjets = 16650877
 nrows_WlvZqq = 188395
 nrows_WqqWlv = 334495
