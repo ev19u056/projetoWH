@@ -5,7 +5,6 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import keras
 import pandas
-import root_numpy
 import numpy as np
 import localConfig as cfg
 
