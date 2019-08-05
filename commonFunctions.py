@@ -22,7 +22,7 @@ def getYields(dataTest, cut=0.5):#, luminosity=35866, splitFactor=2):
     sigYield = selectedSig.EventWeight.sum()
     sigYieldUnc = np.sqrt(np.sum(np.square(selectedSig.EventWeight))) # Signal Yield Uncertainty
     bkgYield = selectedBkg.EventWeight.sum()
-    bkgYieldUnc = np.sqrt(np.sum(np.square(selectedBkg.weight))) # Background Yield Uncertainty
+    bkgYieldUnc = np.sqrt(np.sum(np.square(selectedBkg.EventWeight))) # Background Yield Uncertainty
 
     '''
     sigYield = sigYield * luminosity * splitFactor          #The factor 2 comes from the splitting
