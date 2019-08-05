@@ -111,6 +111,8 @@ YVal = data[["category"]].ix[Dev_len:,:]
 Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
 del data
 
+print(trainFeatures)
+quit()
 XDev = Dev[trainFeatures]
 YDev = Dev[["category"]]
 weightDev = np.ravel(Dev.EventWeight)
