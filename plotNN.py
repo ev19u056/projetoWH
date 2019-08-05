@@ -186,8 +186,8 @@ if __name__ == "__main__":
         plt.title("Number of Events")
         #plt.yscale('log', nonposy='clip')
         plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" )
-        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', weights=bkg_dataDev["weight"])
-        plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", weights=both_dataDev["weight"])
+        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', weights=bkg_dataDev["EventWeight"])
+        plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", weights=both_dataDev["EventWeight"])
         plt.savefig(plots_path+'pred_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
             plt.show()
