@@ -91,10 +91,11 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
             data.append(tmp, ignore_index=True)
             del tmp
 
+print(df_ttbar.category)
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
 print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
 
-print(data.category)
+
 '''
 data = data.sample(frac=1,random_state=seed).reset_index(drop=True)
 
