@@ -48,15 +48,15 @@ print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
 tmp = pd.read_csv('data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*fraction),usecols=usecols)
 df_signal = chunkReader(tmp)
 df_signal[["EventWeight"]] = df_signal[["EventWeight"]]/fraction
-print(df_signal)
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
 df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*fraction),usecols=usecols)
 df_stopWt[["EventWeight"]] = df_stopWt[["EventWeight"]]/fraction
 
+print(int((nrows_ttbar*ttbar_fraction)*fraction))
+
 # print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
 # tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int((nrows_ttbar*ttbar_fraction)*fraction),usecols=usecols)
-# display(tmp)
 # df_ttbar = chunkReader(tmp)
 
 #print(df_stopWt.EventWeight)
