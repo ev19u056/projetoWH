@@ -58,6 +58,7 @@ tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows
 df_ttbar = chunkReader(tmp)
 #print(df_stopWt.EventWeight)
 print(df_ttbar)
+quit()
 #df_ttbar[["EventWeight"]] = df_ttbar[["EventWeight"]]/(fraction*0.1)
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
