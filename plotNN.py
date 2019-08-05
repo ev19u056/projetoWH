@@ -342,7 +342,6 @@ if __name__ == "__main__":
         if args.preview:
             plt.show()
         plt.close()
-    quit()
 
     '''        #PLOTTING ROCK ZOOMED
         plt.plot(fprDev, tprDev, '--')
