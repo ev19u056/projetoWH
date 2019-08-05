@@ -97,12 +97,12 @@ del data
 XDev = dataDev[trainFeatures]
 YDev = dataDev[["category"]]
 weightDev = np.ravel(dataDev.EventWeight)
-del dataDev
+#del dataDev
 
 XVal = dataVal[trainFeatures]
 YVal = dataVal[["category"]]
 weightVal = np.ravel(dataVal.EventWeight)
-del dataVal
+#del dataVal
 
 XTest = dataTest[trainFeatures]
 YTest = dataTest[["category"]]

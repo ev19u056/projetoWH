@@ -55,7 +55,7 @@ if __name__ == "__main__":
         loss_path = filepath + "/loss/"
         acc_path = filepath + "/accuracy/"
     else:
-        print "Missing file name"
+        print "ERROR: Missing filename"
         quit()
 
     os.chdir(filepath+"/")
@@ -80,25 +80,22 @@ if __name__ == "__main__":
     testPredict = model.predict(XTest)
 
     if args.verbose:
-        print("Getting scores")
+        print("Getting scores ...")
 
     scoreDev = model.evaluate(XDev, YDev, sample_weight=weightDev, verbose = 0)
     scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
     scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
 
     if args.verbose:
-        print "Calculating parameters"
+        print "Calculating parameters ..."
 
-    YDev["NN"] = devPredict
-    YVal["NN"] = valPredict
-    YTest["NN"] = testPredict
-    '''
     dataDev["NN"] = devPredict
     dataVal["NN"] = valPredict
-    '''
-    sig_YDev = YDev[YDev.category==1];     bkg_YDev = YDev[YDev.category==0]
-    sig_YVal = YVal[YVal.category==1];    bkg_YVal = YVal[YVal.category==0]
-    sig_YTest = YTest[YTest.category==1];    bkg_YTest = YTest[YTest.category==0]
+    dataTest["NN"] = testPredict
+
+    sig_dataDev = dataDev[dataDev.category==1];     bkg_dataDev = dataDev[dataDev.category==0]
+    sig_dataVal = dataVal[dataVal.category==1];    bkg_dataVal = dataVal[dataVal.category==0]
+    sig_dataTest = dataTest[dataTest.category==1];    bkg_dataTest = dataTest[YTest.category==0]
 
     if args.allPlots:
         args.loss = True
@@ -121,14 +118,14 @@ if __name__ == "__main__":
 
         plt.plot(loss)
         plt.plot(val_loss)
-        plt.ylimit(0.0000012 , 0.0000006)
-	plt.grid()
+        #plt.ylimit(0.0000012 , 0.0000006)
+	    plt.grid()
         plt.title('Model loss')
         plt.ylabel('Loss')
         #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
         plt.xlabel('Epoch')
         plt.legend(['train'], loc='best')
-        plt.legend(['train', 'test'], loc='best')
+        plt.legend(['train', 'val'], loc='best')
         plt.savefig(plots_path+'loss_'+model_name+'.pdf')
         if args.preview:
             plt.show()
@@ -141,19 +138,19 @@ if __name__ == "__main__":
             print "val_acc = " + str(val_acc[-1])
         plt.plot(acc)
         plt.plot(val_acc)
-        plt.ylimit(0.7 ,1)
+        #plt.ylimit(0.7 ,1)
         plt.title('Model accuracy')
         plt.ylabel('Accuracy')
         #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
         plt.xlabel('Epoch')
         plt.legend(['train'], loc='best')
-        plt.legend(['train', 'test'], loc='best')
+        plt.legend(['train', 'val'], loc='best')
         plt.savefig(plots_path+'acc_'+model_name+'.pdf')
         if args.preview:
             plt.show()
         plt.close()
 
-
+    quit()
     if args.overtrainingCheck:
         from scipy.stats import ks_2samp
         from sklearn.metrics import cohen_kappa_score
