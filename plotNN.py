@@ -250,10 +250,10 @@ if __name__ == "__main__":
             selectedVal = dataVal[dataVal.NN>fomCut[fomEvo.index(max_FOM)]]
             selectedSig = selectedVal[selectedVal.category == 1]
             selectedBkg = selectedVal[selectedVal.category == 0]
-            sigYield = selectedSig.weight.sum()
-            bkgYield = selectedBkg.weight.sum()
-            sigYield = sigYield * luminosity * 2          #The factor 2 comes from the splitting
-            bkgYield = bkgYield * luminosity * 2
+            sigYield = selectedSig.EventWeight.sum()
+            bkgYield = selectedBkg.EventWeight.sum()
+            sigYield = sigYield #* luminosity * 2          #The factor 2 comes from the splitting
+            bkgYield = bkgYield #* luminosity * 2
 
             print "Selected events left after cut @", fomCut[fomEvo.index(max_FOM)]
             print "   Number of selected Signal Events:", len(selectedSig)
