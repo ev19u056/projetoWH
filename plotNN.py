@@ -287,7 +287,7 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
-        quit()
+
         #SAME BUT ZOOMED IN , NO LOG yscale
         plt.figure(figsize=(7,6))
         plt.subplots_adjust(hspace=0.5)
@@ -319,6 +319,7 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
+    quit()
     # PLOTTING the ROC function
     if args.areaUnderROC:
         from sklearn.metrics import roc_auc_score, roc_curve
