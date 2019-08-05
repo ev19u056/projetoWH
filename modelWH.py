@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
     # Return evenly spaced values within a given interval.
     for cut in np.arange(0.0, 0.9999999, 0.001):
-      sig, bkg = getYields(dataVal, cut=cut)
+      sig, bkg = getYields(dataTest, cut=cut)
       if sig[0] > 0 and bkg[0] > 0:
         fom, fomUnc = FullFOM(sig, bkg)
         fomEvo.append(fom)
