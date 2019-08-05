@@ -205,11 +205,11 @@ if __name__ == "__main__":
         bkgEff = []
         sigEff = []
 
-        sig_Init = dataVal[dataVal.category == 1].weight.sum()# * 35866 * 2
-        bkg_Init = dataVal[dataVal.category == 0].weight.sum()# * 35866 * 2
+        sig_Init = dataVal[dataVal.category == 1].EventWeight.sum()# * 35866 * 2
+        bkg_Init = dataVal[dataVal.category == 0].EventWeight.sum()# * 35866 * 2
 
         for cut in np.arange(0.0, 0.9999, 0.001):
-            sig, bkg = getYields(dataVal, cut=cut, luminosity=luminosity)
+            sig, bkg = getYields(dataVal, cut=cut)#, luminosity=luminosity)
             if sig[0] > 0 and bkg[0] > 0:
                 fom, fomUnc = FullFOM(sig, bkg)
                 fomEvo.append(fom)
