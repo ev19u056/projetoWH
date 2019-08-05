@@ -53,8 +53,6 @@ print("Reading -> 'stopWt_PwPy8_ade.csv'")
 df_stopWt = pd.read_csv('data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*fraction),usecols=usecols)
 df_stopWt[["EventWeight"]] = df_stopWt[["EventWeight"]]/fraction
 
-print((nrows_ttbar*ttbar_fraction)*fraction)
-
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
 tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int((nrows_ttbar*ttbar_fraction)*fraction),usecols=usecols)
 df_ttbar = chunkReader(tmp)
@@ -108,8 +106,7 @@ YDev = data[["category"]].ix[0:Dev_len-1,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
 '''
-#Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
-Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed), [int(0.8*len(data)), int(0.9*len(data))])
+Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
 del data
 
 XDev = Dev[trainFeatures]
@@ -127,14 +124,13 @@ YTest = Test[["category"]]
 weightTest = np.ravel(Test.EventWeight)
 del Test
 
-print(YTest.category)
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal), ' weightVal: ', len(weightVal)
 print 'XTest: ', len(XTest), ' YTest: ', len(YTest), ' weightTest: ', len(weightTest)
 
-# print "Fitting the scaler and scaling the input variables ..."
-# scaler = StandardScaler().fit(XDev[scalingFeatures])
-# XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
-# XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
+print "Fitting the scaler and scaling the input variables ..."
+scaler = StandardScaler().fit(XDev[scalingFeatures])
+XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
+XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 #scalerfile = 'scaler_'+train_DM+'.sav'
 #joblib.dump(scaler, scalerfile)
