@@ -115,10 +115,11 @@ if __name__ == "__main__":
             print "val_loss = ", str(val_loss[-1])          # ???
             print "loss = ", str(loss[-1])                  # ???
             print "dloss = ", str(val_loss[-1]-loss[-1])    # ???
+
         plt.plot(loss)
         plt.plot(val_loss)
-        plt.ylimit(0.0000012 , 0.0000006)
-    plt.grid()
+        #plt.ylimit(0.0000012 , 0.0000006)
+        #plt.grid()
         plt.title('Model loss')
         plt.ylabel('Loss')
         #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
@@ -129,6 +130,7 @@ if __name__ == "__main__":
         if args.preview:
             plt.show()
         plt.close()
+
     if args.accuracy:
         import pickle
         acc = pickle.load(open(acc_path+"acc_"+model_name+".pickle", "rb"))
