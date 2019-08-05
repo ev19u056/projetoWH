@@ -112,9 +112,9 @@ if __name__ == "__main__":
         loss = pickle.load(open(loss_path+"loss_"+model_name+".pickle", "rb"))
         val_loss = pickle.load(open(loss_path+"val_loss_"+model_name+".pickle", "rb"))
         if args.verbose:
-            print "val_loss = " + str(val_loss[-1])          # ???
-            print "loss = " + str(loss[-1])                  # ???
-            print "dloss = " + str(val_loss[-1]-loss[-1])    # ???
+            print "val_loss = ", str(val_loss[-1])          # ???
+            print "loss = ", str(loss[-1])                  # ???
+            print "dloss = ", str(val_loss[-1]-loss[-1])    # ???
 
         plt.plot(loss)
         plt.plot(val_loss)
