@@ -115,8 +115,8 @@ if __name__ == "__main__":
 
     # Fitting the Model -> TRAINING
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
-    #history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True, **trainParams)
-    history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),shuffle=True, **trainParams)
+    history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True, **trainParams)
+    #history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),shuffle=True, **trainParams)
 
     acc = history.history['acc']
     val_acc = history.history['val_acc']
@@ -162,13 +162,15 @@ if __name__ == "__main__":
     print "Val_loss: ", scoreVal[0], "     Val_acc: ", scoreVal[1]
     print "Test_loss: ", scoreTest[0], "     Dev_acc: ", scoreTest[1]
 
-    # --- CAlculating FOM ---
+    # --- CAlculating FOM --- #
 
     if args.verbose:
         print "Calculating FOM:"
     YTest["NN"] = testPredict
     print(YTest)
     del testPredict
+
+    # --- CAlculating FOM --- #
     '''
     tmpSig, tmpBkg = getYields(dataVal)
     sigYield, sigYieldUnc = tmpSig
