@@ -9,7 +9,7 @@ import numpy as np
 #from keras.layers import Dense, Dropout, AlphaDropout
 #from keras.optimizers import Adam, Nadam
 #from keras.regularizers import l1,l2
-#from math import log
+from math import log
 
 def getYields(dataTest, cut=0.5):#, luminosity=35866, splitFactor=2):
     #defines the selected test data
