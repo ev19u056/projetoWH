@@ -150,6 +150,8 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
+    # --- Over Training Check --- #
+    # Add sig_dataTest, bkg_dataTest
     if args.overtrainingCheck:
         from scipy.stats import ks_2samp
         from sklearn.metrics import cohen_kappa_score
@@ -163,10 +165,10 @@ if __name__ == "__main__":
             print "KS test p-value:", km_value[1]
 
         #plt.yscale('log')
-        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"])
-        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
-        plt.hist(sig_dataVal["NN"], 50, color='blue', alpha=1, normed=1, weights=sig_dataVal["EventWeight"], histtype="step")
-        plt.hist(bkg_dataVal["NN"], 50, color='red', alpha=1, normed=1, weights=bkg_dataVal["EventWeight"], histtype="step")
+        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1)#, weights=sig_dataDev["EventWeight"])
+        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1)#, weights=bkg_dataDev["EventWeight"])
+        plt.hist(sig_dataVal["NN"], 50, color='blue', alpha=1, normed=1, histtype="step")#, weights=sig_dataVal["EventWeight"])
+        plt.hist(bkg_dataVal["NN"], 50, color='red', alpha=1, normed=1, histtype="step")#,weights=bkg_dataVal["EventWeight"])
         plt.xlabel('NN output')
         plt.suptitle("MVA overtraining check for classifier: NN", fontsize=13, fontweight='bold')
         plt.title("Cohen's kappa: {0}\nKolmogorov Smirnov test: {1}".format(cohen_kappa, km_value[1]), fontsize=10)
