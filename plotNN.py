@@ -238,7 +238,7 @@ if __name__ == "__main__":
 
         if args.verbose:
             print "Maximized FOM:", max_FOM
-            if max_FOM != 0.0
+            if max_FOM != 0.0:
                 print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
             else:
                 print "Unexpected Value: max_FOM == 0.0"
