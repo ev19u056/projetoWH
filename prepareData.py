@@ -40,7 +40,7 @@ def chunkReader(tmp):
     #del tmp, chunk
     return result
 
-fraction = 0.05
+fraction = 0.1
 chunksize = 1000
 start = time.time()
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
@@ -139,4 +139,4 @@ XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 pca = decomposition.PCA(n_components=len(trainFeatures)).fit(XDev)
 XDev = pca.transform(XDev)
 XVal = pca.transform(XVal)
-XTest = pca.ransform(XTest)
+XTest = pca.transform(XTest)
