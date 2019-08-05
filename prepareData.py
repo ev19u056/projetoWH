@@ -85,7 +85,7 @@ df_WJets["category"] = 0
 data = None
 for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
-            data = pandas.DataFrame(tmp)
+            data = pd.DataFrame(tmp)
             print(data.category)
             del tmp
         else:
