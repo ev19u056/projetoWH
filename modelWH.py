@@ -163,25 +163,21 @@ if __name__ == "__main__":
     print "Test_loss: ", scoreTest[0], "     Dev_acc: ", scoreTest[1]
 
     # --- CAlculating FOM --- #
-
     if args.verbose:
-        print "Calculating FOM:"
-    YTest["NN"] = testPredict
-    print(YTest)
-    del testPredict
+        print "Calculating FOM..."
+    dataTest["NN"] = testPredict
 
-    # --- CAlculating FOM --- #
-    '''
-    tmpSig, tmpBkg = getYields(dataVal)
+    tmpSig, tmpBkg = getYields(dataTest)
     sigYield, sigYieldUnc = tmpSig
     bkgYield, bkgYieldUnc = tmpBkg
 
-    sigDataVal = dataVal[dataVal.category==1]
-    bkgDataVal = dataVal[dataVal.category==0]
+    sigDataTest = dataTest[dataTest.category==1]
+    bkgDataTest = dataTest[dataTest.category==0]
 
     fomEvo = []
     fomCut = []
 
+    # Return evenly spaced values within a given interval.
     for cut in np.arange(0.0, 0.9999999, 0.001):
       sig, bkg = getYields(dataVal, cut=cut)
       if sig[0] > 0 and bkg[0] > 0:
@@ -190,24 +186,22 @@ if __name__ == "__main__":
         fomCut.append(cut)
 
     max_FOM=0
-
     # Maximising FOM
     if args.verbose:
-        print "Maximizing FOM"
+        print "Maximizing FOM..."
 
     for k in fomEvo:
       if k>max_FOM:
-        max_FOM=k
+          max_FOM=k
     if args.verbose:
-        print "Signal@Presel:", sigDataVal.weight.sum() * 35866 * 2
-        print "Background@Presel:", bkgDataVal.weight.sum() * 35866 * 2
+        print "Signal@Presel:", sigDataTest.weight.sum()# * 35866 * 2
+        print "Background@Presel:", bkgDataTest.weight.sum()# * 35866 * 2
         print "Signal:", sigYield, "+-", sigYieldUnc
         print "Background:", bkgYield, "+-", bkgYieldUnc
 
         print "Maximized FOM:", max_FOM
         print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
-    '''
-    # --- CAlculating FOM ---
+    # --- CAlculating FOM --- #
 
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
@@ -239,31 +233,3 @@ if __name__ == "__main__":
             print("Accuraccy and loss plotted at {}".format(filepath))
             print ("Model name: "+name)
         sys.exit("Done!")
-    '''
-    #Getting predictions
-    if args.verbose:
-        print("Getting predictions")
-
-    # predict(x, batch_size=None, verbose=0, steps=None, callbacks=None)
-    # Generates output predictions for the input samples. Computation is done in batches.
-    devPredict = model.predict(XDev)
-    valPredict = model.predict(XVal)
-
-    #Getting scores
-    if args.verbose:
-        print("Getting scores")
-
-    # evaluate(x=None, y=None, batch_size=None, verbose=1, sample_weight=None, steps=None, callbacks=None)
-    # Returns the loss value & metrics values for the model in test mode. Computation is done in batches.
-    scoreDev = model.evaluate(XDev, YDev, sample_weight=weightDev, verbose = 0)
-    scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
-
-    # CAlculating FOM
-    if args.verbose:
-        print "Calculating FOM:"
-    dataVal["NN"] = valPredict
-
-    tmpSig, tmpBkg = getYields(dataVal)
-    sigYield, sigYieldUnc = tmpSig
-    bkgYield, bkgYieldUnc = tmpBkg
-    '''

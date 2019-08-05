@@ -1,4 +1,4 @@
-'''
+selectedTest'''
 Functions used in different files are gathered here to avoid redundance.
 '''
 
@@ -10,6 +10,36 @@ import numpy as np
 #from keras.optimizers import Adam, Nadam
 #from keras.regularizers import l1,l2
 #from math import log
+
+def getYields(dataTest, cut=0.5):#, luminosity=35866, splitFactor=2):
+    #defines the selected test data
+    selectedTest = dataTest[dataTest.NN>cut]
+
+    #separates the true positives from false negatives
+    selectedSig = selectedTest[selectedTest.category == 1]
+    selectedBkg = selectedTest[selectedTest.category == 0]
+
+    sigYield = selectedSig.EventWeight.sum()
+    sigYieldUnc = np.sqrt(np.sum(np.square(selectedSig.EventWeight))) # Signal Yield Uncertainty
+    bkgYield = selectedBkg.EventWeight.sum()
+    bkgYieldUnc = np.sqrt(np.sum(np.square(selectedBkg.weight))) # Background Yield Uncertainty
+
+    '''
+    sigYield = sigYield * luminosity * splitFactor          #The factor 2 comes from the splitting
+    sigYieldUnc = sigYieldUnc * luminosity * splitFactor
+    bkgYield = bkgYield * luminosity * splitFactor
+    bkgYieldUnc = bkgYieldUnc * luminosity * splitFactor
+    '''
+    return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
+
+def FullFOM(sIn, bIn, fValue=0.2):
+    s, sErr = sIn
+    b, bErr = bIn
+    fomErr = 0.0 # Add the computation of the uncertainty later
+    fomA = 2*(s+b)*log(((s+b)*(b + (fValue*b)**2))/(b**2 + (s + b) * (fValue*b)**2))
+    fomB = log(1 + (s*b*b*fValue*fValue)/(b*(b+(fValue*b)**2)))/(fValue**2)
+    fom = (fomA - fomB)**0.5
+    return (fom, fomErr)
 
 def assure_path_exists(path):
     dir = os.path.dirname(path)

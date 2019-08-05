@@ -91,37 +91,22 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
 print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
 
-'''
-data = data.sample(frac=1,random_state=seed).reset_index(drop=True)
-
-Dev = 0.8
-Dev_len = int(len(data)*Dev)
-Val_len = len(data)-Dev_len
-
-print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
-
-XDev = data[trainFeatures].ix[0:Dev_len-1,:]
-YDev = data[["category"]].ix[0:Dev_len-1,:]
-XVal = data[trainFeatures].ix[Dev_len:,:]
-YVal = data[["category"]].ix[Dev_len:,:]
-'''
-Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
+dataDev, dataVal, dataTest = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
 del data
 
-XDev = Dev[trainFeatures]
-YDev = Dev[["category"]]
-weightDev = np.ravel(Dev.EventWeight)
-del Dev
+XDev = dataDev[trainFeatures]
+YDev = dataDev[["category"]]
+weightDev = np.ravel(dataDev.EventWeight)
+del dataDev
 
-XVal = Val[trainFeatures]
-YVal = Val[["category"]]
-weightVal = np.ravel(Val.EventWeight)
-del Val
+XVal = dataVal[trainFeatures]
+YVal = dataVal[["category"]]
+weightVal = np.ravel(dataVal.EventWeight)
+del dataVal
 
-XTest = Test[trainFeatures]
-YTest = Test[["category"]]
-weightTest = np.ravel(Test.EventWeight)
-del Test
+XTest = dataTest[trainFeatures]
+YTest = dataTest[["category"]]
+weightTest = np.ravel(dataTest.EventWeight)
 
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal), ' weightVal: ', len(weightVal)
