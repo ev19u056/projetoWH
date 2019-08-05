@@ -82,18 +82,18 @@ df_WlvZqq["category"] = 0
 df_WqqWlv["category"] = 0
 df_WJets["category"] = 0
 
-print(df_ttbar.category)
-
 data = None
 for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
             data = tmp
+            print(data.category)
             del tmp
         else:
-            data.append(tmp, ignore_index=True)
+            #data.append(tmp, ignore_index=True)
+            data.append(tmp)
+            print(data.category)
             del tmp
 
-print(df_ttbar.category)
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
 print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
 
