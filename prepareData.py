@@ -86,16 +86,13 @@ data = None
 for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
             data = pd.DataFrame(tmp)
-            print(data.category)
             del tmp
         else:
             data = data.append(pd.DataFrame(tmp),ignore_index=True)
-            print(data.category)
             del tmp
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
 print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
-
 
 '''
 data = data.sample(frac=1,random_state=seed).reset_index(drop=True)
@@ -111,7 +108,8 @@ YDev = data[["category"]].ix[0:Dev_len-1,:]
 XVal = data[trainFeatures].ix[Dev_len:,:]
 YVal = data[["category"]].ix[Dev_len:,:]
 '''
-Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
+#Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
+Dev, Val, Test = np.split(data.sample(frac=1,random_state=seed), [int(0.8*len(data)), int(0.9*len(data))])
 del data
 
 XDev = Dev[trainFeatures]
@@ -129,11 +127,11 @@ YTest = Test[["category"]]
 weightTest = np.ravel(Test.EventWeight)
 del Test
 
+print(YTest.category)
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal), ' weightVal: ', len(weightVal)
 print 'XTest: ', len(XTest), ' YTest: ', len(YTest), ' weightTest: ', len(weightTest)
 
-print(YDev)
 # print "Fitting the scaler and scaling the input variables ..."
 # scaler = StandardScaler().fit(XDev[scalingFeatures])
 # XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
