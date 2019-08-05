@@ -1,4 +1,4 @@
-selectedTest'''
+'''
 Functions used in different files are gathered here to avoid redundance.
 '''
 
