@@ -151,6 +151,7 @@ if __name__ == "__main__":
         plt.close()
 
     # --- Over Training Check --- #
+    # Ver com mais detalhes
     # Add sig_dataTest, bkg_dataTest
     if args.overtrainingCheck:
         from scipy.stats import ks_2samp
@@ -178,9 +179,8 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
-    quit()
     if args.prediction:
-        both_dataDev=bkg_dataDev.append(sig_dataDev)
+        both_dataDev = bkg_dataDev.append(sig_dataDev)
         plt.figure(figsize=(7,6))
         plt.xlabel('NN output')
         plt.title("Number of Events")
@@ -192,7 +192,7 @@ if __name__ == "__main__":
         if args.preview:
             plt.show()
         plt.close()
-
+    quit()
 
 
             #PLOTTING FOM AND Efficiency
