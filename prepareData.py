@@ -82,6 +82,8 @@ df_WlvZqq["category"] = 0
 df_WqqWlv["category"] = 0
 df_WJets["category"] = 0
 
+print(df_ttbar.category)
+
 data = None
 for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
         if data is None:
