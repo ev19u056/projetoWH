@@ -55,7 +55,9 @@ df_stopWt[["EventWeight"]] = df_stopWt[["EventWeight"]]/fraction
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
 tmp = pd.read_csv('data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int((nrows_ttbar*ttbar_fraction)*fraction),usecols=usecols)
+print(tmp)
 df_ttbar = chunkReader(tmp)
+
 #print(df_stopWt.EventWeight)
 print(df_ttbar)
 quit()
