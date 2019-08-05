@@ -135,7 +135,7 @@ if __name__ == "__main__":
 
     # Time of the training
     if args.verbose:
-        print("Training took ", time.time()-start, " seconds")
+        print "Training took ", time.time()-start, " seconds"
 
     # Saving the trainned model and his weights
     model.save(filepath+name+".h5") # model weights
@@ -147,13 +147,13 @@ if __name__ == "__main__":
 
     # Getting predictions
     if args.verbose:
-        print("Getting predictions")
+        print("Getting predictions...")
     #devPredict = model.predict(XDev) # nao se utiliza
     testPredict = model.predict(XTest) # generates output predictions based on the input you pass it
 
     # Getting scores
     if args.verbose:
-        print("Getting scores")
+        print("Getting scores...")
 
     scoreDev = model.evaluate(XDev, YDev,sample_weight=weightDev, verbose = 0) # computes the loss based on the input you pass it, along with any other metrics that you requested in the metrics param when you compiled your model
     scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
@@ -181,14 +181,16 @@ if __name__ == "__main__":
     for cut in np.arange(0.0, 0.9999999, 0.001):
       sig, bkg = getYields(dataTest, cut=cut)
       if sig[0] > 0 and bkg[0] > 0:
+        print "For cut: ", cut, "sig[0] > 0 and bkg[0] > 0"
         fom, fomUnc = FullFOM(sig, bkg)
         fomEvo.append(fom)
         fomCut.append(cut)
 
-    max_FOM=0
+    max_FOM=0.0
     # Maximising FOM
     if args.verbose:
         print "Maximizing FOM..."
+        print(fomEvo)
 
     for k in fomEvo:
       if k>max_FOM:
@@ -200,12 +202,15 @@ if __name__ == "__main__":
         print "Background:", bkgYield, "+-", bkgYieldUnc
 
         print "Maximized FOM:", max_FOM
-        print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
+
+        # To prevent program from crashing if no one fomEvo > 0 was determined
+        if max_FOM == 0.0:
+            print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
     # --- CAlculating FOM --- #
 
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
-    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size:{} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, regularizer, ini ))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 

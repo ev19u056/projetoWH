@@ -11,7 +11,7 @@ import numpy as np
 #from keras.regularizers import l1,l2
 from math import log
 
-def getYields(dataTest, cut=0.5):#, luminosity=35866, splitFactor=2):
+def getYields(dataTest, cut=0.5, splitFactor=3):#, luminosity=35866):
     #defines the selected test data
     selectedTest = dataTest[dataTest.NN>cut]
 
@@ -24,12 +24,12 @@ def getYields(dataTest, cut=0.5):#, luminosity=35866, splitFactor=2):
     bkgYield = selectedBkg.EventWeight.sum()
     bkgYieldUnc = np.sqrt(np.sum(np.square(selectedBkg.EventWeight))) # Background Yield Uncertainty
 
-    '''
-    sigYield = sigYield * luminosity * splitFactor          #The factor 2 comes from the splitting
-    sigYieldUnc = sigYieldUnc * luminosity * splitFactor
-    bkgYield = bkgYield * luminosity * splitFactor
-    bkgYieldUnc = bkgYieldUnc * luminosity * splitFactor
-    '''
+
+    sigYield = sigYield * splitFactor # * luminosity           #The factor 2 comes from the splitting
+    sigYieldUnc = sigYieldUnc * splitFactor #  * luminosity
+    bkgYield = bkgYield * splitFactor #  * luminosity
+    bkgYieldUnc = bkgYieldUnc * splitFactor #  * luminosity
+
     return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
 
 def FullFOM(sIn, bIn, fValue=0.2):
