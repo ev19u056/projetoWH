@@ -217,13 +217,13 @@ if __name__ == "__main__":
                 bkgEff.append(bkg[0]/bkg_Init)
                 sigEff.append(sig[0]/sig_Init)
 
-        max_FOM=0
+        max_FOM=0.0
 
         for k in fomEvo:
             if k>max_FOM:
                 max_FOM=k
 
-        #SAVE VALUES OF FOM EVO AND CUT TO DO A FOM SUMMARY
+        # SAVE VALUES OF FOM EVO AND CUT TO DO A FOM SUMMARY
         f= open(plots_path+"FOM_evo_data.txt","w+")
 
         f.write("\n".join(map(str,fomEvo)))
@@ -234,12 +234,14 @@ if __name__ == "__main__":
         f.write("\n".join(map(str,fomCut)))
         f.close()
 
-        quite()
         Eff = zip(bkgEff, sigEff)
 
         if args.verbose:
             print "Maximized FOM:", max_FOM
-            print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
+            if max_FOM != 0.0
+                print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
+            else:
+                print "Unexpected Value: max_FOM == 0.0"
 
             tmpSig, tmpBkg = getYields(dataVal)
             sigYield, sigYieldUnc = tmpSig
@@ -285,6 +287,7 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
+        quit()
         #SAME BUT ZOOMED IN , NO LOG yscale
         plt.figure(figsize=(7,6))
         plt.subplots_adjust(hspace=0.5)
