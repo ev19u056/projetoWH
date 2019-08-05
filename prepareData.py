@@ -89,7 +89,7 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
             print(data.category)
             del tmp
         else:
-            data = data.append(pd.DataFrame(tmp),)ignore_index=True
+            data = data.append(pd.DataFrame(tmp),ignore_index=True)
             print(data.category)
             del tmp
 
