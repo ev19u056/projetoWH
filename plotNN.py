@@ -115,10 +115,9 @@ if __name__ == "__main__":
             print "val_loss = ", str(val_loss[-1])          # ???
             print "loss = ", str(loss[-1])                  # ???
             print "dloss = ", str(val_loss[-1]-loss[-1])    # ???
-
         plt.plot(loss)
         plt.plot(val_loss)
-        #plt.ylimit(0.0000012 , 0.0000006)
+        plt.ylimit(0.0000012 , 0.0000006)
     plt.grid()
         plt.title('Model loss')
         plt.ylabel('Loss')
