@@ -179,23 +179,23 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
+    # --- Predictions plot --- #
     if args.prediction:
         both_dataDev = bkg_dataDev.append(sig_dataDev)
         plt.figure(figsize=(7,6))
         plt.xlabel('NN output')
         plt.title("Number of Events")
         #plt.yscale('log', nonposy='clip')
-        plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" )
+        plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" ) # legend does not appear !!!
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', weights=bkg_dataDev["EventWeight"])
         plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", weights=both_dataDev["EventWeight"])
         plt.savefig(plots_path+'pred_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
             plt.show()
         plt.close()
-    quit()
 
 
-            #PLOTTING FOM AND Efficiency
+    # PLOTTING FOM AND Efficiency
     if args.efficiencyAndFOM:
         from commonFunctions import FOM1, FOM2, FullFOM, getYields
 
@@ -205,8 +205,8 @@ if __name__ == "__main__":
         bkgEff = []
         sigEff = []
 
-        sig_Init = dataVal[dataVal.category == 1].weight.sum() * 35866 * 2
-        bkg_Init = dataVal[dataVal.category == 0].weight.sum() * 35866 * 2
+        sig_Init = dataVal[dataVal.category == 1].weight.sum()# * 35866 * 2
+        bkg_Init = dataVal[dataVal.category == 0].weight.sum()# * 35866 * 2
 
         for cut in np.arange(0.0, 0.9999, 0.001):
             sig, bkg = getYields(dataVal, cut=cut, luminosity=luminosity)
@@ -223,7 +223,6 @@ if __name__ == "__main__":
             if k>max_FOM:
                 max_FOM=k
 
-
         #SAVE VALUES OF FOM EVO AND CUT TO DO A FOM SUMMARY
         f= open(plots_path+"FOM_evo_data.txt","w+")
 
@@ -235,11 +234,7 @@ if __name__ == "__main__":
         f.write("\n".join(map(str,fomCut)))
         f.close()
 
-
-
-
-
-
+        quite()
         Eff = zip(bkgEff, sigEff)
 
         if args.verbose:
@@ -290,8 +285,6 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
-
-
         #SAME BUT ZOOMED IN , NO LOG yscale
         plt.figure(figsize=(7,6))
         plt.subplots_adjust(hspace=0.5)
@@ -323,13 +316,7 @@ if __name__ == "__main__":
             plt.show()
         plt.close()
 
-
-
-
-
-
-
-        #PLOTTING the ROC function
+    # PLOTTING the ROC function
     if args.areaUnderROC:
         from sklearn.metrics import roc_auc_score, roc_curve
 
