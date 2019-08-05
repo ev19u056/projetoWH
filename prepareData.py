@@ -38,7 +38,7 @@ def chunkReader(tmp):
     for chunk in tmp:
         chunk.dropna(axis=0,how='any',subset=trainFeatures, inplace=True) # Dropping all rows with any NaN value
         result = result.append(chunk)
-    del tmp, chunk
+    #del tmp, chunk
     return result
 
 fraction = 0.05
