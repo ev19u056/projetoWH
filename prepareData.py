@@ -89,7 +89,7 @@ for tmp in [df_signal,df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
             del tmp
 
 del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets, df_signal
-print 'Datasets contain a total of', len(data)#, '(', data.EventWeight.sum(), 'weighted) events:'
+print 'Datasets contain a total of', len(data), '(', data.EventWeight.sum()*luminosity, 'weighted) events'
 
 dataDev, dataVal, dataTest = np.split(data.sample(frac=1,random_state=seed).reset_index(drop=True), [int(0.8*len(data)), int(0.9*len(data))])
 del data
@@ -107,6 +107,16 @@ weightVal = np.ravel(dataVal.EventWeight)
 XTest = dataTest[trainFeatures]
 YTest = dataTest[["category"]]
 weightTest = np.ravel(dataTest.EventWeight)
+
+print '  Development (train):', len(dataDev), '(', dataDev.EventWeight.sum()*luminosity, 'weighted)'
+print '    Signal:', len(dataDev[dataDev.category == 1]), '(', dataDev[dataDev.category == 1].EventWeight.sum()*luminosity, 'weighted)'
+print '    Background:', len(dataDev[dataDev.category == 0]), '(', dataDev[dataDev.category == 0].EventWeight.sum()*luminosity, 'weighted)'
+print '  Validation:', len(dataVal), '(', dataVal.EventWeight.sum()*luminosity, 'weighted)'
+print '    Signal:', len(dataVal[dataVal.category == 1]), '(', dataVal[dataVal.category == 1].EventWeight.sum()*luminosity, 'weighted)'
+print '    Background:', len(dataVal[dataVal.category == 0]), '(', dataVal[dataVal.category == 0].EventWeight.sum()*luminosity, 'weighted)'
+print '  Test:', len(dataTest), '(', dataTest.EventWeight.sum()*luminosity, 'weighted)'
+print '    Signal:', len(dataTest[dataTest.category == 1]), '(', dataTest[dataTest.category == 1].EventWeight.sum()*luminosity, 'weighted)'
+print '    Background:', len(dataTest[dataTest.category == 0]), '(', dataTest[dataTest.category == 0].EventWeight.sum()*luminosity, 'weighted)'
 
 print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
 print 'XVal: ', len(XVal), ' YVal: ', len(YVal), ' weightVal: ', len(weightVal)
