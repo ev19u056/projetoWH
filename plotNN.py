@@ -149,25 +149,22 @@ if __name__ == "__main__":
         # Scores above .8 are generally considered good agreement; zero or lower means no agreement (practically random labels).
         cohen_kappa=cohen_kappa_score(YTest, testPredict.round())
 
-
         # Computes the Kolmogorov-Smirnov statistic on 2 samples.
         # This is a two-sided test for the null hypothesis that 2 independent samples are drawn from the same continuous distribution.
         # Returns:	D (float) KS statistic
         #           p-value (float) two-tailed p-value
-
-        print "Before len(sig_dataDev): ", len(sig_dataDev)
-        km_value=ks_2samp((sig_dataDev["NN"].append(bkg_dataDev["NN"])),(sig_dataVal["NN"].append(bkg_dataVal["NN"])))
-        print "AFTER len(sig_dataDev): ", len(sig_dataDev)
-
+        # São comparadas duas amostras de predicao que provem da NN
+        km_value=ks_2samp((sig_dataDev["NN"].append(bkg_dataDev["NN"])),(sig_dataTest["NN"].append(bkg_dataTest["NN"]))) # append() does not change sig_dataDev
         if args.verbose:
             print "Cohen Kappa score:", cohen_kappa
             print "KS test statistic:", km_value[0]
             print "KS test p-value:", km_value[1]
         #plt.yscale('log')
-        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"])
+        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"]) # histtype by default is ‘bar’
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
-        plt.hist(sig_dataVal["NN"], 50, color='blue', alpha=1, normed=1, histtype="step", weights=sig_dataVal["EventWeight"])
-        plt.hist(bkg_dataVal["NN"], 50, color='red', alpha=1, normed=1, histtype="step",weights=bkg_dataVal["EventWeight"])
+        plt.hist(sig_dataTest["NN"], 50, color='blue', alpha=1, normed=1, histtype="step", weights=sig_dataTest["EventWeight"]) # ‘step’ generates a lineplot that is by default unfilled.
+        plt.hist(bkg_dataTest["NN"], 50, color='red', alpha=1, normed=1, histtype="step",weights=bkg_dataTest["EventWeight"])
+        plt.grid()
         plt.xlabel('NN output')
         plt.suptitle("MVA overtraining check for classifier: NN", fontsize=13, fontweight='bold') # MVA = MultiVariable Analysis
         plt.title("Cohen's kappa: {0}\nKolmogorov Smirnov test (p_value): {1}".format(cohen_kappa, km_value[1]), fontsize=10)
