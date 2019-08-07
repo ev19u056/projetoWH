@@ -34,21 +34,20 @@ def FullFOM(sIn, bIn, fValue=0.2):
     fom = (fomA - fomB)**0.5
     return (fom, fomErr)
 
-def getYields(dataTest, cut=0.5, splitFactor=3, luminosity=135900):
+def getYields(dataTest, cut=0.5, splitFactor=3, luminosity=139500):
     #defines the selected test data
-    selectedTest = dataTest[dataTest.NN>cut]
+    selectedTest = dataTest[dataTest.NN>cut] # selecionam-se aqueles eventos que foram classificados como signal
 
     #separates the true positives from false negatives
-    selectedSig = selectedTest[selectedTest.category == 1]
-    selectedBkg = selectedTest[selectedTest.category == 0]
+    selectedSig = selectedTest[selectedTest.category == 1] # true positives
+    selectedBkg = selectedTest[selectedTest.category == 0] # false negatives
 
     sigYield = selectedSig.EventWeight.sum()
     sigYieldUnc = np.sqrt(np.sum(np.square(selectedSig.EventWeight))) # Signal Yield Uncertainty
     bkgYield = selectedBkg.EventWeight.sum()
     bkgYieldUnc = np.sqrt(np.sum(np.square(selectedBkg.EventWeight))) # Background Yield Uncertainty
 
-
-    sigYield = sigYield * splitFactor * luminosity           #The factor 3 comes from the splitting
+    sigYield = sigYield * splitFactor * luminosity           # The factor 3 comes from the splitting
     sigYieldUnc = sigYieldUnc * splitFactor * luminosity
     bkgYield = bkgYield * splitFactor * luminosity
     bkgYieldUnc = bkgYieldUnc * splitFactor * luminosity
@@ -69,6 +68,7 @@ def plotter(path,Ylabel,Title):
     open_= open(path,'rb')
     plot_= pickle.load(open_)
     plt.plot(plot_)
+    plt.grid()
     plt.ylabel(Ylabel)
     plt.xlabel("Epochs")
     plt.legend()
