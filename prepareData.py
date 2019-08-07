@@ -60,7 +60,10 @@ print("Reading -> 'WlvZqq_Sh221_ade.csv'")
 df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows = int(nrows_WlvZqq*fraction),usecols=usecols)
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows = int(nrows_WqqWlv*fraction),usecols=usecols)
+df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nwe ask for a symbolic contribution for each beer or sangria glass from 40 cents to 1 euro.
+
+Cheers,
+The SSBQ organizing committeerows = int(nrows_WqqWlv*fraction),usecols=usecols)
 
 print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = int((nrows_Wjets*WJets_fraction)*(fraction)),usecols=usecols)
@@ -157,9 +160,9 @@ print 'XTest: ', len(XTest), ' YTest: ', len(YTest), ' weightTest: ', len(weight
 
 print "Fitting the scaler and scaling the input variables ..."
 scaler = StandardScaler().fit(XDev[scalingFeatures])
-print "Before scaler: ", XDev.nFats[:5]
+print "Before scaler: ", XDev.nJets[:5]
 XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
-print "After scaler: ", XDev.nFats[:5]
+print "After scaler: ", XDev.nJets[:5]
 XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 #scalerfile = 'scaler_'+train_DM+'.sav'
 #joblib.dump(scaler, scalerfile)
@@ -167,7 +170,9 @@ XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 # Linear dimensionality reduction using "Singular Value Decomposition" of the data to project it to a lower dimensional space.
 # The input data is centered but not scaled for each feature before applying the SVD.
 pca = decomposition.PCA(n_components=len(trainFeatures)).fit(XDev)
+print "Before PCA: ", XDev.nJets[:5]
 XDev = pca.transform(XDev)
+print "After PCA: ", XDev.nJets[:5]
 XVal = pca.transform(XVal)
 XTest = pca.transform(XTest)
 
