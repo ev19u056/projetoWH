@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
     # --- Over Training Check --- #
 
-    # Negative bins appear on hist ???
+    # Negative bins appear on hist y-axis???
     if args.overtrainingCheck:
         from scipy.stats import ks_2samp
         from sklearn.metrics import cohen_kappa_score
@@ -176,14 +176,15 @@ if __name__ == "__main__":
         plt.close()
 
     # --- Predictions plot --- #
+    # Negative bins appear on hist y-axis???
     if args.prediction:
         both_dataDev = bkg_dataDev.append(sig_dataDev)
         plt.figure(figsize=(7,6))
         plt.xlabel('NN output')
         plt.title("Number of Events")
         #plt.yscale('log', nonposy='clip')
-        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', weights=bkg_dataDev["EventWeight"])
-        plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", weights=both_dataDev["EventWeight"])
+        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', normed=1, weights=bkg_dataDev["EventWeight"])
+        plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", normed=1, weights=both_dataDev["EventWeight"])
         plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" )
         plt.grid()
         plt.savefig(plots_path+'pred_'+model_name+'.pdf', bbox_inches='tight')
