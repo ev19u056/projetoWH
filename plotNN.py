@@ -100,9 +100,7 @@ if __name__ == "__main__":
         loss = pickle.load(open(loss_path+"loss_"+model_name+".pickle", "rb"))
         val_loss = pickle.load(open(loss_path+"val_loss_"+model_name+".pickle", "rb"))
         if args.verbose:
-            print "val_loss = ", str(val_loss[-1])
-            print "loss = ", str(loss[-1])
-            print "val_loss - loss = ", str(val_loss[-1]-loss[-1])
+            print "val_loss = ", str(val_loss[-1]), "loss = ", str(loss[-1]), "val_loss - loss = ", str(val_loss[-1]-loss[-1])
 
         plt.plot(loss)
         plt.plot(val_loss)
@@ -123,12 +121,10 @@ if __name__ == "__main__":
         acc = pickle.load(open(acc_path+"acc_"+model_name+".pickle", "rb"))
         val_acc = pickle.load(open(acc_path+"val_acc_"+model_name+".pickle", "rb"))
         if args.verbose:
-            print "val_acc = " + str(val_acc[-1])
-            print "acc = ", str(acc[-1])
-            print "val_acc - acc = ", str(val_acc[-1]-acc[-1])
+            print "val_acc = ", str(val_acc[-1]), "acc = ", str(acc[-1]), "val_acc - acc = ", str(val_acc[-1]-acc[-1])
         plt.plot(acc)
         plt.plot(val_acc)
-        plt.ylimit(0.7 ,1)
+        plt.ylim(0.7 ,1)
         plt.title('Model accuracy')
         plt.ylabel('Accuracy')
         #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))

@@ -152,10 +152,6 @@ print '  Test:', len(dataTest), '(', dataTest.EventWeight.sum()*luminosity, 'wei
 print '    Signal:', len(dataTest[dataTest.category == 1]), '(', dataTest[dataTest.category == 1].EventWeight.sum()*luminosity, 'weighted)'
 print '    Background:', len(dataTest[dataTest.category == 0]), '(', dataTest[dataTest.category == 0].EventWeight.sum()*luminosity, 'weighted)'
 
-print 'XDev: ', len(XDev), ' YDev: ', len(YDev), ' weightDev: ', len(weightDev)
-print 'XVal: ', len(XVal), ' YVal: ', len(YVal), ' weightVal: ', len(weightVal)
-print 'XTest: ', len(XTest), ' YTest: ', len(YTest), ' weightTest: ', len(weightTest)
-
 print "Fitting the scaler and scaling the input variables ..."
 scaler = StandardScaler().fit(XDev[scalingFeatures])
 XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
