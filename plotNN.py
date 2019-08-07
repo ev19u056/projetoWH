@@ -183,7 +183,7 @@ if __name__ == "__main__":
         plt.xlabel('NN output')
         plt.title("Number of Events")
         #plt.yscale('log', nonposy='clip')
-        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', normed=1, weights=bkg_dataDev["EventWeight"])
+        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', normed=1, weights=bkg_dataDev["EventWeight"]) # in original code there is not normalization but the plot seems to be normalized ???
         plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", normed=1, weights=both_dataDev["EventWeight"])
         plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" )
         plt.grid()
@@ -202,8 +202,8 @@ if __name__ == "__main__":
         bkgEff = []
         sigEff = []
 
-        sig_Init = dataVal[dataVal.category == 1].EventWeight.sum()# * 35866 * 2
-        bkg_Init = dataVal[dataVal.category == 0].EventWeight.sum()# * 35866 * 2
+        sig_Init = dataVal[dataVal.category == 1].EventWeight.sum() * luminosity * 3
+        bkg_Init = dataVal[dataVal.category == 0].EventWeight.sum() * luminosity * 3
 
         for cut in np.arange(0.0, 0.9999, 0.001):
             sig, bkg = getYields(dataVal, cut=cut)#, luminosity=luminosity)
@@ -249,8 +249,8 @@ if __name__ == "__main__":
             selectedBkg = selectedVal[selectedVal.category == 0]
             sigYield = selectedSig.EventWeight.sum()
             bkgYield = selectedBkg.EventWeight.sum()
-            sigYield = sigYield #* luminosity * 2          #The factor 2 comes from the splitting
-            bkgYield = bkgYield #* luminosity * 2
+            sigYield = sigYield * luminosity * 3          #The factor 2 comes from the splitting
+            bkgYield = bkgYield * luminosity * 3
 
             print "Selected events left after cut @", fomCut[fomEvo.index(max_FOM)]
             print "   Number of selected Signal Events:", len(selectedSig)
