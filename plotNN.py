@@ -124,7 +124,8 @@ if __name__ == "__main__":
             print "val_acc = ", str(val_acc[-1]), "acc = ", str(acc[-1]), "val_acc - acc = ", str(val_acc[-1]-acc[-1])
         plt.plot(acc)
         plt.plot(val_acc)
-        plt.ylim(0.7 ,1)
+        plt.grid()
+        plt.ylim(0.7,0.9)
         plt.title('Model accuracy')
         plt.ylabel('Accuracy')
         #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
@@ -143,22 +144,33 @@ if __name__ == "__main__":
         from scipy.stats import ks_2samp
         from sklearn.metrics import cohen_kappa_score
 
-        cohen_kappa=cohen_kappa_score(YVal, valPredict.round())
+        # Returns: kappa : float
+        # The kappa statistic, which is a number between -1 and 1.
+        # Scores above .8 are generally considered good agreement; zero or lower means no agreement (practically random labels).
+        cohen_kappa=cohen_kappa_score(YTest, testPredict.round())
+
+
+        # Computes the Kolmogorov-Smirnov statistic on 2 samples.
+        # This is a two-sided test for the null hypothesis that 2 independent samples are drawn from the same continuous distribution.
+        # Returns:	D (float) KS statistic
+        #           p-value (float) two-tailed p-value
+
+        print "Before len(sig_dataDev): ", len(sig_dataDev)
         km_value=ks_2samp((sig_dataDev["NN"].append(bkg_dataDev["NN"])),(sig_dataVal["NN"].append(bkg_dataVal["NN"])))
+        print "AFTER len(sig_dataDev): ", len(sig_dataDev)
 
         if args.verbose:
             print "Cohen Kappa score:", cohen_kappa
             print "KS test statistic:", km_value[0]
             print "KS test p-value:", km_value[1]
-
         #plt.yscale('log')
-        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1)#, weights=sig_dataDev["EventWeight"])
-        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1)#, weights=bkg_dataDev["EventWeight"])
-        plt.hist(sig_dataVal["NN"], 50, color='blue', alpha=1, normed=1, histtype="step")#, weights=sig_dataVal["EventWeight"])
-        plt.hist(bkg_dataVal["NN"], 50, color='red', alpha=1, normed=1, histtype="step")#,weights=bkg_dataVal["EventWeight"])
+        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"])
+        plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
+        plt.hist(sig_dataVal["NN"], 50, color='blue', alpha=1, normed=1, histtype="step", weights=sig_dataVal["EventWeight"])
+        plt.hist(bkg_dataVal["NN"], 50, color='red', alpha=1, normed=1, histtype="step",weights=bkg_dataVal["EventWeight"])
         plt.xlabel('NN output')
-        plt.suptitle("MVA overtraining check for classifier: NN", fontsize=13, fontweight='bold')
-        plt.title("Cohen's kappa: {0}\nKolmogorov Smirnov test: {1}".format(cohen_kappa, km_value[1]), fontsize=10)
+        plt.suptitle("MVA overtraining check for classifier: NN", fontsize=13, fontweight='bold') # MVA = MultiVariable Analysis
+        plt.title("Cohen's kappa: {0}\nKolmogorov Smirnov test (p_value): {1}".format(cohen_kappa, km_value[1]), fontsize=10)
         plt.legend(['Signal (Test sample)', 'Background (Test sample)', 'Signal (Train sample)', 'Background (Train sample)'], loc='best')
         plt.savefig(plots_path+'hist_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
