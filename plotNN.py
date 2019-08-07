@@ -138,8 +138,8 @@ if __name__ == "__main__":
         plt.close()
 
     # --- Over Training Check --- #
-    # Ver com mais detalhes
-    # Add sig_dataTest, bkg_dataTest
+
+    # Negative bins appear on hist ???
     if args.overtrainingCheck:
         from scipy.stats import ks_2samp
         from sklearn.metrics import cohen_kappa_score
@@ -159,8 +159,7 @@ if __name__ == "__main__":
             print "Cohen Kappa score:", cohen_kappa
             print "KS test statistic:", km_value[0]
             print "KS test p-value:", km_value[1]
-            negative = bkg_dataDev["NN"] < 0.0
-            print(negative==True)
+
         #plt.yscale('log')
         plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"]) # histtype by default is "bar"
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
@@ -183,14 +182,14 @@ if __name__ == "__main__":
         plt.xlabel('NN output')
         plt.title("Number of Events")
         #plt.yscale('log', nonposy='clip')
-        plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" ) # legend does not appear !!!
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', weights=bkg_dataDev["EventWeight"])
         plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", weights=both_dataDev["EventWeight"])
+        plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" )
+        plt.grid()
         plt.savefig(plots_path+'pred_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
             plt.show()
         plt.close()
-
 
     # PLOTTING FOM AND Efficiency
     if args.efficiencyAndFOM:
