@@ -160,7 +160,7 @@ if __name__ == "__main__":
             print "KS test statistic:", km_value[0]
             print "KS test p-value:", km_value[1]
         #plt.yscale('log')
-        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"]) # histtype by default is ‘bar’
+        plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"]) # histtype by default is "bar"
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
         plt.hist(sig_dataTest["NN"], 50, color='blue', alpha=1, normed=1, histtype="step", weights=sig_dataTest["EventWeight"]) # ‘step’ generates a lineplot that is by default unfilled.
         plt.hist(bkg_dataTest["NN"], 50, color='red', alpha=1, normed=1, histtype="step",weights=bkg_dataTest["EventWeight"])
