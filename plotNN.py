@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
     sig_dataDev = dataDev[dataDev.category==1];     bkg_dataDev = dataDev[dataDev.category==0]      # separar sig e bkg em dataDev
     sig_dataVal = dataVal[dataVal.category==1];    bkg_dataVal = dataVal[dataVal.category==0]       # separar sig e bkg em dataVal
-    sig_dataTest = dataTest[dataTest.category==1];    bkg_dataTest = dataTest[YTest.category==0]    # separar sig e bkg em dataTest
+    sig_dataTest = dataTest[dataTest.category==1];    bkg_dataTest = dataTest[dataTest.category==0]    # separar sig e bkg em dataTest
 
     if args.allPlots:
         args.loss = True
