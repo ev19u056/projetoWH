@@ -24,12 +24,12 @@ scalingFeatures = ['mB1', 'mB2', 'mBB', 'mJ3', 'mL1', 'mTW', 'mVH', 'met', 'pTW'
 
 luminosity = 139500 # pb^-1
 
-nrows_signal = 991141
-nrows_stopWt = 277816
-nrows_ttbar = 4168037
-nrows_Wjets = 16650877
-nrows_WlvZqq = 188395
-nrows_WqqWlv = 334495
+nrows_signal = 991141;      XS_signal = 1.37 # pb
+nrows_stopWt = 277816;      XS_stopWt = 71.7
+nrows_ttbar = 4168037;      XS_ttbar = 452.36
+nrows_Wjets = 16650877;     XS_Wjets = 1976.49
+nrows_WlvZqq = 188395;      XS_WlvZqq = 11.413
+nrows_WqqWlv = 334495;      XS_WqqWlv = 50.64
 
 ttbar_fraction = 1.0/10.0
 WJets_fraction = 1.0/40.0
@@ -94,17 +94,16 @@ if not useSF:
     df_WlvZqq.sampleWeight = df_WlvZqq.EventWeight
     df_WqqWlv.sampleWeight = df_WqqWlv.EventWeight
     df_WJets.sampleWeight = df_WJets.EventWeight
-# uncomment just after define XS of each event
-'''
+
 else:
     scale = fraction if fraction < 1.0 else 1.0
     df_signal.sampleWeight = 1/(nrows_signal*scale)
-    df_stopWt.sampleWeight = df_stopWt.XS/(nrows_stopWt*scale)
-    df_ttbar.sampleWeight = df_ttbar.XS/(nrows_ttbar*scale*ttbar_fraction)
-    df_WlvZqq.sampleWeight = df_WlvZqq.XS/(nrows_WlvZqq*scale)
-    df_WqqWlv.sampleWeight = df_WqqWlv.XS/(nrows_WqqWlv*scale)
-    df_WJets.sampleWeight = df_WlvZqq.XS/(nrows_WJets*scale*WJets_fraction)
-'''
+    df_stopWt.sampleWeight = df_stopWt.sampleWeight*XS_stopWt/(nrows_stopWt*scale)
+    df_ttbar.sampleWeight = df_ttbar.sampleWeight*XS_ttbar/(nrows_ttbar*scale*ttbar_fraction)
+    df_WlvZqq.sampleWeight = df_WlvZqq.sampleWeight*XS_WlvZqq/(nrows_WlvZqq*scale)
+    df_WqqWlv.sampleWeight = df_WqqWlv.sampleWeight*XS_WqqWlv/(nrows_WqqWlv*scale)
+    df_WJets.sampleWeight = df_WlvZqq.sampleWeight*XS_Wjets/(nrows_WJets*scale*WJets_fraction)
+
 df_signal.sampleWeight = df_signal.sampleWeight/df_signal.sampleWeight.sum()
 df_stopWt.sampleWeight = df_stopWt.sampleWeight/df_stopWt.sampleWeight.sum()
 df_ttbar.sampleWeight = df_ttbar.sampleWeight/df_ttbar.sampleWeight.sum()
@@ -157,21 +156,18 @@ print 'XTest: ', len(XTest), ' YTest: ', len(YTest), ' weightTest: ', len(weight
 
 print "Fitting the scaler and scaling the input variables ..."
 scaler = StandardScaler().fit(XDev[scalingFeatures])
-print "Before scaler: ", XDev.nJets[:5]
 XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
-print "After scaler: ", XDev.nJets[:5]
 XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 #scalerfile = 'scaler_'+train_DM+'.sav'
 #joblib.dump(scaler, scalerfile)
 
 # Linear dimensionality reduction using "Singular Value Decomposition" of the data to project it to a lower dimensional space.
 # The input data is centered but not scaled for each feature before applying the SVD.
+'''
 pca = decomposition.PCA(n_components=len(trainFeatures)).fit(XDev)
-print "Before PCA: ", XDev.nJets[:5]
 XDev = pca.transform(XDev)
-print "After PCA: ", XDev.nJets[:5]
 XVal = pca.transform(XVal)
 XTest = pca.transform(XTest)
-
+'''
 print "DATA is ready!"
 print "Preparing DATA took: ", (time.time() - start)
