@@ -159,8 +159,8 @@ if __name__ == "__main__":
             print "Cohen Kappa score:", cohen_kappa
             print "KS test statistic:", km_value[0]
             print "KS test p-value:", km_value[1]
-            negative = bkg_dataDev["NN"] < 0
-            print(negative)
+            negative = bkg_dataDev["NN"] < 0.0
+            print(negative==True)
         #plt.yscale('log')
         plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"]) # histtype by default is "bar"
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
