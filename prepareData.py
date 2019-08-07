@@ -102,7 +102,7 @@ else:
     df_ttbar.sampleWeight = df_ttbar.sampleWeight*XS_ttbar/(nrows_ttbar*scale*ttbar_fraction)
     df_WlvZqq.sampleWeight = df_WlvZqq.sampleWeight*XS_WlvZqq/(nrows_WlvZqq*scale)
     df_WqqWlv.sampleWeight = df_WqqWlv.sampleWeight*XS_WqqWlv/(nrows_WqqWlv*scale)
-    df_WJets.sampleWeight = df_WlvZqq.sampleWeight*XS_Wjets/(nrows_WJets*scale*WJets_fraction)
+    df_WJets.sampleWeight = df_WlvZqq.sampleWeight*XS_Wjets/(nrows_Wjets*scale*WJets_fraction)
 
 df_signal.sampleWeight = df_signal.sampleWeight/df_signal.sampleWeight.sum()
 df_stopWt.sampleWeight = df_stopWt.sampleWeight/df_stopWt.sampleWeight.sum()
