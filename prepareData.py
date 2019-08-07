@@ -157,7 +157,9 @@ print 'XTest: ', len(XTest), ' YTest: ', len(YTest), ' weightTest: ', len(weight
 
 print "Fitting the scaler and scaling the input variables ..."
 scaler = StandardScaler().fit(XDev[scalingFeatures])
+print "Before scaler: ", XDev.nFats[:5]
 XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
+print "After scaler: ", XDev.nFats[:5]
 XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
 #scalerfile = 'scaler_'+train_DM+'.sav'
 #joblib.dump(scaler, scalerfile)
