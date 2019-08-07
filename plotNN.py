@@ -153,7 +153,7 @@ if __name__ == "__main__":
         # This is a two-sided test for the null hypothesis that 2 independent samples are drawn from the same continuous distribution.
         # Returns:	D (float) KS statistic
         #           p-value (float) two-tailed p-value
-        # São comparadas duas amostras de predicao que provem da NN
+        # Sao comparadas duas amostras de predicao que provem da NN
         km_value=ks_2samp((sig_dataDev["NN"].append(bkg_dataDev["NN"])),(sig_dataTest["NN"].append(bkg_dataTest["NN"]))) # append() does not change sig_dataDev
         if args.verbose:
             print "Cohen Kappa score:", cohen_kappa
