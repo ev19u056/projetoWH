@@ -159,6 +159,7 @@ if __name__ == "__main__":
             print "Cohen Kappa score:", cohen_kappa
             print "KS test statistic:", km_value[0]
             print "KS test p-value:", km_value[1]
+            negative = bkg_dataDev["NN"] < 0
         #plt.yscale('log')
         plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"]) # histtype by default is "bar"
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
@@ -168,7 +169,7 @@ if __name__ == "__main__":
         plt.xlabel('NN output')
         plt.suptitle("MVA overtraining check for classifier: NN", fontsize=13, fontweight='bold') # MVA = MultiVariable Analysis
         plt.title("Cohen's kappa: {0}\nKolmogorov Smirnov test (p_value): {1}".format(cohen_kappa, km_value[1]), fontsize=10)
-        plt.legend(['Signal (Test sample)', 'Background (Test sample)', 'Signal (Train sample)', 'Background (Train sample)'], loc='best')
+        plt.legend(['Signal (Train sample)', 'Background (Train sample)', 'Signal (Test sample)', 'Background (Test sample)'], loc='best')
         plt.savefig(plots_path+'hist_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
             plt.show()
