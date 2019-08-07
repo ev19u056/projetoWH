@@ -60,10 +60,7 @@ print("Reading -> 'WlvZqq_Sh221_ade.csv'")
 df_WlvZqq = pd.read_csv('data/WlvZqq_Sh221_ade.csv',nrows = int(nrows_WlvZqq*fraction),usecols=usecols)
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nwe ask for a symbolic contribution for each beer or sangria glass from 40 cents to 1 euro.
-
-Cheers,
-The SSBQ organizing committeerows = int(nrows_WqqWlv*fraction),usecols=usecols)
+df_WqqWlv = pd.read_csv('data/WqqWlv_Sh221_ade.csv',nrows = int(nrows_WqqWlv*fraction),usecols=usecols)
 
 print("Reading -> 'WJets_Sh221.csv'")
 df_WJets = pd.read_csv('data/WJets_Sh221.csv',nrows = int((nrows_Wjets*WJets_fraction)*(fraction)),usecols=usecols)
