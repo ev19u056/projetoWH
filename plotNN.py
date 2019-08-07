@@ -25,20 +25,9 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--areaUnderROC', action='store_true', help='Area under ROC plot')
     parser.add_argument('-w', '--weights', action='store_true', help='Plot neural network weights')
     parser.add_argument('-z', '--structure', action='store_true', help='Plot neural network structure')
-#    parser.add_argument('-l', '--layers', type=int, help='Number of layers')
-#    parser.add_argument('-n', '--neurons', type=int, help='Number of neurons per layer')
-#    parser.add_argument('-x', '--gridSearch', action='store_true', help='File on grid search')
-#    parser.add_argument('-s', '--singleNN', action='store_true', help='Whether this NN is stored in the Searches or SingleNN folder')
-    parser.add_argument('-u', '--runNum', type=int, help='Run number')
-    parser.add_argument('-k', '--local', action='store_true', help='Local file')
     parser.add_argument('-d', '--preview', action='store_true', help='Preview plots')
-#    parser.add_argument('-bk', '--bk', action='store_true', help='Whether or not you choose to load Zinv background samples or only W+jets and TTpow')
 
 #python plotNN.py -v -f Model_Ver_3 -b -c -o -p -r -s
-
-#    parser.add_argument('-b', '--batch', action='store_true', help='Whether this is a batch job, if it is, no interactive questions will be asked and answers will be assumed')
-#    parser.add_argument('-p', '--dropoutRate', type=float, default=0, help='Dropout Rate')
-#    parser.add_argument('-dc', '--decay', type=float, default=0, help='Learning rate decay')
 
     from prepareData import *
     args = parser.parse_args()
@@ -92,9 +81,9 @@ if __name__ == "__main__":
     dataVal["NN"] = valPredict
     dataTest["NN"] = testPredict
 
-    sig_dataDev = dataDev[dataDev.category==1];     bkg_dataDev = dataDev[dataDev.category==0]
-    sig_dataVal = dataVal[dataVal.category==1];    bkg_dataVal = dataVal[dataVal.category==0]
-    sig_dataTest = dataTest[dataTest.category==1];    bkg_dataTest = dataTest[YTest.category==0]
+    sig_dataDev = dataDev[dataDev.category==1];     bkg_dataDev = dataDev[dataDev.category==0]      # separar sig e bkg em dataDev
+    sig_dataVal = dataVal[dataVal.category==1];    bkg_dataVal = dataVal[dataVal.category==0]       # separar sig e bkg em dataVal
+    sig_dataTest = dataTest[dataTest.category==1];    bkg_dataTest = dataTest[YTest.category==0]    # separar sig e bkg em dataTest
 
     if args.allPlots:
         args.loss = True
@@ -113,11 +102,10 @@ if __name__ == "__main__":
         if args.verbose:
             print "val_loss = ", str(val_loss[-1])
             print "loss = ", str(loss[-1])
-            print "dloss = ", str(val_loss[-1]-loss[-1])
+            print "val_loss - loss = ", str(val_loss[-1]-loss[-1])
 
         plt.plot(loss)
         plt.plot(val_loss)
-        #plt.ylimit(0.0000012 , 0.0000006)
         plt.grid()
         plt.title('Model loss')
         plt.ylabel('Loss')
@@ -136,9 +124,11 @@ if __name__ == "__main__":
         val_acc = pickle.load(open(acc_path+"val_acc_"+model_name+".pickle", "rb"))
         if args.verbose:
             print "val_acc = " + str(val_acc[-1])
+            print "acc = ", str(acc[-1])
+            print "val_acc - acc = ", str(val_acc[-1]-acc[-1])
         plt.plot(acc)
         plt.plot(val_acc)
-        #plt.ylimit(0.7 ,1)
+        plt.ylimit(0.7 ,1)
         plt.title('Model accuracy')
         plt.ylabel('Accuracy')
         #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
