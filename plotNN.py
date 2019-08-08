@@ -349,7 +349,7 @@ if __name__ == "__main__":
         plt.figure()
         plt.subplots_adjust(hspace=0.5)
 
-        plt.subplot(1)
+        plt.subplot(211)
         plt.plot(fprDev, tprDev, '--')
         plt.plot(fprVal, tprVal, ':')
         plt.plot(fprTest, tprTest, linewidth=0.5)
@@ -365,7 +365,7 @@ if __name__ == "__main__":
         # plt.close()
 
         #PLOTTING ROCK ZOOMED
-        plt.subplot(2)
+        plt.subplot(212)
         plt.plot(fprDev, tprDev, '--')
         plt.plot(fprVal, tprVal, ':')
         plt.plot(fprTest, tprTest, linewidth=0.5)
@@ -379,7 +379,7 @@ if __name__ == "__main__":
         if args.preview:
             plt.show()
         plt.close()
-        
+
     if args.weights:
         import math
         from matplotlib.colors import LinearSegmentedColormap
