@@ -379,7 +379,7 @@ if __name__ == "__main__":
         if args.preview:
             plt.show()
         plt.close()
-    '''
+        
     if args.weights:
         import math
         from matplotlib.colors import LinearSegmentedColormap
