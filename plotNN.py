@@ -346,6 +346,10 @@ if __name__ == "__main__":
             print "ROC Curve IntegralVal:", roc_integralVal
             print "ROC Curve IntegralTest:", roc_integralTest
 
+        plt.figure()
+        plt.subplots_adjust(hspace=0.5)
+
+        plt.subplot(1)
         plt.plot(fprDev, tprDev, '--')
         plt.plot(fprVal, tprVal, ':')
         plt.plot(fprTest, tprTest, linewidth=0.5)
@@ -355,21 +359,23 @@ if __name__ == "__main__":
         plt.title('ROC curve')
         rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal),"Test Integral: {0}".format(roc_integralTest)]
         plt.legend(rocLegend, loc='best')
-        plt.savefig(plots_path+'ROC_'+model_name+'.pdf', bbox_inches='tight')
-        if args.preview:
-            plt.show()
-        plt.close()
+        # plt.savefig(plots_path+'ROC_'+model_name+'.pdf', bbox_inches='tight')
+        # if args.preview:
+        #     plt.show()
+        # plt.close()
 
-    '''        #PLOTTING ROCK ZOOMED
+        #PLOTTING ROCK ZOOMED
+        plt.subplot(2)
         plt.plot(fprDev, tprDev, '--')
-        plt.plot(fprVal, tprVal, linewidth=0.5)
+        plt.plot(fprVal, tprVal, ':')
+        plt.plot(fprTest, tprTest, linewidth=0.5)
         plt.xlim(0 , 0.3)
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
         plt.title('ROC curve')
-        rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal)]
+        rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal),"Test Integral: {0}".format(roc_integralTest)]
         plt.legend(rocLegend, loc='best')
-        plt.savefig(plots_path+'ROC_zoomed_'+model_name+'.pdf', bbox_inches='tight')
+        plt.savefig(plots_path+'ROC_ROC_zoomed_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
             plt.show()
         plt.close()
