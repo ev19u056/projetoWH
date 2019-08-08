@@ -63,9 +63,9 @@ if __name__ == "__main__":
     if args.verbose:
         print("Getting predictions ...")
 
-    devPredict = model.predict(XDev)
-    valPredict = model.predict(XVal)
-    testPredict = model.predict(XTest)
+    dataDev["NN"] = model.predict(XDev)
+    dataVal["NN"] = model.predict(XVal)
+    dataTest["NN"] = model.predict(XTest)
 
     if args.verbose:
         print("Getting scores ...")
@@ -76,11 +76,11 @@ if __name__ == "__main__":
 
     if args.verbose:
         print "Calculating parameters ..."
-
+    '''
     dataDev["NN"] = devPredict
     dataVal["NN"] = valPredict
     dataTest["NN"] = testPredict
-
+    '''
     sig_dataDev = dataDev[dataDev.category==1];     bkg_dataDev = dataDev[dataDev.category == 0]      # separar sig e bkg em dataDev
     sig_dataVal = dataVal[dataVal.category == 1];    bkg_dataVal = dataVal[dataVal.category == 0]       # separar sig e bkg em dataVal
     sig_dataTest = dataTest[dataTest.category==1];    bkg_dataTest = dataTest[dataTest.category==0]    # separar sig e bkg em dataTest
@@ -325,21 +325,35 @@ if __name__ == "__main__":
     if args.areaUnderROC:
         from sklearn.metrics import roc_auc_score, roc_curve
 
+        # roc_auc_score(y_true, y_score, average=’macro’, sample_weight=None, max_fpr=None)
+        # Compute Area Under the Receiver Operating Characteristic Curve (ROC AUC) from prediction scores.
+        # Returns: auc (float)
         roc_integralDev = roc_auc_score(dataDev.category, dataDev.NN)
         roc_integralVal = roc_auc_score(dataVal.category, dataVal.NN)
+        roc_integralTest = roc_auc_score(dataTest.category, dataTest.NN) # sample_weight = dataTest.EventWeight ???
+
+        # roc_curve(y_true, y_score, pos_label=None, sample_weight=None, drop_intermediate=True)
+        # Compute Receiver operating characteristic (ROC)
+        # Returns:
+        #           fpr : array, shape = [>2]
+        #           tpr : array, shape = [>2]
+        #           thresholds : array, shape = [n_thresholds]
         fprDev, tprDev, _Dev = roc_curve(dataDev.category, dataDev.NN)
         fprVal, tprVal, _Val = roc_curve(dataVal.category, dataVal.NN)
+        fprTest, tprTest, _Test = roc_curve(dataTest.category, dataTest.NN)
         if args.verbose:
             print "ROC Curve IntegralDev:", roc_integralDev
             print "ROC Curve IntegralVal:", roc_integralVal
+            print "ROC Curve IntegralTest:", roc_integralTest
 
         plt.plot(fprDev, tprDev, '--')
-        plt.plot(fprVal, tprVal, linewidth=0.5)
+        plt.plot(fprVal, tprVal, ':')
+        plt.plot(fprTest, tprTest, linewidth=0.5)
         plt.grid()
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
         plt.title('ROC curve')
-        rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal)]
+        rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal),"Test Integral: {0}".format(roc_integralTest)]
         plt.legend(rocLegend, loc='best')
         plt.savefig(plots_path+'ROC_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
