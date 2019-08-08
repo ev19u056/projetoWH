@@ -147,7 +147,7 @@ if __name__ == "__main__":
         # Returns: kappa : float
         # The kappa statistic, which is a number between -1 and 1.
         # Scores above .8 are generally considered good agreement; zero or lower means no agreement (practically random labels).
-        cohen_kappa=cohen_kappa_score(YTest, testPredict.round())
+        cohen_kappa=cohen_kappa_score(YTest, dataTest["NN"].round())
 
         # Computes the Kolmogorov-Smirnov statistic on 2 samples.
         # This is a two-sided test for the null hypothesis that 2 independent samples are drawn from the same continuous distribution.
@@ -369,10 +369,11 @@ if __name__ == "__main__":
         plt.plot(fprDev, tprDev, '--')
         plt.plot(fprVal, tprVal, ':')
         plt.plot(fprTest, tprTest, linewidth=0.5)
+        plt.grid()
         plt.xlim(0 , 0.3)
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
-        plt.title('ROC curve')
+        plt.title('ROC curve ZOOMED')
         rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal),"Test Integral: {0}".format(roc_integralTest)]
         plt.legend(rocLegend, loc='best')
         plt.savefig(plots_path+'ROC_ROC_zoomed_'+model_name+'.pdf', bbox_inches='tight')
@@ -432,14 +433,13 @@ if __name__ == "__main__":
         for layer in model.layers:
             if len(layer.get_weights()) == 0:
                 continue
-            ax = figure.add_subplot(nRow, nCol,i)
 
+            ax = figure.add_subplot(nRow, nCol,i)
             im = plt.imshow(layer.get_weights()[0], interpolation="none", vmin=-2, vmax=2, cmap=myColor)
             plt.title(layer.name, fontsize=10)
             plt.xlabel("Neuron", fontsize=9)
             plt.ylabel("Input", fontsize=9)
             plt.colorbar(im, use_gridspec=True)
-
             i+=1
 
         plt.tight_layout()
@@ -449,4 +449,4 @@ if __name__ == "__main__":
 
     if args.structure:
         from keras.utils import plot_model
-        plot_model(model, to_file='model.pdf', show_shapes=True)
+        plot_model(model, to_file='model.pdf', show_shapes=True)s
