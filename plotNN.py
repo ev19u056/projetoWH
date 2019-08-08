@@ -446,7 +446,8 @@ if __name__ == "__main__":
         plt.savefig(plots_path+'Weights_'+model_name+'.pdf', bbox_inches='tight')
         if args.preview:
             plt.show()
-
+    '''
     if args.structure:
         from keras.utils import plot_model
-        plot_model(model, to_file='model.pdf', show_shapes=True)s
+        plot_model(model, to_file='model.pdf', show_shapes=True)
+    '''
