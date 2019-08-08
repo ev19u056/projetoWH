@@ -81,8 +81,8 @@ if __name__ == "__main__":
     dataVal["NN"] = valPredict
     dataTest["NN"] = testPredict
 
-    sig_dataDev = dataDev[dataDev.category==1];     bkg_dataDev = dataDev[dataDev.category==0]      # separar sig e bkg em dataDev
-    sig_dataVal = dataVal[dataVal.category==1];    bkg_dataVal = dataVal[dataVal.category==0]       # separar sig e bkg em dataVal
+    sig_dataDev = dataDev[dataDev.category==1];     bkg_dataDev = dataDev[dataDev.category == 0]      # separar sig e bkg em dataDev
+    sig_dataVal = dataVal[dataVal.category == 1];    bkg_dataVal = dataVal[dataVal.category == 0]       # separar sig e bkg em dataVal
     sig_dataTest = dataTest[dataTest.category==1];    bkg_dataTest = dataTest[dataTest.category==0]    # separar sig e bkg em dataTest
 
     if args.allPlots:
@@ -194,7 +194,7 @@ if __name__ == "__main__":
 
     # PLOTTING FOM AND Efficiency
     if args.efficiencyAndFOM:
-        from commonFunctions import FOM1, FOM2, FullFOM, getYields
+        from commonFunctions import FullFOM, getYields
 
         fomEvo = []
         fomCut = []
@@ -202,17 +202,18 @@ if __name__ == "__main__":
         bkgEff = []
         sigEff = []
 
-        sig_Init = dataVal[dataVal.category == 1].EventWeight.sum() * luminosity * 3
-        bkg_Init = dataVal[dataVal.category == 0].EventWeight.sum() * luminosity * 3
+        sig_Init = sig_dataTest.EventWeight.sum() * luminosity * 3
+        bkg_Init =  bkg_dataTest.EventWeight.sum() * luminosity * 3
 
         for cut in np.arange(0.0, 0.9999, 0.001):
-            sig, bkg = getYields(dataVal, cut=cut)#, luminosity=luminosity)
+            # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
+            sig, bkg = getYields(dataTest, cut=cut, luminosity=luminosity)
             if sig[0] > 0 and bkg[0] > 0:
-                fom, fomUnc = FullFOM(sig, bkg)
+                fom, fomUnc = FullFOM(sig, bkg) # return (fom, fomErr)
                 fomEvo.append(fom)
                 fomCut.append(cut)
-                bkgEff.append(bkg[0]/bkg_Init)
-                sigEff.append(sig[0]/sig_Init)
+                bkgEff.append(bkg[0]/bkg_Init) # bkg efficiency ???
+                sigEff.append(sig[0]/sig_Init) # sig efficiency ???
 
         max_FOM=0.0
 
@@ -222,12 +223,10 @@ if __name__ == "__main__":
 
         # SAVE VALUES OF FOM EVO AND CUT TO DO A FOM SUMMARY
         f= open(plots_path+"FOM_evo_data.txt","w+")
-
         f.write("\n".join(map(str,fomEvo)))
         f.close()
 
         f= open(plots_path+"FOM_cut_data.txt","w+")
-
         f.write("\n".join(map(str,fomCut)))
         f.close()
 
@@ -238,25 +237,24 @@ if __name__ == "__main__":
             if max_FOM != 0.0:
                 print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
             else:
-                print "Unexpected Value: max_FOM == 0.0"
+                print "ERROR: An unexpected Value: max_FOM == 0.0"
 
-            tmpSig, tmpBkg = getYields(dataVal)
+            # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
+            tmpSig, tmpBkg = getYields(dataTest)
             sigYield, sigYieldUnc = tmpSig
             bkgYield, bkgYieldUnc = tmpBkg
 
-            selectedVal = dataVal[dataVal.NN>fomCut[fomEvo.index(max_FOM)]]
-            selectedSig = selectedVal[selectedVal.category == 1]
-            selectedBkg = selectedVal[selectedVal.category == 0]
-            sigYield = selectedSig.EventWeight.sum()
-            bkgYield = selectedBkg.EventWeight.sum()
-            sigYield = sigYield * luminosity * 3          #The factor 2 comes from the splitting
-            bkgYield = bkgYield * luminosity * 3
+            selectedTest = dataTest[dataTest.NN>fomCut[fomEvo.index(max_FOM)]]
+            selectedSig = selectedTest[selectedTest.category == 1]
+            selectedBkg = selectedTest[selectedTest.category == 0]
+            sigYield = selectedSig.EventWeight.sum() * luminosity * 3  #The factor 3 comes from the splitting
+            bkgYield = selectedBkg.EventWeight.sum() * luminosity * 3
 
             print "Selected events left after cut @", fomCut[fomEvo.index(max_FOM)]
             print "   Number of selected Signal Events:", len(selectedSig)
             print "   Number of selected Background Events:", len(selectedBkg)
-            print "   Sig Yield", sigYield
-            print "   Bkg Yield", bkgYield
+            print "   Sig Yield:", sigYield
+            print "   Bkg Yield:", bkgYield
 
         plt.figure(figsize=(7,6))
         plt.subplots_adjust(hspace=0.5)
@@ -265,14 +263,20 @@ if __name__ == "__main__":
         plt.plot(fomCut, fomEvo, linewidth = 0.5)
         plt.title("FOM")
         plt.ylabel("FOM")
-        plt.xlabel("ND")
+        plt.xlabel("ND")    # O que significa ND ???
         plt.legend(["Max. FOM: {0}".format(max_FOM)], loc='best')
         plt.grid()
 
         plt.subplot(212)
-        plt.semilogy(fomCut, Eff , linewidth = 0.5)
+        plt.semilogy(fomCut, Eff , linewidth = 0.5) # Eff = zip(bkgEff, sigEff)
+
+        # axvspan(xmin, xmax, ymin=0, ymax=1, **kwargs)
+        # Draw a vertical span (rectangle) from xmin to xmax. With the default values of ymin = 0 and ymax = 1.
         plt.axvspan(fomCut[fomEvo.index(max_FOM)], 1, facecolor='#2ca02c', alpha=0.3)
-        #plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
+
+        # axvline(x=0, ymin=0, ymax=1, **kwargs)
+        # Add a vertical line across the axes.
+        plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
         plt.title("Efficiency")
         plt.ylabel("Eff")
         plt.xlabel("ND")
@@ -283,7 +287,6 @@ if __name__ == "__main__":
         if args.preview:
             plt.show()
         plt.close()
-
 
         #SAME BUT ZOOMED IN , NO LOG yscale
         plt.figure(figsize=(7,6))
@@ -302,9 +305,11 @@ if __name__ == "__main__":
         plt.subplot(212)
         plt.plot(fomCut, Eff , linewidth = 0.3)
         plt.xlim(0.95 , 1.01)
+
+        # Get or set the current tick locations and labels of the x-axis.
         plt.xticks(np.arange(0.95 , 1.01, step = 0.01))
         plt.axvspan(fomCut[fomEvo.index(max_FOM)], 1, facecolor='#2ca02c', alpha=0.3)
-        #plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
+        plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
         plt.title("Efficiency")
         plt.ylabel("Eff")
         plt.xlabel("ND")
@@ -330,6 +335,7 @@ if __name__ == "__main__":
 
         plt.plot(fprDev, tprDev, '--')
         plt.plot(fprVal, tprVal, linewidth=0.5)
+        plt.grid()
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
         plt.title('ROC curve')
