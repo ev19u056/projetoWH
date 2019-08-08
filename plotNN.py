@@ -325,7 +325,7 @@ if __name__ == "__main__":
     if args.areaUnderROC:
         from sklearn.metrics import roc_auc_score, roc_curve
 
-        # roc_auc_score(y_true, y_score, average=’macro’, sample_weight=None, max_fpr=None)
+        # roc_auc_score(y_true, y_score, average='macro', sample_weight=None, max_fpr=None)
         # Compute Area Under the Receiver Operating Characteristic Curve (ROC AUC) from prediction scores.
         # Returns: auc (float)
         roc_integralDev = roc_auc_score(dataDev.category, dataDev.NN)
