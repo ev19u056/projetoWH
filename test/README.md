@@ -57,3 +57,9 @@
  
  **Model_Ver_20** : Neuron-Layers: 53 54 60 30 20 10 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 120 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 27.4933407095 ; Weight Initializer: glorot_uniform   
  
+ 
+ **Model_Ver_21** : Neuron-Layers: 53 54 60 30 20 10 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 120 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 30.966058075 ; Weight Initializer: glorot_uniform   
+ 
+ 
+ **Model_Ver_22** : Neuron-Layers: 53 54 60 30 20 10 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 120 ; Initial_lr: 0.003 ; Final_lr: <tf.Variable 'Adam/lr:0' shape=() dtype=float32_ref>; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 30.3779066976 ; Weight Initializer: glorot_uniform   
+ 
