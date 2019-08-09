@@ -125,7 +125,7 @@ if __name__ == "__main__":
         plt.plot(acc)
         plt.plot(val_acc)
         plt.grid()
-        plt.ylim(0.7,0.9)
+        plt.ylim(0.8,0.9)
         plt.title('Model accuracy')
         plt.ylabel('Accuracy')
         #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))

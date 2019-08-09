@@ -211,12 +211,14 @@ if __name__ == "__main__":
         plt.subplot(2,1,1)
         plotter(filepath+"accuracy/acc_"+name+".pickle","accuracy",name+"'s accuracy")
         plotter(filepath+"accuracy/val_acc_"+name+".pickle","Val accuracy",name+"'s Accuracy")
+        plt.grid()
         plt.legend(['train', 'val'], loc='upper left')
         #plt.savefig(filepath+"accuracy/Accuracy.pdf")
 
         plt.subplot(2,1,2)
         plotter(filepath+"loss/loss_"+name+".pickle","loss",name +"loss function")
         plotter(filepath+"loss/val_loss_"+name+".pickle","loss Validation",name+"'s Loss")
+        plt.grid()
         plt.legend(['train', 'val'], loc='upper left')
         #plt.savefig(filepath + "loss/Loss_Validation.pdf")
 
