@@ -104,7 +104,7 @@ if __name__ == "__main__":
     # Compile
     model.compile(**compileArgs)
 
-    callbacks = [EarlyStopping(patience=10, verbose=True, restore_best_weights=True), ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, verbose=True, min_delta=0.0001, cooldown=0, min_lr=0)]
+    callbacks = [EarlyStopping(patience=10, verbose=True), ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, verbose=True, min_delta=0.0001, cooldown=0, min_lr=0), ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True)]
     # Fitting the Model -> TRAINING
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
     history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True,callbacks=callbacks, **trainParams)
@@ -129,7 +129,7 @@ if __name__ == "__main__":
         print "Training took ", time.time()-start, " seconds"
 
     # Saving the trainned model and its weights
-    model.save(filepath+name+".h5") # model weights
+    # model.save(filepath+name+".h5") # model weights
     model_json = model.to_json()    # model structure
     with open(filepath+name + ".json", "w") as json_file:
       json_file.write(model_json)
