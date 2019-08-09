@@ -6,12 +6,12 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import keras
 from keras import *
-from keras.optimizers import Adam, Nadam
+from keras.optimizers import Adam#, Nadam
 import time
 import pandas
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, AlphaDropout
-from keras.callbacks import EarlyStopping, ModelCheckpoint
+from keras.layers import Dense#, Dropout, AlphaDropout
+from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 
 ''' copy to your folder and adapt commonFunctions.py'''
 from commonFunctions import assure_path_exists, plotter, getYields, FullFOM#, myClassifier, gridClassifier, getDefinedClassifier,
