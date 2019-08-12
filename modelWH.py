@@ -30,6 +30,7 @@ if __name__ == "__main__":
 
     ## Input arguments. Pay speciall attention to the required ones.
     parser = argparse.ArgumentParser(description='Process the command line options')
+    parser.add_argument('-z', '--batch', action='store_true', help='Whether this is a batch job, if it is, no interactive questions will be asked and answers will be assumed')
     parser.add_argument('-v', '--verbose', action='store_true', help='Whether to print verbose output')
     parser.add_argument('-e', '--epochs', type=int, required=True, help='Number of epochs')
     parser.add_argument('-a', '--batchSize', type=int, required=True, help='Batch size')
