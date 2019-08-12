@@ -35,7 +35,7 @@ nrows_WqqWlv = 334495;      XS_WqqWlv = 50.64
 
 ttbar_fraction = 1.0/10.0
 WJets_fraction = 1.0/40.0
-fraction = 0.1
+fraction = 0.3
 chunksize = 1000
 
 def chunkReader(tmp):

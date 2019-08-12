@@ -5,10 +5,6 @@ Functions used in different files are gathered here to avoid redundance.
 import os
 import pandas
 import numpy as np
-#from keras.models import Sequential
-#from keras.layers import Dense, Dropout, AlphaDropout
-#from keras.optimizers import Adam, Nadam
-#from keras.regularizers import l1,l2
 from math import log
 
 def FOM1(sIn, bIn):
@@ -72,3 +68,21 @@ def plotter(path,Ylabel,Title):
     plt.xlabel("Epochs")
     plt.legend()
     plt.title(Title)
+
+# Classifiers
+
+from keras.models import Sequential
+from keras.layers import Dense, Dropout, AlphaDropout
+from keras.optimizers import Adam, Nadam
+from keras.regularizers import l1,l2
+
+def getDefinedClassifier(nIn, nOut, compileArgs, neurons, layers, dropout_rate=0, regularizer=0):
+  model = Sequential()
+  model.add(Dense(neurons, input_dim=nIn, kernel_initializer='he_normal', activation='relu', kernel_regularizer=l2(regularizer)))
+  #model.add(Dropout(dropout_rate))
+  for i in range(0,layers-1):
+      model.add(Dense(neurons, kernel_initializer='he_normal', activation='relu', kernel_regularizer=l2(regularizer)))
+      #model.add(Dropout(dropout_rate))
+  model.add(Dense(nOut, activation="sigmoid", kernel_initializer='glorot_normal', kernel_regularizer=l2(regularizer)))
+  model.compile(**compileArgs)
+  return model
