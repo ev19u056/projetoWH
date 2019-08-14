@@ -59,6 +59,7 @@ if __name__ == "__main__":
     parser.add_argument('-l', '--List', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 53, output always 1)')
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
     parser.add_argument('-ini', '--initializer', type=str, default="he_normal", help='Kernel Initializer for hidden layers')
+    parser.add_argument('-bN','--batchNorm', action='store_true',help='Wether to use Batch Normalization')
 
     args = parser.parse_args()
 
@@ -110,27 +111,26 @@ if __name__ == "__main__":
     ## EXERCISE 2: Create your NN model
     model = Sequential()
 
-    '''
-    model.add(Dense(int(architecture[0]), input_dim=53, activation=act , kernel_initializer=ini)) # input + 1st hidden layer
-    i=1
-    while i < len(architecture) :
-        model.add(Dense(int(architecture[i]), activation=act , kernel_initializer=ini))
-        i=i+1
-    model.add(Dense(1, activation='sigmoid',kernel_initializer='glorot_normal')) # output
-    '''
-
-    model.add(Dense(int(architecture[0]),use_bias=False, input_dim=53, kernel_initializer=ini)) # input + 1st hidden layer
-    model.add(BatchNormalization())
-    model.add(Activation(act))
-    i=1
-    while i < len(architecture):
-        model.add(Dense(int(architecture[i]),use_bias=False, kernel_initializer=ini))
+    if args.batchNorm:
+        model.add(Dense(int(architecture[0]), input_dim=53, activation=act , kernel_initializer=ini)) # input + 1st hidden layer
+        i=1
+        while i < len(architecture) :
+            model.add(Dense(int(architecture[i]), activation=act , kernel_initializer=ini))
+            i=i+1
+        model.add(Dense(1, activation='sigmoid',kernel_initializer='glorot_normal')) # output
+    else:
+        model.add(Dense(int(architecture[0]),use_bias=False, input_dim=53, kernel_initializer=ini)) # input + 1st hidden layer
         model.add(BatchNormalization())
         model.add(Activation(act))
-        i=i+1
-    model.add(Dense(1, use_bias=False,kernel_initializer='glorot_normal')) # output
-    model.add(BatchNormalization())
-    model.add(Activation('sigmoid'))
+        i=1
+        while i < len(architecture):
+            model.add(Dense(int(architecture[i]),use_bias=False, kernel_initializer=ini))
+            model.add(BatchNormalization())
+            model.add(Activation(act))
+            i=i+1
+        model.add(Dense(1, use_bias=False,kernel_initializer='glorot_normal')) # output
+        model.add(BatchNormalization())
+        model.add(Activation('sigmoid'))
 
     # Compile
     model.compile(**compileArgs)
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
     # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
-    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, lr_list[-1], regularizer, max_FOM, ini ))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; BatchNormalization: {} ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, args.batchNorm, batch_size, n_epochs, learning_rate, lr_list[-1], regularizer, max_FOM, ini ))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
