@@ -56,7 +56,7 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--regularizer', type=float, default=0, help='Regularizer')
     parser.add_argument('-i', '--iteration', type=int, default=1, help='Iteration number i')
 
-    parser.add_argument('-l', '--list', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 53, output always 1)')
+    parser.add_argument('-l', '--List', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 53, output always 1)')
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
     parser.add_argument('-ini', '--initializer', type=str, default="glorot_uniform", help='Kernel Initializer for hidden layers')
 
@@ -72,8 +72,8 @@ if __name__ == "__main__":
 
     act = args.act # activation function for hidden neurons
     batch_size = args.batchSize
-    list = args.list
-    architecture = list.split()
+    List = args.List
+    architecture = List.split()
     ini = args.initializer
     verbose = 0
     if args.verbose:
@@ -218,8 +218,8 @@ if __name__ == "__main__":
 
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
-    # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
-    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, lrates[-1], regularizer, max_FOM, ini ))
+    # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, lrates[-1], regularizer, max_FOM, ini ))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
