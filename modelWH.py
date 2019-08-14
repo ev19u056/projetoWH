@@ -121,7 +121,7 @@ if __name__ == "__main__":
     model.compile(**compileArgs)
 
     callbacks = [EarlyStopping(patience=15, verbose=True),
-                    ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=True, cooldown=1, min_delta=1E-7, min_lr=0),
+                    ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=True, cooldown=1, min_lr=0), # argument min_delta is not supported
                     ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True),
                     LearningRateMonitor()]
     # Fitting the Model -> TRAINING
