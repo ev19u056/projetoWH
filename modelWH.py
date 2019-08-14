@@ -115,7 +115,7 @@ if __name__ == "__main__":
     while i < len(architecture) :
         model.add(Dense(int(architecture[i]), activation=act , kernel_initializer=ini))
         i=i+1
-    model.add(Dense(1, activation='sigmoid',kernel_initializer=glorot_normal)) # output
+    model.add(Dense(1, activation='sigmoid',kernel_initializer='glorot_normal')) # output
 
     # Compile
     model.compile(**compileArgs)
