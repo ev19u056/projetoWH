@@ -10,7 +10,7 @@ from keras.optimizers import Adam#, Nadam
 import time
 import pandas
 from keras.models import Sequential
-from keras.layers import Dense#, Dropout, AlphaDropout
+from keras.layers import Dense, BatchNormalization#, Dropout, AlphaDropout
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from keras.callbacks import Callback
 from keras import backend
@@ -110,12 +110,27 @@ if __name__ == "__main__":
     ## EXERCISE 2: Create your NN model
     model = Sequential()
 
+    '''
     model.add(Dense(int(architecture[0]), input_dim=53, activation=act , kernel_initializer=ini)) # input + 1st hidden layer
     i=1
     while i < len(architecture) :
         model.add(Dense(int(architecture[i]), activation=act , kernel_initializer=ini))
         i=i+1
     model.add(Dense(1, activation='sigmoid',kernel_initializer='glorot_normal')) # output
+    '''
+
+    model.add(Dense(int(architecture[0]),use_bias=False, input_dim=53, kernel_initializer=ini)) # input + 1st hidden layer
+    model.add(BatchNormalization())
+    model.add(Activation(act))
+    i=1
+    while i < len(architecture):
+        model.add(Dense(int(architecture[i]),use_bias=False, kernel_initializer=ini))
+        model.add(BatchNormalization())
+        model.add(Activation(act))
+        i=i+1
+    model.add(Dense(1, use_bias=False,kernel_initializer='glorot_normal')) # output
+    model.add(BatchNormalization())
+    model.add(Activation('sigmoid'))
 
     # Compile
     model.compile(**compileArgs)
