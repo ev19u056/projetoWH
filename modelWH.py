@@ -234,7 +234,7 @@ if __name__ == "__main__":
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
     # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
-    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; BatchNormalization: {} ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, args.batchNorm, batch_size, n_epochs, learning_rate, lr_list[-1], regularizer, max_FOM, ini ))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; BatchNormalization: {} ; Batch size: {} ; Epochs: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n LR_list: {} ".format(name, List, act, args.batchNorm, batch_size, len(history.history['loss']), regularizer, max_FOM, ini,lr_list))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
