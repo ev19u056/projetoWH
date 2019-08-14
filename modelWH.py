@@ -14,7 +14,7 @@ from keras.layers import Dense#, Dropout, AlphaDropout
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 
 ''' copy to your folder and adapt commonFunctions.py'''
-from commonFunctions import assure_path_exists, plotter, getYields, FullFOM#, myClassifier, gridClassifier, getDefinedClassifier,
+from commonFunctions import assure_path_exists, plotter, getYields, FullFOM, LearningRateMonitor#, myClassifier, gridClassifier, getDefinedClassifier,
 import matplotlib.pyplot as plt
 #from scipy.stats import ks_2samp
 
@@ -104,10 +104,15 @@ if __name__ == "__main__":
     # Compile
     model.compile(**compileArgs)
 
-    callbacks = [EarlyStopping(patience=10, verbose=True), ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, verbose=True, cooldown=1, min_lr=0), ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True)]
+    callbacks = [EarlyStopping(patience=15, verbose=True),
+                    ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=True, cooldown=1, min_delta=1E-7, min_lr=0),
+                    ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True),
+                    LearningRateMonitor()]
     # Fitting the Model -> TRAINING
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
     history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True,callbacks=callbacks, **trainParams)
+
+    lrates = LearningRateMonitor.lrates
 
     acc = history.history['acc']
     val_acc = history.history['val_acc']
@@ -198,7 +203,7 @@ if __name__ == "__main__":
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
     # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
-    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, model.optimizer.lr, regularizer, max_FOM, ini ))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, list, act, batch_size, n_epochs, learning_rate, lrates[-1], regularizer, max_FOM, ini ))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 

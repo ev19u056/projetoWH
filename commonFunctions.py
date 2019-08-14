@@ -7,6 +7,20 @@ import pandas
 import numpy as np
 from math import log
 
+# a custom Callback
+# monitor the learning rate
+class LearningRateMonitor(Callback):
+	# start of training
+	def on_train_begin(self, logs={}):
+		self.lrates = list()
+
+	# end of each training epoch
+	def on_epoch_end(self, epoch, logs={}):
+		# get and store the learning rate
+		optimizer = self.model.optimizer
+		lrate = float(backend.get_value(self.model.optimizer.lr))
+		self.lrates.append(lrate)
+
 def FOM1(sIn, bIn):
     s, sErr = sIn
     b, bErr = bIn
