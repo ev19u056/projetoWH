@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     parser.add_argument('-l', '--List', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 53, output always 1)')
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
-    parser.add_argument('-ini', '--initializer', type=str, default="glorot_uniform", help='Kernel Initializer for hidden layers')
+    parser.add_argument('-ini', '--initializer', type=str, default="he_normal", help='Kernel Initializer for hidden layers')
 
     args = parser.parse_args()
 
@@ -120,15 +120,15 @@ if __name__ == "__main__":
     # Compile
     model.compile(**compileArgs)
 
+    lrm = LearningRateMonitor()
     callbacks = [EarlyStopping(patience=15, verbose=True),
                     ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=True, cooldown=1, min_lr=0), # argument min_delta is not supported
-                    ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True),
-                    LearningRateMonitor()]
+                    ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True), lrm]
     # Fitting the Model -> TRAINING
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
     history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True,callbacks=callbacks, **trainParams)
 
-    lrates = LearningRateMonitor.lrates
+    lr_list = lrm.lrates
 
     acc = history.history['acc']
     val_acc = history.history['val_acc']
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
     # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
-    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, lrates[-1], regularizer, max_FOM, ini ))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Initial_lr: {} ; Final_lr: {}; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, lr_list[-1], regularizer, max_FOM, ini ))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
