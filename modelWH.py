@@ -10,7 +10,7 @@ from keras.optimizers import Adam#, Nadam
 import time
 import pandas
 from keras.models import Sequential
-from keras.layers import Dense, BatchNormalization#, Dropout, AlphaDropout
+from keras.layers import Dense, BatchNormalization, Activation#, Dropout, AlphaDropout
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from keras.callbacks import Callback
 from keras import backend
