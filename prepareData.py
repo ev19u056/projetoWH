@@ -20,7 +20,7 @@ def chunkReader(tmp):
         result = result.append(chunk)
     return result
 
-def dataLoader(fraction=0.3, filepath, name):
+def dataLoader(filepath, name,fraction=0.3):
 
     if fraction > 1.0 or fraction <= 0.0:
 		raise ValueError("An invalid fraction was chosen")
@@ -191,4 +191,4 @@ iteration = 28
 name ="Model_Ver_"+str(iteration)
 filepath = cfg.lgbk+"test/"+name+"/"
 
-dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(fraction, filepath, name)
+dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, name,fraction)
