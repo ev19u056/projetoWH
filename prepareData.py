@@ -148,12 +148,12 @@ def dataLoader(filepath, name,fraction=0.3):
     f=open(filepath + "prepareData_" + name + ".txt", "w")
     f.write("{}\n".format(fraction))
     f.write("Development: {}\n".format(len(dataDev)))
-    f.write("qqWlvHbbJ_PwPy8MINLO_ade.csv:  {} lines     {} \n".format(int(nrows_signal*fraction), 100.0*fraction))
-    f.write("stopWt_PwPy8_ade.csv:          {} lines     {} \n".format(int(nrows_stopWt*fraction), 100.0*fraction))
-    f.write("ttbar_nonallhad_PwPy8_ade.csv: {} lines     {} \n".format(int((nrows_ttbar*ttbar_fraction)*fraction), 100.0*ttbar_fraction*fraction))
-    f.write("WlvZqq_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WlvZqq*fraction), 100.0*fraction))
-    f.write("WqqWlv_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WqqWlv*fraction), 100.0*fraction))
-    f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int(nrows_Wjets*WJets_fraction), 100.0*WJets_fraction*fraction))
+    f.write("qqWlvHbbJ_PwPy8MINLO_ade.csv:  {} lines     {} \n".format(int(nrows_signal*fraction), fraction))
+    f.write("stopWt_PwPy8_ade.csv:          {} lines     {} \n".format(int(nrows_stopWt*fraction), fraction))
+    f.write("ttbar_nonallhad_PwPy8_ade.csv: {} lines     {} \n".format(int((nrows_ttbar*ttbar_fraction)*fraction), ttbar_fraction*fraction))
+    f.write("WlvZqq_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WlvZqq*fraction), fraction))
+    f.write("WqqWlv_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WqqWlv*fraction), fraction))
+    f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int(nrows_Wjets*WJets_fraction), WJets_fraction*fraction))
 
     print "Fitting the scaler and scaling the input variables ..."
     scaler = StandardScaler().fit(XDev[scalingFeatures])
