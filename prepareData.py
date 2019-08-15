@@ -147,7 +147,7 @@ def dataLoader(filepath, name,fraction=0.3):
     # Creating a text file where all of the prepareData caracteristics are displayed
     f=open(filepath + "prepareData_" + name + ".txt", "w")
     f.write("{}\n".format(fraction))
-    f.write("Development: {}\n".format(len(dataDev)))
+    #f.write("Development: {}\n".format(len(dataDev)))
     f.write("qqWlvHbbJ_PwPy8MINLO_ade.csv:  {} lines     {} \n".format(int(nrows_signal*fraction), fraction))
     f.write("stopWt_PwPy8_ade.csv:          {} lines     {} \n".format(int(nrows_stopWt*fraction), fraction))
     f.write("ttbar_nonallhad_PwPy8_ade.csv: {} lines     {} \n".format(int((nrows_ttbar*ttbar_fraction)*fraction), ttbar_fraction*fraction))
@@ -156,10 +156,16 @@ def dataLoader(filepath, name,fraction=0.3):
     f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int(nrows_Wjets*WJets_fraction), WJets_fraction*fraction))
 
     print "Fitting the scaler and scaling the input variables ..."
+    '''
     scaler = StandardScaler().fit(XDev[scalingFeatures])
     XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
     XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
     XTest[scalingFeatures] = scaler.transform(XTest[scalingFeatures])
+    '''
+    scaler = StandardScaler().fit(XDev)
+    XDev = scaler.transform(XDev)
+    XVal = scaler.transform(XVal)
+    XTest = scaler.transform(XTest)
     #scalerfile = 'scaler_'+train_DM+'.sav'
     #joblib.dump(scaler, scalerfile)
 
