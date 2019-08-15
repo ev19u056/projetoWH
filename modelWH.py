@@ -41,7 +41,6 @@ class LearningRateMonitor(Callback):
 		self.lrates.append(lrate)
 
 if __name__ == "__main__":
-    
     import argparse
     import sys
 
