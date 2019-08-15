@@ -148,12 +148,12 @@ def dataLoader(filepath, name,fraction=0.3):
     f=open(filepath + "prepareData_" + name + ".txt", "w")
     f.write("{}\n".format(fraction))
     f.write("Development: {}\n".format(len(dataDev)))
-    f.write("qqWlvHbbJ_PwPy8MINLO_ade.csv:  {0:.0f} lines     {0:.2f} \n".format(int(nrows_signal*fraction), 100.0*fraction))
-    f.write("stopWt_PwPy8_ade.csv:          {0:.0f} lines     {0:.2f} \n".format(int(nrows_stopWt*fraction), 100.0*fraction))
-    f.write("ttbar_nonallhad_PwPy8_ade.csv: {0:.0f} lines     {0:.2f} \n".format(int((nrows_ttbar*ttbar_fraction)*fraction), 100.0*ttbar_fraction*fraction))
-    f.write("WlvZqq_Sh221_ade.csv:          {0:.0f} lines     {0:.2f} \n".format(int(nrows_WlvZqq*fraction), 100.0*fraction))
-    f.write("WqqWlv_Sh221_ade.csv:          {0:.0f} lines     {0:.2f} \n".format(int(nrows_WqqWlv*fraction), 100.0*fraction))
-    f.write("WJets_Sh221.csv:               {0:.0f} lines     {0:.2f} \n".format(int(nrows_Wjets*WJets_fraction), 100.0*WJets_fraction*fraction))
+    f.write("qqWlvHbbJ_PwPy8MINLO_ade.csv:  {} lines     {} \n".format(int(nrows_signal*fraction), 100.0*fraction))
+    f.write("stopWt_PwPy8_ade.csv:          {} lines     {} \n".format(int(nrows_stopWt*fraction), 100.0*fraction))
+    f.write("ttbar_nonallhad_PwPy8_ade.csv: {} lines     {} \n".format(int((nrows_ttbar*ttbar_fraction)*fraction), 100.0*ttbar_fraction*fraction))
+    f.write("WlvZqq_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WlvZqq*fraction), 100.0*fraction))
+    f.write("WqqWlv_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WqqWlv*fraction), 100.0*fraction))
+    f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int(nrows_Wjets*WJets_fraction), 100.0*WJets_fraction*fraction))
 
     print "Fitting the scaler and scaling the input variables ..."
     scaler = StandardScaler().fit(XDev[scalingFeatures])
@@ -188,7 +188,7 @@ def dataLoader(filepath, name,fraction=0.3):
 
     return dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest
 
-fraction = 0.1
+fraction = 0.01
 iteration = 28
 name ="Model_Ver_"+str(iteration)
 filepath = cfg.lgbk+"test/"+name+"/"
