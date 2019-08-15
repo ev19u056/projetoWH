@@ -70,7 +70,7 @@ if __name__ == "__main__":
     my_decay = args.decay
     dropout_rate = args.dropoutRate
     regularizer = args.regularizer
-    iteration = args.iteration
+	iteration = args.iteration
 
     act = args.act # activation function for hidden neurons
     batch_size = args.batchSize
