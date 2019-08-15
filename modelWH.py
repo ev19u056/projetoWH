@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 import localConfig as cfg
 import pickle   # This module is used for serializing and de-serializing a Python object structure
 
-from prepareData import *
+from prepareData import dataLoader
 
 # a custom Callback
 # monitor the learning rate
@@ -59,7 +59,8 @@ if __name__ == "__main__":
     parser.add_argument('-l', '--List', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 53, output always 1)')
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
     parser.add_argument('-ini', '--initializer', type=str, default="he_normal", help='Kernel Initializer for hidden layers')
-    parser.add_argument('-bN','--batchNorm', action='store_true',help='Wether to use Batch Normalization')
+    parser.add_argument('-bN', '--batchNorm', action='store_true',help='Wether to use Batch Normalization')
+	parser.add_argument('-f', '--fraction', type=float, default=0.3, help='The fraction of available data to be loaded' )
 
     args = parser.parse_args()
 
@@ -76,6 +77,8 @@ if __name__ == "__main__":
     List = args.List
     architecture = List.split()
     ini = args.initializer
+	fraction = args.fraction
+
     verbose = 0
     if args.verbose:
         verbose = 1
@@ -100,8 +103,10 @@ if __name__ == "__main__":
 
     if os.path.exists(filepath) == False:
         os.mkdir(filepath)
-    os.chdir(filepath)
 
+	_, _, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(fraction, filepath, name)
+
+	os.chdir(filepath)
     # Printing stuff and starting time
     if args.verbose:
         print("Dir "+filepath+" created.")
@@ -111,7 +116,9 @@ if __name__ == "__main__":
     ## EXERCISE 2: Create your NN model
     model = Sequential()
 
-    if args.batchNorm:
+    if not args.batchNorm:
+		if args.verbose:
+			print("# WARNING: No BatchNormalization!")
         model.add(Dense(int(architecture[0]), input_dim=53, activation=act , kernel_initializer=ini)) # input + 1st hidden layer
         i=1
         while i < len(architecture) :
@@ -119,6 +126,8 @@ if __name__ == "__main__":
             i=i+1
         model.add(Dense(1, activation='sigmoid',kernel_initializer='glorot_normal')) # output
     else:
+		if args.verbose:
+			print("# WARNING: BatchNormalization will be used!")
         model.add(Dense(int(architecture[0]),use_bias=False, input_dim=53, kernel_initializer=ini)) # input + 1st hidden layer
         model.add(BatchNormalization())
         model.add(Activation(act))
@@ -143,6 +152,11 @@ if __name__ == "__main__":
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
     history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True,callbacks=callbacks, **trainParams)
 
+	# Time of the training
+	training_time = time.time()-start
+    if args.verbose:
+        print "Training took ", training_time, " seconds"
+
     lr_list = lrm.lrates
 
     acc = history.history['acc']
@@ -159,10 +173,6 @@ if __name__ == "__main__":
     pickle.dump(loss, open(filepath+"loss/loss_"+name+".pickle", "wb"))
     pickle.dump(val_acc, open(filepath+"accuracy/val_acc_"+name+".pickle", "wb"))
     pickle.dump(val_loss, open(filepath+"loss/val_loss_"+name+".pickle", "wb"))
-
-    # Time of the training
-    if args.verbose:
-        print "Training took ", time.time()-start, " seconds"
 
     # Saving the trainned model
     model_json = model.to_json()    # model structure
@@ -234,10 +244,11 @@ if __name__ == "__main__":
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
     # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
-    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; BatchNormalization: {} ; Batch size: {} ; Epochs: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}\n LR_list: {}\n".format(name, List, act, args.batchNorm, batch_size, len(history.history['loss']), regularizer, max_FOM, ini,lr_list))
+    f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; BatchNormalization: {} ; Batch size: {} ; Epochs: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}\nLR_list: {}\n".format(name, List, act, args.batchNorm, batch_size, len(history.history['loss']), regularizer, max_FOM, ini,lr_list))
     f.write("Dev_loss:  {}   Dev_acc:  {}\n".format(scoreDev[0], scoreDev[1]))
     f.write("Val_loss:  {}   Val_acc:  {}\n".format(scoreVal[0], scoreVal[1]))
     f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
+	f.write("Training_time: {} s\n".format(training_time))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
