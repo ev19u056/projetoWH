@@ -248,7 +248,7 @@ if __name__ == "__main__":
     f.write("Dev_loss:  {}   Dev_acc:  {}\n".format(scoreDev[0], scoreDev[1]))
     f.write("Val_loss:  {}   Val_acc:  {}\n".format(scoreVal[0], scoreVal[1]))
     f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
-	f.write("Training_time: {} s\n".format(training_time))
+	f.write("Training_time: {0:.2f}\n".format(training_time))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
