@@ -41,6 +41,7 @@ class LearningRateMonitor(Callback):
 		self.lrates.append(lrate)
 
 if __name__ == "__main__":
+    
     import argparse
     import sys
 
@@ -60,7 +61,7 @@ if __name__ == "__main__":
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
     parser.add_argument('-ini', '--initializer', type=str, default="he_normal", help='Kernel Initializer for hidden layers')
     parser.add_argument('-bN', '--batchNorm', action='store_true',help='Wether to use Batch Normalization')
-	#parser.add_argument('-f', '--fraction', type=float, default=0.3, help='The fraction of available data to be loaded')
+	parser.add_argument('-f', '--fraction', type=float, default=0.3, help='The fraction of available data to be loaded')
 
     args = parser.parse_args()
 
@@ -71,14 +72,12 @@ if __name__ == "__main__":
     dropout_rate = args.dropoutRate
     regularizer = args.regularizer
 	iteration = args.iteration
-
     act = args.act # activation function for hidden neurons
     batch_size = args.batchSize
     List = args.List
     architecture = List.split()
     ini = args.initializer
-	#fraction = args.fraction
-	fraction = 0.1
+	fraction = args.fraction
 
     verbose = 0
     if args.verbose:
