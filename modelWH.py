@@ -103,7 +103,7 @@ if __name__ == "__main__":
     if os.path.exists(filepath) == False:
         os.mkdir(filepath)
 
-	dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(fraction, filepath, name)
+	dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, name, fraction)
 
 	os.chdir(filepath)
     # Printing stuff and starting time
