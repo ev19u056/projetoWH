@@ -60,7 +60,7 @@ if __name__ == "__main__":
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
     parser.add_argument('-ini', '--initializer', type=str, default="he_normal", help='Kernel Initializer for hidden layers')
     parser.add_argument('-bN', '--batchNorm', action='store_true',help='Wether to use Batch Normalization')
-	parser.add_argument('-f', '--fraction', type=float, default=0.3, help='The fraction of available data to be loaded' )
+	parser.add_argument('-f', '--fraction', type=float, default=0.3, help='The fraction of available data to be loaded')
 
     args = parser.parse_args()
 
