@@ -76,11 +76,11 @@ if __name__ == "__main__":
     List = args.List
     architecture = List.split()
     ini = args.initializer
-	fraction = args.fraction
+	#fraction = args.fraction
 
     verbose = 0
     if args.verbose:
-        verbose = 1
+		verbose = 1
 
     ## Model compile arguments, training parameters and optimizer.
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 	os.chdir(filepath)
     # Printing stuff and starting time
     if args.verbose:
-        print("Dir "+filepath+" created.")
+		print("Dir "+filepath+" created.")
         print("Starting the training")
         start = time.time()
 
