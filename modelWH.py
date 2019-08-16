@@ -27,16 +27,16 @@ from prepareData import dataLoader
 # a custom Callback
 # monitor the learning rate
 class LearningRateMonitor(Callback):
-	# start of training
-	def on_train_begin(self, logs={}):
-		self.lrates = list()
+    # start of training
+    def on_train_begin(self, logs={}):
+        self.lrates = list()
 
-	# end of each training epoch
-	def on_epoch_end(self, epoch, logs={}):
-		# get and store the learning rate
-		optimizer = self.model.optimizer
-		lrate = float(backend.get_value(self.model.optimizer.lr))
-		self.lrates.append(lrate)
+    # end of each training epoch
+    def on_epoch_end(self, epoch, logs={}):
+        # get and store the learning rate
+        optimizer = self.model.optimizer
+        lrate = float(backend.get_value(self.model.optimizer.lr))
+        self.lrates.append(lrate)
 
 if __name__ == "__main__":
     import argparse
@@ -100,12 +100,12 @@ if __name__ == "__main__":
     if os.path.exists(filepath) == False:
         os.mkdir(filepath)
 
-    dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, name, fraction)
+    _, _, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, name, fraction)
 
-	os.chdir(filepath)
+    os.chdir(filepath)
     # Printing stuff and starting time
     if args.verbose:
-		print("Dir "+filepath+" created.")
+        print("Dir "+filepath+" created.")
         print("Starting the training")
         start = time.time()
 
@@ -113,8 +113,8 @@ if __name__ == "__main__":
     model = Sequential()
 
     if not args.batchNorm:
-		if args.verbose:
-			print("# WARNING: No BatchNormalization!")
+        if args.verbose:
+            print("# WARNING: No BatchNormalization!")
         model.add(Dense(int(architecture[0]), input_dim=53, activation=act , kernel_initializer=ini)) # input + 1st hidden layer
         i=1
         while i < len(architecture) :
@@ -122,8 +122,8 @@ if __name__ == "__main__":
             i=i+1
         model.add(Dense(1, activation='sigmoid',kernel_initializer='glorot_normal')) # output
     else:
-		if args.verbose:
-			print("# WARNING: BatchNormalization will be used!")
+        if args.verbose:
+            print("# WARNING: BatchNormalization will be used!")
         model.add(Dense(int(architecture[0]),use_bias=False, input_dim=53, kernel_initializer=ini)) # input + 1st hidden layer
         model.add(BatchNormalization())
         model.add(Activation(act))
@@ -148,8 +148,8 @@ if __name__ == "__main__":
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
     history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True,callbacks=callbacks, **trainParams)
 
-	# Time of the training
-	training_time = time.time()-start
+    # Time of the training
+    training_time = time.time()-start
     if args.verbose:
         print "Training took ", training_time, " seconds"
 
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     f.write("Dev_loss:  {}   Dev_acc:  {}\n".format(scoreDev[0], scoreDev[1]))
     f.write("Val_loss:  {}   Val_acc:  {}\n".format(scoreVal[0], scoreVal[1]))
     f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
-	f.write("Training_time: {0:.2f}\n".format(training_time))
+    f.write("Training_time: {0:.2f}\n".format(training_time))
     f.close()
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 

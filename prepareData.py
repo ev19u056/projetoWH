@@ -194,7 +194,7 @@ def dataLoader(filepath, name,fraction):
 
     return dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest
 
-fraction = 0.01
-iteration = 28
-name ="Model_Ver_"+str(iteration)
-filepath = cfg.lgbk+"test/"+name+"/"
+# fraction = 0.01
+# iteration = 28
+# name ="Model_Ver_"+str(iteration)
+# filepath = cfg.lgbk+"test/"+name+"/"
