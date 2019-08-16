@@ -47,7 +47,7 @@ if __name__ == "__main__":
         quit()
 
     f=open(filepath + "/prepareData_" + model_name + ".txt", "r")
-    fraction = int(f.readline())
+    fraction = float(f.readline())
 
     dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, model_name, fraction)
     os.chdir(filepath+"/")
