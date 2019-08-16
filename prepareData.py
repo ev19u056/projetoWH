@@ -25,7 +25,7 @@ def chunkReader(tmp):
 def dataLoader(filepath, name,fraction):
 
     if fraction > 1.0 or fraction <= 0.0:
-		raise ValueError("An invalid fraction was chosen")
+        raise ValueError("An invalid fraction was chosen")
 
     # fix random seed for reproducibility
     seed = 7
