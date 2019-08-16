@@ -22,7 +22,7 @@ def chunkReader(tmp):
         result = result.append(chunk)
     return result
 
-def dataLoader(filepath, name,fraction):
+def dataLoader(filepath, name, fraction):
 
     if fraction > 1.0 or fraction <= 0.0:
         raise ValueError("An invalid fraction was chosen")

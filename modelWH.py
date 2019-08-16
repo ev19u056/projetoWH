@@ -17,6 +17,7 @@ from keras import backend
 
 from commonFunctions import assure_path_exists, plotter, getYields, FullFOM#, myClassifier, gridClassifier, getDefinedClassifier,
 import matplotlib.pyplot as plt
+import numpy as np
 #from scipy.stats import ks_2samp
 
 import localConfig as cfg
