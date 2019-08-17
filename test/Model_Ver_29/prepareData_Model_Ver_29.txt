@@ -1,8 +1,8 @@
-0.35
-qqWlvHbbJ_PwPy8MINLO_ade.csv:  346899 lines     0.35 
-stopWt_PwPy8_ade.csv:          97235 lines     0.35 
-ttbar_nonallhad_PwPy8_ade.csv: 145881 lines     0.035 
-WlvZqq_Sh221_ade.csv:          65938 lines     0.35 
-WqqWlv_Sh221_ade.csv:          117073 lines     0.35 
-WJets_Sh221.csv:               416271 lines     0.00875 
-Preparing DATA took:   90.14s
+0.4
+qqWlvHbbJ_PwPy8MINLO_ade.csv:  396456 lines     0.4 
+stopWt_PwPy8_ade.csv:          111126 lines     0.4 
+ttbar_nonallhad_PwPy8_ade.csv: 166721 lines     0.04 
+WlvZqq_Sh221_ade.csv:          75358 lines     0.4 
+WqqWlv_Sh221_ade.csv:          133798 lines     0.4 
+WJets_Sh221.csv:               416271 lines     0.01 
+Preparing DATA took:   113.86s
