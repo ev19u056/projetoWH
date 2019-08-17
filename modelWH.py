@@ -224,7 +224,7 @@ if __name__ == "__main__":
       if k>max_FOM:
           max_FOM=k
     if args.verbose:
-		luminosity = 139500 # pb^-1
+        luminosity = 139500 # pb^-1
         print "Signal@Presel:", sigDataTest.EventWeight.sum() * luminosity * 3 # The factor 3 comes from the splitting ???
         print "Background@Presel:", bkgDataTest.EventWeight.sum() * luminosity * 3
         print "Signal:", sigYield, "+-", (sigYieldUnc/sigYield)*100, "%"
