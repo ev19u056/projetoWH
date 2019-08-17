@@ -192,8 +192,3 @@ def dataLoader(filepath, name, fraction, luminosity=139500):
     print("Preparing DATA took: {0:.2f}s".format(time.time() - start))
 
     return dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest
-
-# fraction = 0.01
-# iteration = 28
-# name ="Model_Ver_"+str(iteration)
-# filepath = cfg.lgbk+"test/"+name+"/"

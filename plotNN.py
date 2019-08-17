@@ -49,7 +49,7 @@ if __name__ == "__main__":
     f=open(filepath + "/prepareData_" + model_name + ".txt", "r")
     fraction = float(f.readline())
 
-    dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, model_name, fraction)
+    dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath+"/", model_name, fraction)
     os.chdir(filepath+"/")
     plots_path = filepath+"/plots_"+model_name+"/"
     assure_path_exists(plots_path)
