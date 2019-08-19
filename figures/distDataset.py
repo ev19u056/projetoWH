@@ -64,8 +64,8 @@ df_WqqWlv.EventWeight = df_WqqWlv.EventWeight/fraction
 df_WJets.EventWeight = df_WJets.EventWeight/(fraction*WJets_fraction)
 
 i=1
-nRow=2
-nCol=3
+nRow=3
+nCol=2
 k = 1
 figure = plt.figure()
 for var in trainFeatures:
@@ -77,6 +77,7 @@ for var in trainFeatures:
         k += 1
         i = 1
 
+    print var, " is plotting..."
     ax = figure.add_subplot(nRow, nCol,i)
     plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='bar',label='signal')
     plt.hist(df_stopWt[var],weights=df_stopWt['EventWeight'],density=True,stacked=True,histtype='bar',label='stopWt')
@@ -85,7 +86,7 @@ for var in trainFeatures:
     plt.hist(df_WqqWlv[var],weights=df_WqqWlv['EventWeight'],density=True,stacked=True,histtype='bar',label='WqqWlv')
     plt.hist(df_WJets[var],weights=df_WJets['EventWeight'],density=True,stacked=True,histtype='bar',label='WJets')
 
-    plt.legend(prop={'size': 10})
+    plt.legend(loc='best')
     plt.grid(True)
     plt.title(var)
     i += 1
