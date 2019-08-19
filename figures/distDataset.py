@@ -72,7 +72,7 @@ tmp = []
 for var in trainFeatures:
     if (i == 5):
         plt.tight_layout()
-        plt.savefig(filepath+'_'.join(tmp)+'.pdf', bbox_inches='tight')
+        plt.savefig(filepath+str(k)+'_'+'_'.join(tmp)+'.pdf', bbox_inches='tight')
         plt.close()
         figure = plt.figure()
         del tmp [:];    tmp = []
