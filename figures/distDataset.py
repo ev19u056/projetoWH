@@ -63,6 +63,44 @@ df_WlvZqq.EventWeight = df_WlvZqq.EventWeight/fraction
 df_WqqWlv.EventWeight = df_WqqWlv.EventWeight/fraction
 df_WJets.EventWeight = df_WJets.EventWeight/(fraction*WJets_fraction)
 
+bkg = None
+for tmp in [df_stopWt,df_ttbar,df_WlvZqq,df_WqqWlv,df_WJets]:
+    if bkg is None:
+        bkg = pd.DataFrame(tmp)
+        del tmp
+    else:
+        bkg = bkg.append(pd.DataFrame(tmp),ignore_index=True)
+        del tmp
+del df_stopWt, df_ttbar, df_WlvZqq, df_WqqWlv, df_WJets
+
+i=1
+nRow=2
+nCol=2
+k = 1
+figure = plt.figure()
+tmp = []
+filepath += 'sig_bkg/'
+for var in trainFeatures:
+    if (i == 5):
+        plt.tight_layout()
+        plt.savefig(filepath+str(k)+'_'+'_'.join(tmp)+'.pdf', bbox_inches='tight')
+        plt.close()
+        figure = plt.figure()
+        del tmp [:];    tmp = []
+        k += 1
+        i = 1
+    tmp.append(var)
+    print k, var, " is plotting..."
+    ax = figure.add_subplot(nRow, nCol,i)
+    plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='step',label='sig')
+    plt.hist(bkg[var],weights=bkg['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
+
+    plt.legend(loc='best')
+    #plt.grid(True)
+    plt.title(var)
+    i += 1
+
+'''
 i=1
 nRow=2
 nCol=2
@@ -81,14 +119,15 @@ for var in trainFeatures:
     tmp.append(var)
     print k, var, " is plotting..."
     ax = figure.add_subplot(nRow, nCol,i)
-    plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='step',label='sig')
-    plt.hist(df_stopWt[var],weights=df_stopWt['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
-    plt.hist(df_ttbar[var],weights=df_ttbar['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
-    plt.hist(df_WlvZqq[var],weights=df_WlvZqq['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
-    plt.hist(df_WqqWlv[var],weights=df_WqqWlv['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
-    plt.hist(df_WJets[var],weights=df_WJets['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
+    plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='bar',label='sig')
+    plt.hist(df_stopWt[var],weights=df_stopWt['EventWeight'],density=True,stacked=True,histtype='step',label='bkg')
+    plt.hist(df_ttbar[var],weights=df_ttbar['EventWeight'],density=True,stacked=True,histtype='step',label='bkg')
+    plt.hist(df_WlvZqq[var],weights=df_WlvZqq['EventWeight'],density=True,stacked=True,histtype='step',label='bkg')
+    plt.hist(df_WqqWlv[var],weights=df_WqqWlv['EventWeight'],density=True,stacked=True,histtype='step',label='bkg')
+    plt.hist(df_WJets[var],weights=df_WJets['EventWeight'],density=True,stacked=True,histtype='step',label='bkg')
 
-    plt.legend(loc='best')
-    #plt.grid(True)
+    #plt.legend(loc='best')
+    plt.grid(True)
     plt.title(var)
     i += 1
+'''
