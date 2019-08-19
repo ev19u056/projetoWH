@@ -81,7 +81,7 @@ figure = plt.figure()
 tmp = []
 filepath += 'sig_bkg/'
 for var in trainFeatures:
-    if (i == 5):
+    if i == 5:
         plt.tight_layout()
         plt.savefig(filepath+str(k)+'_'+'_'.join(tmp)+'.pdf', bbox_inches='tight')
         plt.close()
@@ -98,6 +98,10 @@ for var in trainFeatures:
     #plt.grid(True)
     plt.title(var)
     i += 1
+    if k == 14:
+        plt.tight_layout()
+        plt.savefig(filepath+str(k)+'_'+'_'.join(tmp)+'.pdf', bbox_inches='tight')
+        plt.close()
 
 '''
 i=1
