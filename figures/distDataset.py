@@ -103,6 +103,14 @@ for var in trainFeatures:
         plt.savefig(filepath+str(k)+'_'+'_'.join(tmp)+'.pdf', bbox_inches='tight')
         plt.close()
 
+f=open(filepath + "prepareData.txt", "w")
+f.write("{}\n".format(fraction))
+f.write("qqWlvHbbJ_PwPy8MINLO_ade.csv:  {} lines     {} \n".format(int(nrows_signal*fraction), fraction))
+f.write("stopWt_PwPy8_ade.csv:          {} lines     {} \n".format(int(nrows_stopWt*fraction), fraction))
+f.write("ttbar_nonallhad_PwPy8_ade.csv: {} lines     {} \n".format(int((nrows_ttbar*ttbar_fraction)*fraction), ttbar_fraction*fraction))
+f.write("WlvZqq_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WlvZqq*fraction), fraction))
+f.write("WqqWlv_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WqqWlv*fraction), fraction))
+f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int(nrows_Wjets*WJets_fraction), WJets_fraction*fraction))
 '''
 i=1
 nRow=2
