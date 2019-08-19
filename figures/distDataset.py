@@ -75,7 +75,7 @@ for var in trainFeatures:
         plt.savefig(filepath+'_'.join(tmp)+'.pdf', bbox_inches='tight')
         plt.close()
         figure = plt.figure()
-        tmp.clear()
+        del tmp [:];    tmp = []
         k += 1
         i = 1
     tmp.append(var)
