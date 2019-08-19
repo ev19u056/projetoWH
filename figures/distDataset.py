@@ -28,8 +28,8 @@ trainFeatures = ['nFats', 'nJets', 'nTags', 'nTaus', 'nMuons', 'nbJets', 'FJ1nTa
 usecols = trainFeatures[:]
 usecols.append("EventWeight")
 
-#lgbk = "/home/t3atlas/ev19u056/projetoWH/"
-filepath = cfg.lgbk + "figures/"
+lgbk = "/home/t3atlas/ev19u056/projetoWH/"
+filepath = lgbk + "figures/"
 
 def chunkReader(tmp):
     result = pd.DataFrame()
@@ -39,24 +39,24 @@ def chunkReader(tmp):
     return result
 
 print("Reading -> 'qqWlvHbbJ_PwPy8MINLO_ade.csv'")
-tmp = pd.read_csv(cfg.lgbk+'data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*fraction),usecols=usecols)
+tmp = pd.read_csv(lgbk+'data/qqWlvHbbJ_PwPy8MINLO_ade.csv',chunksize=chunksize,nrows = int(nrows_signal*fraction),usecols=usecols)
 df_signal = chunkReader(tmp)
 
 print("Reading -> 'stopWt_PwPy8_ade.csv'")
-df_stopWt = pd.read_csv(cfg.lgbk+'data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*fraction),usecols=usecols)
+df_stopWt = pd.read_csv(lgbk+'data/stopWt_PwPy8_ade.csv',nrows = int(nrows_stopWt*fraction),usecols=usecols)
 
 print("Reading -> 'ttbar_nonallhad_PwPy8_ade.csv'")
-tmp = pd.read_csv(cfg.lgbk+'data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int((nrows_ttbar*ttbar_fraction)*fraction),usecols=usecols)
+tmp = pd.read_csv(lgbk+'data/ttbar_nonallhad_PwPy8_ade.csv',chunksize=chunksize,nrows = int((nrows_ttbar*ttbar_fraction)*fraction),usecols=usecols)
 df_ttbar = chunkReader(tmp)
 
 print("Reading -> 'WlvZqq_Sh221_ade.csv'")
-df_WlvZqq = pd.read_csv(cfg.lgbk+'data/WlvZqq_Sh221_ade.csv',nrows = int(nrows_WlvZqq*fraction),usecols=usecols)
+df_WlvZqq = pd.read_csv(lgbk+'data/WlvZqq_Sh221_ade.csv',nrows = int(nrows_WlvZqq*fraction),usecols=usecols)
 
 print("Reading -> 'WqqWlv_Sh221_ade.csv'")
-df_WqqWlv = pd.read_csv(cfg.lgbk+'data/WqqWlv_Sh221_ade.csv',nrows = int(nrows_WqqWlv*fraction),usecols=usecols)
+df_WqqWlv = pd.read_csv(lgbk+'data/WqqWlv_Sh221_ade.csv',nrows = int(nrows_WqqWlv*fraction),usecols=usecols)
 
 print("Reading -> 'WJets_Sh221.csv'")
-df_WJets = pd.read_csv(cfg.lgbk+'data/WJets_Sh221.csv',nrows = int((nrows_Wjets*WJets_fraction)*(fraction)),usecols=usecols)
+df_WJets = pd.read_csv(lgbk+'data/WJets_Sh221.csv',nrows = int((nrows_Wjets*WJets_fraction)*(fraction)),usecols=usecols)
 
 df_signal.EventWeight = df_signal.EventWeight/fraction
 df_stopWt.EventWeight = df_stopWt.EventWeight/fraction
