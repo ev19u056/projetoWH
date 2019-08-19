@@ -77,7 +77,7 @@ for var in trainFeatures:
         k += 1
         i = 1
 
-    figure.add_subplot(nRow, nCol,i)
+    ax = figure.add_subplot(nRow, nCol,i)
     plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='bar',label='signal')
     plt.hist(df_stopWt[var],weights=df_stopWt['EventWeight'],density=True,stacked=True,histtype='bar',label='stopWt')
     plt.hist(df_ttbar[var],weights=df_ttbar['EventWeight'],density=True,stacked=True,histtype='bar',label='ttbar')
