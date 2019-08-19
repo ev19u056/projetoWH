@@ -92,9 +92,8 @@ for var in trainFeatures:
     tmp.append(var)
     print k, var, " is plotting..."
     ax = figure.add_subplot(nRow, nCol,i)
-    plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='step',label='sig')
     plt.hist(bkg[var],weights=bkg['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
-
+    plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='step',label='sig')
     plt.legend(loc='best')
     #plt.grid(True)
     plt.title(var)
