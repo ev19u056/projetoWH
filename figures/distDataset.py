@@ -89,3 +89,4 @@ for var in trainFeatures:
     plt.legend(prop={'size': 10})
     plt.grid(True)
     plt.title(var)
+    i += 1
