@@ -71,7 +71,7 @@ figure = plt.figure()
 for var in trainFeatures:
     if (i == 6):
         plt.tight_layout()
-        plt.savefig(filepath+k+'.pdf', bbox_inches='tight')
+        plt.savefig(filepath+str(k)+'.pdf', bbox_inches='tight')
         plt.close()
         break
         figure = plt.figure()
