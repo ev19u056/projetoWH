@@ -64,12 +64,12 @@ df_WqqWlv.EventWeight = df_WqqWlv.EventWeight/fraction
 df_WJets.EventWeight = df_WJets.EventWeight/(fraction*WJets_fraction)
 
 i=1
-nRow=3
+nRow=2
 nCol=2
 k = 1
 figure = plt.figure()
 for var in trainFeatures:
-    if (i == 7):
+    if (i == 5):
         plt.tight_layout()
         plt.savefig(filepath+str(k)+'.pdf', bbox_inches='tight')
         plt.close()
