@@ -68,16 +68,18 @@ nRow=2
 nCol=2
 k = 1
 figure = plt.figure()
+tmp = []
 for var in trainFeatures:
     if (i == 5):
         plt.tight_layout()
-        plt.savefig(filepath+str(k)+'.pdf', bbox_inches='tight')
+        plt.savefig(filepath+'_'.join(tmp)+'.pdf', bbox_inches='tight')
         plt.close()
         figure = plt.figure()
+        tmp.clear()
         k += 1
         i = 1
-
-    print var, " is plotting..."
+    tmp.append(var)
+    print k, var, " is plotting..."
     ax = figure.add_subplot(nRow, nCol,i)
     plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='bar',label='signal')
     plt.hist(df_stopWt[var],weights=df_stopWt['EventWeight'],density=True,stacked=True,histtype='step',label='stopWt')
