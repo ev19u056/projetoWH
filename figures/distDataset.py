@@ -63,7 +63,7 @@ df_WlvZqq.EventWeight = df_WlvZqq.EventWeight/fraction
 df_WqqWlv.EventWeight = df_WqqWlv.EventWeight/fraction
 df_WJets.EventWeight = df_WJets.EventWeight/(fraction*WJets_fraction)
 
-i=1
+i=0
 nRow=2
 nCol=3
 k = 1
