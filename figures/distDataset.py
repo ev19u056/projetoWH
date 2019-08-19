@@ -81,14 +81,14 @@ for var in trainFeatures:
     tmp.append(var)
     print k, var, " is plotting..."
     ax = figure.add_subplot(nRow, nCol,i)
-    plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='bar',label='signal')
-    plt.hist(df_stopWt[var],weights=df_stopWt['EventWeight'],density=True,stacked=True,histtype='step',label='stopWt')
-    plt.hist(df_ttbar[var],weights=df_ttbar['EventWeight'],density=True,stacked=True,histtype='step',label='ttbar')
-    plt.hist(df_WlvZqq[var],weights=df_WlvZqq['EventWeight'],density=True,stacked=True,histtype='step',label='WlvZqq')
-    plt.hist(df_WqqWlv[var],weights=df_WqqWlv['EventWeight'],density=True,stacked=True,histtype='step',label='WqqWlv')
-    plt.hist(df_WJets[var],weights=df_WJets['EventWeight'],density=True,stacked=True,histtype='step',label='WJets')
+    plt.hist(df_signal[var],weights=df_signal['EventWeight'],density=True,stacked=True,histtype='step',label='sig')
+    plt.hist(df_stopWt[var],weights=df_stopWt['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
+    plt.hist(df_ttbar[var],weights=df_ttbar['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
+    plt.hist(df_WlvZqq[var],weights=df_WlvZqq['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
+    plt.hist(df_WqqWlv[var],weights=df_WqqWlv['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
+    plt.hist(df_WJets[var],weights=df_WJets['EventWeight'],density=True,stacked=True,histtype='bar',label='bkg')
 
-    #plt.legend(loc='best')
-    plt.grid(True)
+    plt.legend(loc='best')
+    #plt.grid(True)
     plt.title(var)
     i += 1
