@@ -1,0 +1,7 @@
+0.6
+qqWlvHbbJ_PwPy8MINLO_ade.csv:  594684 lines     0.6 
+stopWt_PwPy8_ade.csv:          166689 lines     0.6 
+ttbar_nonallhad_PwPy8_ade.csv: 250082 lines     0.06 
+WlvZqq_Sh221_ade.csv:          113037 lines     0.6 
+WqqWlv_Sh221_ade.csv:          200697 lines     0.6 
+WJets_Sh221.csv:               416271 lines     0.015 
