@@ -64,5 +64,5 @@ if __name__ == "__main__":
 
     plt.legend(layers_legend, loc='best')
 #   plt.savefig(name+'.pdf')
-    plt.savefig('ROC_'+model_name+'.pdf')
+    plt.savefig('ROC_'+hyperParam+'.pdf')
     plt.show()
