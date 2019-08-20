@@ -12,8 +12,10 @@ from sklearn.preprocessing import StandardScaler
 from keras.models import Sequential
 from keras.layers import Dense#, Dropout, AlphaDropout
 from keras.optimizers import Adam#, Nadam
+
+from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from keras.callbacks import Callback
-from sklearn.metrics import confusion_matrix, cohen_kappa_score
+from sklearn.metrics import cohen_kappa_score#, confusion_matrix
 from scipy.stats import ks_2samp
 import localConfig as cfg
 import pickle
