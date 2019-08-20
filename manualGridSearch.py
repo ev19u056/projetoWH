@@ -183,5 +183,6 @@ if __name__ == "__main__":
             f.write(str(km_value_b)+"\n")
             f.write(str(km_value)+"\n")
             f.write(str(max_FOM)+"\n")
+            f.write(scoreTest)
 
     sys.exit("Done!")

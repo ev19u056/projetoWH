@@ -28,22 +28,27 @@ if __name__ == "__main__":
     ks_s = []
     ks_b = []
     FOM = []
+    test_loss = []; test_acc = []
     line_index=0
 
     for line in f:
-        if line_index%7==0:
+        if line_index%8==0:
             layer.append(float(line,))
-        if line_index%7==1:
+        if line_index%8==1:
             neurons.append(float(line,))
-        if line_index%7==2:
+        if line_index%8==2:
             roc_AUC.append(float(line,))
-        if line_index%7==3:
+        if line_index%8==3:
             ks_s.append(float(line,))
-        if line_index%7==4:
+        if line_index%8==4:
             ks_b.append(float(line,))
-        if line_index%7==5:
+        if line_index%8==5:
             ks.append(float(line,))
-        if line_index%7==6:
+        if line_index%8==6:
+            FOM.append(float(line,))
+        if line_index%8==7:
+            test_loss =
+            test_acc = 
             FOM.append(float(line,))
         line_index=line_index+1
 
