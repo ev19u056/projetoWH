@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parser.add_argument('-n', '--neurons', type=int, required=False, help='Number of neurons per layer')
     parser.add_argument('-e', '--epochs', type=int, required=True, help='Number of epochs')
     parser.add_argument('-b', '--batchSize', type=int, required=True, help='Batch size')
-    parser.add_argument('-o', '--outputDir', required=True, help='Output directory')
+    parser.add_argument('-h', '--hyperParam', required=True, help='Output directory')
     parser.add_argument('-p', '--dropoutRate', type=float, default=0, help='Dropout Rate')
     parser.add_argument('-f', '--fraction', type=float, default=0.3, help="The fraction of available data to be loaded")
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
                     lrm]#, ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True)]
 
     # lgbk = "/home/t3atlas/ev19u056/projetoWH/"
-    hyperParam = args.outputDir
+    hyperParam = args.hyperParam
     # filepath = "/home/t3atlas/ev19u056/projetoWH/gridSearch/batchSize/"
     filepath = cfg.lgbk + 'gridSearch/' + hyperParam + '/'
     assure_path_exists(filepath)
@@ -79,8 +79,8 @@ if __name__ == "__main__":
 
     f = open(fileToPlot+'.txt', 'w')
 
-    for layers in [3,4,5]:   # LAYERS
-        for neurons in range(2, 101):    # NEURONS
+    for layers in [3,4]:   # LAYERS
+        for neurons in range(30, 70):    # NEURONS
             if args.verbose:
                 print "  ==> #LAYERS:", layers, "   #NEURONS:", neurons, " <=="
                 print("Starting the training")
