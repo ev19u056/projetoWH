@@ -5,4 +5,4 @@ ttbar_nonallhad_PwPy8_ade.csv: 41680 lines     0.01
 WlvZqq_Sh221_ade.csv:          18839 lines     0.1 
 WqqWlv_Sh221_ade.csv:          33449 lines     0.1 
 WJets_Sh221.csv:               416271 lines     0.0025 
-Preparing DATA took:   17.72s
+Preparing DATA took:   15.46s
