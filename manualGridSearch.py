@@ -60,7 +60,7 @@ if __name__ == "__main__":
                     lrm]#, ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True)]
 
     # lgbk = "/home/t3atlas/ev19u056/projetoWH/"
-    hyperParam = cfg.outputDir
+    hyperParam = args.outputDir
     # filepath = "/home/t3atlas/ev19u056/projetoWH/batchSize/"
     filepath = cfg.lgbk + hyperParam + '/'
     dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, hyperParam, fraction)
