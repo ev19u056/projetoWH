@@ -14,7 +14,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     hyperParam = args.hyperParam
-    learning_rate = str(float(model_name[model_name.find("Lr")+2:model_name.find("_D")]))
+    #learning_rate = str(float(model_name[model_name.find("Lr")+2:model_name.find("_D")]))
     filepath = cfg.lgbk + 'gridSearch/' + hyperParam + '/'
     os.chdir(filepath)
     name = "ROC_" + hyperParam
