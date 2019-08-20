@@ -58,10 +58,11 @@ if __name__ == "__main__":
 
     neurons = range(2,61)
     lim = len(neurons)/nLayers
-
+    print "lim=", lim
     for i in range(0,nLayers):
+        print "i=", i
         plt.plot(neurons[i*lim:(i+1)*lim], roc_AUC[i*lim:(i+1)*lim])
-
+    plt.grid()
     plt.legend(layers_legend, loc='best')
 #   plt.savefig(name+'.pdf')
     plt.savefig('ROC_'+hyperParam+'.pdf')
