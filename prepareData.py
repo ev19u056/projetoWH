@@ -152,7 +152,7 @@ def dataLoader(filepath, name, fraction, luminosity=139500):
     f.write("ttbar_nonallhad_PwPy8_ade.csv: {} lines     {} \n".format(int((nrows_ttbar*ttbar_fraction)*fraction), ttbar_fraction*fraction))
     f.write("WlvZqq_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WlvZqq*fraction), fraction))
     f.write("WqqWlv_Sh221_ade.csv:          {} lines     {} \n".format(int(nrows_WqqWlv*fraction), fraction))
-    f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int(nrows_Wjets*WJets_fraction), WJets_fraction*fraction))
+    f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int((nrows_Wjets*WJets_fraction)*fraction), WJets_fraction*fraction))
 
     print "Fitting the scaler and scaling the input variables ..."
     '''

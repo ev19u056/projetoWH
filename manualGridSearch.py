@@ -75,9 +75,7 @@ if __name__ == "__main__":
     assure_path_exists(filepath+"loss/"+"dummy.txt")
     os.chdir(filepath)
 
-    #fileToPlot = "mGS:outputs_run_"+test_point+"_"+str(learning_rate)+"_"+str(my_decay)
-
-    f = open(fileToPlot+'.txt', 'w')
+    # f = open(fileToPlot+'.txt', 'w')
 
     for layers in [3,4]:   # LAYERS
         for neurons in range(30, 70):    # NEURONS
@@ -176,6 +174,7 @@ if __name__ == "__main__":
             km_value_b = ks_2samp(bkg_dataDev["NN"], bkg_dataTest["NN"])[1]
             km_value = ks_2samp(dataDev["NN"], dataTest["NN"])[1]
 
+            f = open(fileToPlot+'.txt', 'a')
             f.write(str(layers)+"\n")
             f.write(str(neurons)+"\n")
             f.write(str(roc_Integral)+"\n")
@@ -184,5 +183,6 @@ if __name__ == "__main__":
             f.write(str(km_value)+"\n")
             f.write(str(max_FOM)+"\n")
             f.write("{}\n".format(scoreTest))
+            f.close()
 
     sys.exit("Done!")
