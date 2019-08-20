@@ -39,7 +39,7 @@ if __name__ == "__main__":
     parser.add_argument('-n', '--neurons', type=int, required=False, help='Number of neurons per layer')
     parser.add_argument('-e', '--epochs', type=int, required=True, help='Number of epochs')
     parser.add_argument('-b', '--batchSize', type=int, required=True, help='Batch size')
-    parser.add_argument('-h', '--hyperParam', required=True, help='Output directory')
+    parser.add_argument('-o', '--hyperParam', required=True, help='Output directory')
     parser.add_argument('-p', '--dropoutRate', type=float, default=0, help='Dropout Rate')
     parser.add_argument('-f', '--fraction', type=float, default=0.3, help="The fraction of available data to be loaded")
 
