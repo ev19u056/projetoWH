@@ -61,8 +61,9 @@ if __name__ == "__main__":
 
     # lgbk = "/home/t3atlas/ev19u056/projetoWH/"
     hyperParam = args.outputDir
-    # filepath = "/home/t3atlas/ev19u056/projetoWH/batchSize/"
-    filepath = cfg.lgbk + hyperParam + '/'
+    # filepath = "/home/t3atlas/ev19u056/projetoWH/gridSearch/batchSize/"
+    filepath = cfg.lgbk + 'gridSearch/' + hyperParam + '/'
+    assure_path_exists(filepath)
     dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, hyperParam, fraction)
 
     if args.verbose:
