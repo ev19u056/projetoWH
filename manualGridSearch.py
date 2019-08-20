@@ -128,7 +128,7 @@ if __name__ == "__main__":
             scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
             scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
 
-            cohen_kappa=cohen_kappa_score(YTest, testPredict.round())
+            cohen_kappa=cohen_kappa_score(YTest, dataTest["NN"].round())
 
             if args.verbose:
                 print "Calculating FOM..."
