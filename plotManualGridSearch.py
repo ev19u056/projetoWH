@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Process the command line options')
     parser.add_argument('-v', '--verbose', action='store_true', help='Whether to print verbose output')
-    parser.add_argument('-h', '--hyperParam', type=str, required=True, help='HyperParameter to study')
+    parser.add_argument('-a', '--hyperParam', type=str, required=True, help='HyperParameter to study')
     args = parser.parse_args()
 
     hyperParam = args.hyperParam
