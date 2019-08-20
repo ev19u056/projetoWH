@@ -69,7 +69,7 @@ if __name__ == "__main__":
     if args.verbose:
         print "Opening files..."
 
-    fileToPlot = "ROC_" + args.outputDir
+    fileToPlot = "ROC_" + args.hyperParam
 
     assure_path_exists(filepath+"accuracy/"+"dummy.txt")
     assure_path_exists(filepath+"loss/"+"dummy.txt")
