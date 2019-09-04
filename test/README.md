@@ -1,37 +1,4 @@
 
- **Model_Ver_3** : Neuron-Layers: 53 54 60 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size:3000 ; Epochs: 250 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_4** : Neuron-Layers: 53 54 60 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size:3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: glorot_uniform   
-
- 
- **Model_Ver_5** : Neuron-Layers: 53 54 60 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size:3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_6** : Neuron-Layers: 53 54 60 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size:3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_7** : Neuron-Layers: 53 54 60 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size:3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_8** : Neuron-Layers: 53 54 60 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size:3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_9** : Neuron-Layers: 53 54 60 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size:3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: glorot_uniform   ; fraction: 0.1; PCA implemented
- 
- 
- **Model_Ver_10** : Neuron-Layers: 53 54 60 40 30 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 0.0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_11** : Neuron-Layers: 53 54 60 40 30 20 15 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 100 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 0.0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_12** : Neuron-Layers: 53 54 60 30 15 10 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 200 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 0.0 ; Weight Initializer: glorot_uniform   
- 
- 
- **Model_Ver_13** : Neuron-Layers: 53 54 60 30 15 10 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 300 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 0.0 ; Weight Initializer: glorot_uniform   
- 
- 
  **Model_Ver_14** : Neuron-Layers: 53 54 60 30 15 10 1 ; Activation: relu ; Output: Sigmoid ; Batch size: 3000 ; Epochs: 200 ; Step size: 0.003 ; Optimizer: Adam ; Regulizer: 0 ; Max FOM : 0.549666696331 ; Weight Initializer: glorot_uniform   
  
  
@@ -88,17 +55,3 @@ Dev_loss:  1.11243098712e-06   Dev_acc:  0.872290981128
 Val_loss:  1.16885833457e-06   Val_acc:  0.869575983847
 Test_loss: 1.17150897865e-06   Test_acc: 0.870939169691
 Training_time: 697.38
-
- 
- **Model_Ver_1** : Neuron-Layers: 53 71 71 71 71 1 ; Activation: relu ; Output: Sigmoid ; BatchNormalization: False ; Batch size: 3000 ; Epochs: 39 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: he_normal
-Dev_loss:  4.12977354242e-05   Dev_acc:  0.849066488855
-Val_loss:  5.03187937071e-05   Val_acc:  0.832
-Test_loss: 5.47292138522e-05   Test_acc: 0.831238095238
-Training_time: 16.48
-
- 
- **Model_Ver_1** : Neuron-Layers: 53 71 71 71 71 1 ; Activation: relu ; Output: Sigmoid ; BatchNormalization: False ; Batch size: 3000 ; Epochs: 28 ; Optimizer: Adam ; Regulizer: 0 ; Weight Initializer: he_normal
-Dev_loss:  4.20142623854e-05   Dev_acc:  0.852019432273
-Val_loss:  4.98727982445e-05   Val_acc:  0.838476190476
-Test_loss: 4.96465606824e-05   Test_acc: 0.83619047619
-Training_time: 12.34

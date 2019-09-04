@@ -153,9 +153,7 @@ if __name__ == "__main__":
         EarlyStopping = EarlyStopping(patience=15, verbose=True)
         callbacks.append(EarlyStopping)
 
-    subplot_lines = 2
     if args.ReduceLROnPlateau:
-        subplot_lines = 3
         ReduceLROnPlateau = ReduceLROnPlateau(monitor='val_loss', factor=my_decay, patience=10, verbose=True, cooldown=1, min_lr=0.000001) # argument min_delta is not supported
         callbacks.append(ReduceLROnPlateau)
 
