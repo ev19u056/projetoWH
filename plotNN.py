@@ -132,6 +132,7 @@ if __name__ == "__main__":
         plt.close()
 
     scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
+    print(model.metrics_names)
     print(scoreTest)
     f = open(plots_path+"score_"+model_name+".txt","w")
     f.write("Epochs: {}\n".format(len(loss)-1))
