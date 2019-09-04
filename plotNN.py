@@ -121,7 +121,7 @@ if __name__ == "__main__":
         plt.plot(acc, label='train = {0:0.4f}'.format(acc[-1]))
         plt.plot(val_acc, label='val = {0:0.4f}'.format(val_acc[-1]))
         plt.grid()
-        plt.ylim(0.8,0.9)
+        plt.ylim(0.82,0.88)
         plt.title('Model accuracy')
         plt.ylabel('Accuracy')
         plt.xlabel('Epoch')
@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
     f = open(plots_path+"score_"+model_name+".txt","w")
-    f.write("Epochs: {}\n".format(len(loss)-1))
+    f.write("Epochs: {}\n".format(len(loss)))
     f.write("Dev_loss: {}   Dev_acc: {}\n".format(loss[-1],acc[-1]))
     f.write("Val_loss: {}   Val_acc: {}\n".format(val_loss[-1],val_acc[-1]))
 
@@ -141,8 +141,6 @@ if __name__ == "__main__":
         f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
     else:
         f.write("Test_loss: {}\n".format(scoreTest))
-
-
 
     # --- Over Training Check --- #
     # Negative bins appear on hist y-axis???
@@ -461,7 +459,7 @@ if __name__ == "__main__":
             i+=1
 
         plt.tight_layout()
-        pdf_pages.savefig(fig)
+        pdf_pages.savefig(figure)
         if args.preview:
             plt.show()
         plt.close()
