@@ -45,20 +45,22 @@ if __name__ == "__main__":
 
     ## Input arguments. Pay speciall attention to the required ones.
     parser = argparse.ArgumentParser(description='Process the command line options')
-    parser.add_argument('-z', '--batch', action='store_true', help='Whether this is a batch job, if it is, no interactive questions will be asked and answers will be assumed')
     parser.add_argument('-v', '--verbose', action='store_true', help='Whether to print verbose output')
     parser.add_argument('-e', '--epochs', type=int, required=True, help='Number of epochs')
     parser.add_argument('-a', '--batchSize', type=int, required=True, help='Batch size')
     parser.add_argument('-b', '--learningRate', type=float, required=True, help='Learning rate')
-    parser.add_argument('-c', '--decay', type=float, default=0, help='Learning rate decay')
-    parser.add_argument('-d', '--dropoutRate', type=float, default=0, help='Drop-out rate')
+    parser.add_argument('-c', '--decay', type=float, default=0.1, help='Learning rate decay')
+    #parser.add_argument('-d', '--dropoutRate', type=float, default=0, help='Drop-out rate')
     parser.add_argument('-r', '--regularizer', type=float, default=0, help='Regularizer')
     parser.add_argument('-i', '--iteration', type=int, default=1, help='Iteration number i')
     parser.add_argument('-f', '--fraction', type=float, default=0.3, help="The fraction of available data to be loaded")
     parser.add_argument('-l', '--List', type=str, required=True, help='Defines the architecture of the NN; e.g: -l "14 12 7" -> 3 hidden layers of 14, 12 and 7 neurons respectively (input always 53, output always 1)')
+
     parser.add_argument('-act', '--act', type=str, default="relu", help='activation function for the hidden neurons')
     parser.add_argument('-ini', '--initializer', type=str, default="he_normal", help='Kernel Initializer for hidden layers')
     parser.add_argument('-bN', '--batchNorm', action='store_true',help='Wether to use Batch Normalization')
+    parser.add_argument('-es', '--EarlyStopping', action='store_true',help='Wether to use EarlyStopping Callback')
+    parser.add_argument('-rlrop', '--ReduceLROnPlateau', action='store_true',help='Wether to use ReduceLROnPlateau Callback')
 
     args = parser.parse_args()
 
@@ -66,7 +68,6 @@ if __name__ == "__main__":
     batch_size = args.batchSize
     learning_rate = args.learningRate
     my_decay = args.decay
-    dropout_rate = args.dropoutRate
     regularizer = args.regularizer
     iteration = args.iteration
     act = args.act # activation function for hidden neurons
@@ -141,10 +142,22 @@ if __name__ == "__main__":
     # Compile
     model.compile(**compileArgs)
 
+    callbacks = []
     lrm = LearningRateMonitor()
-    callbacks = [EarlyStopping(patience=15, verbose=True),
-                    ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=True, cooldown=1, min_lr=0), # argument min_delta is not supported
-                    ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True), lrm]
+    ModelCheckpoint = ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True)
+    callbacks.append(lrm)
+    callbacks.append(ModelCheckpoint)
+
+    if args.EarlyStopping:
+        EarlyStopping = EarlyStopping(patience=15, verbose=True)
+        callbacks.append(EarlyStopping)
+
+    subplot_lines = 2
+    if args.ReduceLROnPlateau:
+        subplot_lines = 3
+        ReduceLROnPlateau = ReduceLROnPlateau(monitor='val_loss', factor=my_decay, patience=10, verbose=True, cooldown=1, min_lr=0.000001) # argument min_delta is not supported
+        callbacks.append(ReduceLROnPlateau)
+
     # Fitting the Model -> TRAINING
     # fit(x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None, validation_freq=1)
     history = model.fit(XDev, YDev, validation_data=(XVal,YVal,weightVal),sample_weight=weightDev,shuffle=True,callbacks=callbacks, **trainParams)
@@ -176,6 +189,10 @@ if __name__ == "__main__":
     with open(filepath+name + ".json", "w") as json_file:
       json_file.write(model_json)
 
+    # Restoring the best weights
+    model.load_weights(filepath+name+".h5")
+    model.compile(**compileArgs)
+
     # Getting predictions
     if args.verbose:
         print("Getting predictions...")
@@ -192,53 +209,6 @@ if __name__ == "__main__":
     print "Val_loss: ", scoreVal[0], "     Val_acc: ", scoreVal[1]
     print "Test_loss: ", scoreTest[0], "   Test_acc: ", scoreTest[1]
 
-    # --- Calculating FOM --- #
-    if args.verbose:
-        print "Calculating FOM..."
-    dataTest["NN"] = testPredict
-
-    tmpSig, tmpBkg = getYields(dataTest) # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
-    sigYield, sigYieldUnc = tmpSig
-    bkgYield, bkgYieldUnc = tmpBkg
-
-    sigDataTest = dataTest[dataTest.category==1] # seleciona-se apenas sig
-    bkgDataTest = dataTest[dataTest.category==0] # seleciona-se apenas bkg
-
-    fomEvo = []
-    fomCut = []
-
-    # Return evenly spaced values within a given interval.
-    for cut in np.arange(0.0, 0.9999999, 0.001):
-      sig, bkg = getYields(dataTest, cut=cut) # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
-      if sig[0] > 0 and bkg[0] > 0:
-        fom, fomUnc = FullFOM(sig, bkg) # return (fom, fomErr)
-        fomEvo.append(fom)
-        fomCut.append(cut)
-
-    # Maximising FOM
-    if args.verbose:
-        print "Maximizing FOM..."
-
-    max_FOM=0.0
-    for k in fomEvo:
-      if k>max_FOM:
-          max_FOM=k
-    if args.verbose:
-        luminosity = 139500 # pb^-1
-        print "Signal@Presel:", sigDataTest.EventWeight.sum() * luminosity * 3 # The factor 3 comes from the splitting ???
-        print "Background@Presel:", bkgDataTest.EventWeight.sum() * luminosity * 3
-        print "Signal:", sigYield, "+-", (sigYieldUnc/sigYield)*100, "%"
-        print "Background:", bkgYield, "+-", (bkgYieldUnc/bkgYield)*100, "%"
-
-        print "Maximized FOM: ", max_FOM
-
-        # To prevent program from crashing if no one fomEvo > 0 was determined
-        if max_FOM != 0.0:
-            print "FOM Cut:", fomCut[fomEvo.index(max_FOM)] # Cut that produces the maximized FOM
-        else:
-            print "ERROR: someting goes wrong!"
-    # --- Calculating FOM --- #
-
     # Creating a text file where all of the model's caracteristics are displayed
     f=open(testpath + "README.md", "a")
     # f.write("\n \n **{}** : Neuron-Layers: 53 {} 1 ; Activation: {} ; Output: Sigmoid ; Batch size: {} ; Epochs: {} ; Step size: {} ; Optimizer: Adam ; Regulizer: {} ; Max FOM : {} ; Weight Initializer: {}   \n ".format(name, List, act, batch_size, n_epochs, learning_rate, regularizer, max_FOM, ini ))
@@ -251,28 +221,36 @@ if __name__ == "__main__":
     print("DONE: Creating a text file where all of the model's caracteristics are displayed")
 
     # Plot accuracy and loss evolution over epochs for both training and validation datasets
-    if not args.batch:
-        fig=plt.figure()
-        plt.subplots_adjust(hspace=0.5)
+    pdf_pages = PdfPages(filepath+name+"_Accuracy_Loss_"+compileArgs['loss']+".pdf")
 
-        plt.subplot(2,1,1)
-        plotter(filepath+"accuracy/acc_"+name+".pickle","accuracy",name+"'s accuracy")
-        plotter(filepath+"accuracy/val_acc_"+name+".pickle","Val accuracy",name+"'s Accuracy")
+    fig = plt.figure(figsize=(8.27, 11.69), dpi=100)
+    plt.subplots_adjust(hspace=0.5)
+
+    plt.subplot(2,1,1)
+    plotter(filepath+"accuracy/acc_"+name+".pickle","accuracy",name+"'s accuracy")
+    plotter(filepath+"accuracy/val_acc_"+name+".pickle","Val accuracy",name+"'s Accuracy")
+    plt.grid()
+    plt.legend(['train', 'val'], loc='lower right')
+
+    plt.subplot(2,1,2)
+    plotter(filepath+"loss/loss_"+name+".pickle","loss",name +"loss function")
+    plotter(filepath+"loss/val_loss_"+name+".pickle","loss Validation",name+"'s Loss")
+    plt.grid()
+    plt.legend(['train', 'val'], loc='upper right')
+    pdf_pages.savefig(fig)
+    plt.close()
+
+    if args.ReduceLROnPlateau:
+        fig = plt.figure(figsize=(8.27, 5.845), dpi=100)
+        pickle.dump(lrm.lrates, open(filepath+"lr_"+name+".pickle", "wb"))
+        plotter(filepath+"lr_"+name+".pickle","learning Rate",name +"'s Learning Rate, Factor=" + str(my_decay), log=True)
         plt.grid()
-        plt.legend(['train', 'val'], loc='upper left')
-        #plt.savefig(filepath+"accuracy/Accuracy.pdf")
-
-        plt.subplot(2,1,2)
-        plotter(filepath+"loss/loss_"+name+".pickle","loss",name +"loss function")
-        plotter(filepath+"loss/val_loss_"+name+".pickle","loss Validation",name+"'s Loss")
-        plt.grid()
-        plt.legend(['train', 'val'], loc='upper left')
-        #plt.savefig(filepath + "loss/Loss_Validation.pdf")
-
-        plt.savefig(filepath+name+"_Accuracy_Loss_"+compileArgs['loss']+".pdf")
+        plt.legend(['lr'], loc='upper right')
+        pdf_pages.savefig(fig)
         plt.close()
+    pdf_pages.close()
 
-        if args.verbose:
-            print("Accuraccy and loss plotted at {}".format(filepath))
-            print ("Model name: "+name)
-        sys.exit("Done!")
+    if args.verbose:
+        print("Accuraccy and loss plotted at {}".format(filepath))
+        print ("Model name: "+name)
+    sys.exit("Done!")
