@@ -1,15 +1,15 @@
 !/bin/bash
-$ -pe mcore 3
+-pe mcore 3
 
-$ -l container=True
-$ -v CONTAINER=UBUNTU16
+-l container=True
+-v CONTAINER=UBUNTU16
 
-$ -v SGEIN=modelWH.py
-$ -v SGEIN=prepareData.py
-$ -v SGEIN=localConfig.py
-$ -v SGEIN=commonFunctions.py
+-v SGEIN=modelWH.py
+-v SGEIN=prepareData.py
+-v SGEIN=localConfig.py
+-v SGEIN=commonFunctions.py
 
-$ -v SGEOUT=test:/home/t3atlas/ev19u056/projetoWH
+-v SGEOUT=test:/home/t3atlas/ev19u056/projetoWH
 
 cd /home/t3atlas/ev19u056/projetoWH
 python plotNN.py -v -f Model_Ver_16 -a
