@@ -70,14 +70,14 @@ if __name__ == "__main__":
     dataDev["NN"] = model.predict(XDev)
     dataVal["NN"] = model.predict(XVal)
     dataTest["NN"] = model.predict(XTest)
-
+    '''
     if args.verbose:
         print("Getting scores ...")
 
     scoreDev = model.evaluate(XDev, YDev, sample_weight=weightDev, verbose = 0)
     scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
     scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
-
+    '''
     if args.verbose:
         print "Calculating parameters ..."
 

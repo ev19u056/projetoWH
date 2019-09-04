@@ -53,17 +53,19 @@ if __name__ == "__main__":
     myAdam = Adam(lr=learning_rate)#, decay=my_decay)
     compileArgs['optimizer'] = myAdam
 
-    # --- CallBacks --- #
-    lrm = LearningRateMonitor()
-    callbacks = [EarlyStopping(patience=15, verbose=True),
-                    ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=True, cooldown=1, min_lr=0), # argument min_delta is not supported
-                    lrm]#, ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True)]
-
     # lgbk = "/home/t3atlas/ev19u056/projetoWH/"
     hyperParam = args.hyperParam
     # filepath = "/home/t3atlas/ev19u056/projetoWH/gridSearch/batchSize/"
     filepath = cfg.lgbk + 'gridSearch/' + hyperParam + '/'
     assure_path_exists(filepath)
+
+    # --- CallBacks --- #
+    lrm = LearningRateMonitor()
+    callbacks = [EarlyStopping(patience=15, verbose=True),
+                    ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=True, cooldown=1, min_lr=0), # argument min_delta is not supported
+                    lrm]#, ModelCheckpoint(filepath+name+".h5", save_best_only=True, save_weights_only=True)]
+    # --- CallBacks --- #
+
     dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath, hyperParam, fraction)
 
     if args.verbose:
@@ -71,12 +73,12 @@ if __name__ == "__main__":
 
     fileToPlot = "ROC_" + args.hyperParam
 
-    assure_path_exists(filepath+"accuracy/"+"dummy.txt")
-    assure_path_exists(filepath+"loss/"+"dummy.txt")
+    assure_path_exists(filepath+"accuracy/")
+    assure_path_exists(filepath+"loss/")
     os.chdir(filepath)
 
     # f = open(fileToPlot+'.txt', 'w')
-
+    layers = range()
     for layers in [3,4]:   # LAYERS
         for neurons in range(30, 70):    # NEURONS
             if args.verbose:
