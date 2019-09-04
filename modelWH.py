@@ -94,10 +94,7 @@ if __name__ == "__main__":
     name ="Model_Ver_"+str(iteration)
 
     # Creating the directory where the fileswill be stored
-    testpath =cfg.lgbk + "test/".write("Dev_loss:  {}   Dev_acc:  {}\n".format(scoreDev[0], scoreDev[1]))
-    f.write("Val_loss:  {}   Val_acc:  {}\n".format(scoreVal[0], scoreVal[1]))
-    f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
-    f.write("Training_time: {0:.2f
+    testpath =cfg.lgbk + "test/"
     filepath = cfg.lgbk+"test/"+name+"/"
 
     ## Directory to save your NN files. Edit lgbk variable in localConfig.py
@@ -116,10 +113,7 @@ if __name__ == "__main__":
         start = time.time()
 
     ## EXERCISE 2: Create your NN model
-    model = Sequential().write("Dev_loss:  {}   Dev_acc:  {}\n".format(scoreDev[0], scoreDev[1]))
-    f.write("Val_loss:  {}   Val_acc:  {}\n".format(scoreVal[0], scoreVal[1]))
-    f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
-    f.write("Training_time: {0:.2f
+    model = Sequential()
 
     if not args.batchNorm:
         if args.verbose:
