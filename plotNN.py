@@ -63,7 +63,8 @@ if __name__ == "__main__":
       loaded_model_json = json_file.read()
     model = model_from_json(loaded_model_json)
     model.load_weights(model_name+".h5")
-    model.compile(loss = 'binary_crossentropy', optimizer = 'adam')
+    new_metrics = ['binary_accuracy']  # for example ['binary_accuracy']
+    model.compile(loss = 'binary_crossentropy', optimizer = 'adam',metrics=model.metrics+new_metrics)
 
     if args.verbose:
         print("Getting predictions ...")
