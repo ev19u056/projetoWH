@@ -110,7 +110,7 @@ def dataLoader(filepath, name, fraction, luminosity=139500,PCA=True):
         df_WJets.sampleWeight = df_WlvZqq.sampleWeight*XS_Wjets/(nrows_Wjets*scale*WJets_fraction)
 
     df_signal.sampleWeight = df_signal.sampleWeight/df_signal.sampleWeight.sum()
-    df_stopWt.sampleWeight = df_stopWtPCA.sampleWeight/df_stopWt.sampleWeight.sum()
+    df_stopWt.sampleWeight = df_stopWt.sampleWeight/df_stopWt.sampleWeight.sum()
     df_ttbar.sampleWeight = df_ttbar.sampleWeight/df_ttbar.sampleWeight.sum()
     df_WlvZqq.sampleWeight = df_WlvZqq.sampleWeight/df_WlvZqq.sampleWeight.sum()
     df_WqqWlv.sampleWeight = df_WqqWlv.sampleWeight/df_WqqWlv.sampleWeight.sum()
