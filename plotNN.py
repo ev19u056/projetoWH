@@ -35,7 +35,7 @@ if __name__ == "__main__":
     from keras.models import model_from_json
     from commonFunctions import assure_path_exists
     from matplotlib.backends.backend_pdf import PdfPages
-    
+
     if args.file != None:
         model_name = args.file
         #lgbk = "/home/t3atlas/ev19u056/projetoWH/"
@@ -132,6 +132,7 @@ if __name__ == "__main__":
         plt.close()
 
     scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
+    print(scoreTest)
     f = open(plots_path+"score_"+model_name+".txt","w")
     f.write("Epochs: {}\n".format(len(loss)-1))
     f.write("Dev_loss: {}   Dev_acc: {}\n".format(loss[-1],acc[-1]))
