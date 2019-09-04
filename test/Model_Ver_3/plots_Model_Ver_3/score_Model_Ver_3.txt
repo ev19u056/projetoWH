@@ -1,0 +1,7 @@
+Epochs: 28
+Dev_loss: 1.45759739405e-06   Dev_acc: 0.872569953319
+Val_loss: 1.60174768772e-06   Val_acc: 0.867588603602
+Test_loss: 1.59418610117e-06
+cohen_kappa_score: 0.711790573243
+KS_p-value: 0.434113665456
+ROCAUC Dev: 0.943391307862     Val: 0.940857892782        Test: 0.9412848959
