@@ -34,7 +34,8 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from keras.models import model_from_json
     from commonFunctions import assure_path_exists
-
+    from matplotlib.backends.backend_pdf import PdfPages
+    
     if args.file != None:
         model_name = args.file
         #lgbk = "/home/t3atlas/ev19u056/projetoWH/"
