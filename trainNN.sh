@@ -12,7 +12,11 @@ $ -v SGEIN=commonFunctions.py
 $ -v SGEOUT=test:/home/t3atlas/ev19u056/projetoWH
 
 cd /home/t3atlas/ev19u056/projetoWH
-
+python plotNN.py -v -f Model_Ver_16 -a
+python plotNN.py -v -f Model_Ver_17 -a
+$git add .
+$git commit -m "modelWH.py"
+$git push
 python plotNN.py -v -f Model_Ver_18 -a
 python plotNN.py -v -f Model_Ver_19 -a
 $git add .
@@ -33,7 +37,6 @@ $git push
 python plotNN.py -v -f Model_Ver_26 -a
 python plotNN.py -v -f Model_Ver_27 -a
 python plotNN.py -v -f Model_Ver_28 -a
-python plotNN.py -v -f Model_Ver_29 -a
 $git add .
 $git commit -m "modelWH.py"
 $git push
