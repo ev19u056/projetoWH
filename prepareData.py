@@ -23,7 +23,7 @@ def chunkReader(tmp):
         result = result.append(chunk)
     return result
 
-def dataLoader(filepath, name, fraction, luminosity=139500):
+def dataLoader(filepath, name, fraction, luminosity=139500,PCA=True):
 
     if fraction > 1.0 or fraction <= 0.0:
         raise ValueError("An invalid fraction was chosen")
@@ -110,7 +110,7 @@ def dataLoader(filepath, name, fraction, luminosity=139500):
         df_WJets.sampleWeight = df_WlvZqq.sampleWeight*XS_Wjets/(nrows_Wjets*scale*WJets_fraction)
 
     df_signal.sampleWeight = df_signal.sampleWeight/df_signal.sampleWeight.sum()
-    df_stopWt.sampleWeight = df_stopWt.sampleWeight/df_stopWt.sampleWeight.sum()
+    df_stopWt.sampleWeight = df_stopWtPCA.sampleWeight/df_stopWt.sampleWeight.sum()
     df_ttbar.sampleWeight = df_ttbar.sampleWeight/df_ttbar.sampleWeight.sum()
     df_WlvZqq.sampleWeight = df_WlvZqq.sampleWeight/df_WlvZqq.sampleWeight.sum()
     df_WqqWlv.sampleWeight = df_WqqWlv.sampleWeight/df_WqqWlv.sampleWeight.sum()
@@ -155,28 +155,21 @@ def dataLoader(filepath, name, fraction, luminosity=139500):
     f.write("WJets_Sh221.csv:               {} lines     {} \n".format(int((nrows_Wjets*WJets_fraction)*fraction), WJets_fraction*fraction))
 
     print "Fitting the scaler and scaling the input variables ..."
-    '''
-    scaler = StandardScaler().fit(XDev[scalingFeatures])
-    XDev[scalingFeatures] = scaler.transform(XDev[scalingFeatures])
-    XVal[scalingFeatures] = scaler.transform(XVal[scalingFeatures])
-    XTest[scalingFeatures] = scaler.transform(XTest[scalingFeatures])
-    '''
     scaler = StandardScaler().fit(XDev)
     XDev = scaler.transform(XDev)
     XVal = scaler.transform(XVal)
     XTest = scaler.transform(XTest)
-    #scalerfile = 'scaler_'+train_DM+'.sav'
-    #joblib.dump(scaler, scalerfile)
 
     # Linear dimensionality reduction using "Singular Value Decomposition" of the data to project it to a lower dimensional space.
     # The input data is centered but not scaled for each feature before applying the SVD.
-    '''
-    pca = decomposition.PCA(n_components=len(trainFeatures)).fit(XDev)
-    XDev = pca.transform(XDev)
-    XVal = pca.transform(XVal)
-    XTest = pca.transform(XTest)
-    '''
-    f.write("Preparing DATA took:   {0:.2f}s\n".format(time.time() - start))
+    if PCA:
+        print "Linear dimensionality reduction is applying ..."
+        pca = decomposition.PCA(n_components=len(trainFeatures)).fit(XDev)
+        XDev = pca.transform(XDev)
+        XVal = pca.transform(XVal)
+        XTest = pca.transform(XTest)
+    f.write("PCA: {}\n".format(PCA))
+    f.write("Preparing DATA took:   {0:.4f}s\n".format(time.time() - start))
     f.close()
 
     print '  Development (train):', len(dataDev)#, '(', dataDev.EventWeight.sum()*luminosity, 'weighted)'
@@ -189,6 +182,6 @@ def dataLoader(filepath, name, fraction, luminosity=139500):
     print '    Signal:', len(dataTest[dataTest.category == 1])#, '(', dataTest[dataTest.category == 1].EventWeight.sum()*luminosity, 'weighted)'
     print '    Background:', len(dataTest[dataTest.category == 0])#, '(', dataTest[dataTest.category == 0].EventWeight.sum()*luminosity, 'weighted)'
     print "DATA is ready!"
-    print("Preparing DATA took: {0:.2f}s".format(time.time() - start))
+    print("Preparing DATA took: {0:.4f}s".format(time.time() - start))
 
     return dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest

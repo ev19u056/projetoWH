@@ -21,10 +21,9 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--accuracy', action='store_true', help='Accuracy plot')
     parser.add_argument('-o', '--overtrainingCheck', action='store_true', help='Wether there was overtraining')
     parser.add_argument('-p', '--prediction', action='store_true', help='Predictions plot')
-    parser.add_argument('-e', '--efficiencyAndFOM', action='store_true', help='Plot efficiency and FOM')
+    #parser.add_argument('-e', '--efficiencyAndFOM', action='store_true', help='Plot efficiency and FOM')
     parser.add_argument('-r', '--areaUnderROC', action='store_true', help='Area under ROC plot')
     parser.add_argument('-w', '--weights', action='store_true', help='Plot neural network weights')
-    parser.add_argument('-z', '--structure', action='store_true', help='Plot neural network structure')
     parser.add_argument('-d', '--preview', action='store_true', help='Preview plots')
 
 #python plotNN.py -v -f Model_Ver_3 -b -c -o -p -r -s
@@ -48,6 +47,7 @@ if __name__ == "__main__":
 
     f=open(filepath + "/prepareData_" + model_name + ".txt", "r")
     fraction = float(f.readline())
+    f.close()
 
     dataDev, dataVal, dataTest, XDev, YDev, weightDev, XVal, YVal, weightVal, XTest, YTest, weightTest = dataLoader(filepath+"/", model_name, fraction)
     os.chdir(filepath+"/")
@@ -70,14 +70,7 @@ if __name__ == "__main__":
     dataDev["NN"] = model.predict(XDev)
     dataVal["NN"] = model.predict(XVal)
     dataTest["NN"] = model.predict(XTest)
-    '''
-    if args.verbose:
-        print("Getting scores ...")
 
-    scoreDev = model.evaluate(XDev, YDev, sample_weight=weightDev, verbose = 0)
-    scoreVal = model.evaluate(XVal, YVal, sample_weight=weightVal, verbose = 0)
-    scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
-    '''
     if args.verbose:
         print "Calculating parameters ..."
 
@@ -90,7 +83,7 @@ if __name__ == "__main__":
         args.accuracy = True
         args.overtrainingCheck = True
         args.prediction = True
-        args.efficiencyAndFOM = True
+        #args.efficiencyAndFOM = True
         args.areaUnderROC = True
         args.weights = True
 
@@ -101,16 +94,16 @@ if __name__ == "__main__":
         if args.verbose:
             print "val_loss = ", str(val_loss[-1]), "loss = ", str(loss[-1]), "val_loss - loss = ", str(val_loss[-1]-loss[-1])
 
-        plt.plot(loss)
-        plt.plot(val_loss)
+        pdf_pages = PdfPages(plots_path+'loss_'+model_name+".pdf") # plots_path = filepath+"/plots_"+model_name+"/"
+        fig = plt.figure(figsize=(8.27, 5.845), dpi=100)
+        plt.plot(loss, label='train = {0:.4E}'.format(loss[-1]))
+        plt.plot(val_loss, label='val = {0:.4E}'.format(val_loss[-1]))
         plt.grid()
         plt.title('Model loss')
         plt.ylabel('Loss')
-        #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
         plt.xlabel('Epoch')
-        plt.legend(['train'], loc='best')
-        plt.legend(['train', 'val'], loc='best')
-        plt.savefig(plots_path+'loss_'+model_name+'.pdf')
+        plt.legend(loc='upper right')
+        pdf_pages.savefig(fig)
         if args.preview:
             plt.show()
         plt.close()
@@ -121,23 +114,30 @@ if __name__ == "__main__":
         val_acc = pickle.load(open(acc_path+"val_acc_"+model_name+".pickle", "rb"))
         if args.verbose:
             print "val_acc = ", str(val_acc[-1]), "acc = ", str(acc[-1]), "val_acc - acc = ", str(val_acc[-1]-acc[-1])
-        plt.plot(acc)
-        plt.plot(val_acc)
+
+        pdf_pages = PdfPages(plots_path+'acc_'+model_name+".pdf") # plots_path = filepath+"/plots_"+model_name+"/"
+        fig = plt.figure(figsize=(8.27, 5.845), dpi=100)
+        plt.plot(acc, label='train = {0:0.4f}'.format(acc[-1]))
+        plt.plot(val_acc, label='val = {0:0.4f}'.format(val_acc[-1]))
         plt.grid()
         plt.ylim(0.8,0.9)
         plt.title('Model accuracy')
         plt.ylabel('Accuracy')
-        #plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
         plt.xlabel('Epoch')
-        plt.legend(['train'], loc='best')
-        plt.legend(['train', 'val'], loc='best')
-        plt.savefig(plots_path+'acc_'+model_name+'.pdf')
+        plt.legend(loc='lower right')
+        pdf_pages.savefig(fig)
         if args.preview:
             plt.show()
         plt.close()
 
-    # --- Over Training Check --- #
+    scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
+    f = open(plots_path+"score_"+model_name".txt","w")
+    f.write("Epochs: {}\n".format(len(loss)-1))
+    f.write("Dev_loss: {}   Dev_acc: {}\n".format(loss[-1],acc[-1]))
+    f.write("Val_loss: {}   Val_acc: {}\n".format(val_loss[-1],val_acc[-1]))
+    f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
 
+    # --- Over Training Check --- #
     # Negative bins appear on hist y-axis???
     if args.overtrainingCheck:
         from scipy.stats import ks_2samp
@@ -159,17 +159,22 @@ if __name__ == "__main__":
             print "KS test statistic:", km_value[0]
             print "KS test p-value:", km_value[1]
 
-        #plt.yscale('log')
+        f.write("cohen_kappa_score: {}\n".format(cohen_kappa))
+        f.write("KS_p-value: {}\n".format(km_value[1]))
+
+        pdf_pages = PdfPages(plots_path+'hist_'+model_name+'.pdf')
+        fig = plt.figure(figsize=(8.27, 5.845), dpi=100)
+
         plt.hist(sig_dataDev["NN"], 50, facecolor='blue', alpha=0.7, normed=1, weights=sig_dataDev["EventWeight"]) # histtype by default is "bar"
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', alpha=0.7, normed=1, weights=bkg_dataDev["EventWeight"])
         plt.hist(sig_dataTest["NN"], 50, color='blue', alpha=1, normed=1, histtype="step", weights=sig_dataTest["EventWeight"]) # "step" generates a lineplot that is by default unfilled.
         plt.hist(bkg_dataTest["NN"], 50, color='red', alpha=1, normed=1, histtype="step",weights=bkg_dataTest["EventWeight"])
         plt.grid()
         plt.xlabel('NN output')
-        plt.suptitle("MVA overtraining check for classifier: NN", fontsize=13, fontweight='bold') # MVA = MultiVariable Analysis
-        plt.title("Cohen's kappa: {0}\nKolmogorov Smirnov test (p_value): {1}".format(cohen_kappa, km_value[1]), fontsize=10)
+        plt.suptitle("Overtraining check", fontsize=13, fontweight='bold') # MVA = MultiVariable Analysis
+        plt.title("Cohen's kappa: {0:0.4f}\nK-S test (p_value): {1:0.4f}".format(cohen_kappa, km_value[1]), fontsize=10)
         plt.legend(['Signal (Train sample)', 'Background (Train sample)', 'Signal (Test sample)', 'Background (Test sample)'], loc='best')
-        plt.savefig(plots_path+'hist_'+model_name+'.pdf', bbox_inches='tight')
+        pdf_pages.savefig(fig)
         if args.preview:
             plt.show()
         plt.close()
@@ -178,147 +183,148 @@ if __name__ == "__main__":
     # Negative bins appear on hist y-axis???
     if args.prediction:
         both_dataDev = bkg_dataDev.append(sig_dataDev)
-        plt.figure(figsize=(7,6))
+        pdf_pages = PdfPages(plots_path+'pred_'+model_name+'.pdf')
+        fig = plt.figure(figsize=(8.27, 5.845), dpi=100)
         plt.xlabel('NN output')
         plt.title("Number of Events")
-        #plt.yscale('log', nonposy='clip')
         plt.hist(bkg_dataDev["NN"], 50, facecolor='red', normed=1, weights=bkg_dataDev["EventWeight"]) # in original code there is not normalization but the plot seems to be normalized ???
         plt.hist(both_dataDev["NN"], 50, color="blue", histtype="step", normed=1, weights=both_dataDev["EventWeight"])
         plt.legend(['Background + Signal (test sample)', 'Background (test sample)'], loc="best" )
         plt.grid()
-        plt.savefig(plots_path+'pred_'+model_name+'.pdf', bbox_inches='tight')
+
+        pdf_pages.savefig(fig)
         if args.preview:
             plt.show()
         plt.close()
 
-    # PLOTTING FOM AND Efficiency
-    if args.efficiencyAndFOM:
-        from commonFunctions import FullFOM, getYields
-
-        fomEvo = []
-        fomCut = []
-
-        bkgEff = []
-        sigEff = []
-
-        sig_Init = sig_dataTest.EventWeight.sum() * luminosity * 3
-        bkg_Init =  bkg_dataTest.EventWeight.sum() * luminosity * 3
-
-        for cut in np.arange(0.0, 0.9999, 0.001):
-            # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
-            sig, bkg = getYields(dataTest, cut=cut, luminosity=luminosity)
-            if sig[0] > 0 and bkg[0] > 0:
-                fom, fomUnc = FullFOM(sig, bkg) # return (fom, fomErr)
-                fomEvo.append(fom)
-                fomCut.append(cut)
-                bkgEff.append(bkg[0]/bkg_Init) # bkg efficiency ???
-                sigEff.append(sig[0]/sig_Init) # sig efficiency ???
-
-        max_FOM=0.0
-
-        for k in fomEvo:
-            if k>max_FOM:
-                max_FOM=k
-
-        # SAVE VALUES OF FOM EVO AND CUT TO DO A FOM SUMMARY
-        f= open(plots_path+"FOM_evo_data.txt","w+")
-        f.write("\n".join(map(str,fomEvo)))
-        f.close()
-
-        f= open(plots_path+"FOM_cut_data.txt","w+")
-        f.write("\n".join(map(str,fomCut)))
-        f.close()
-
-        Eff = zip(bkgEff, sigEff)
-
-        if args.verbose:
-            print "Maximized FOM:", max_FOM
-            if max_FOM != 0.0:
-                print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
-            else:
-                print "ERROR: An unexpected Value: max_FOM == 0.0"
-
-            # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
-            tmpSig, tmpBkg = getYields(dataTest)
-            sigYield, sigYieldUnc = tmpSig
-            bkgYield, bkgYieldUnc = tmpBkg
-
-            selectedTest = dataTest[dataTest.NN>fomCut[fomEvo.index(max_FOM)]]
-            selectedSig = selectedTest[selectedTest.category == 1]
-            selectedBkg = selectedTest[selectedTest.category == 0]
-            sigYield = selectedSig.EventWeight.sum() * luminosity * 3  #The factor 3 comes from the splitting
-            bkgYield = selectedBkg.EventWeight.sum() * luminosity * 3
-
-            print "Selected events left after cut @", fomCut[fomEvo.index(max_FOM)]
-            print "   Number of selected Signal Events:", len(selectedSig)
-            print "   Number of selected Background Events:", len(selectedBkg)
-            print "   Sig Yield:", sigYield
-            print "   Bkg Yield:", bkgYield
-
-        plt.figure(figsize=(7,6))
-        plt.subplots_adjust(hspace=0.5)
-
-        plt.subplot(211)
-        plt.plot(fomCut, fomEvo, linewidth = 0.5)
-        plt.title("FOM")
-        plt.ylabel("FOM")
-        plt.xlabel("ND")    # O que significa ND ???
-        plt.legend(["Max. FOM: {0}".format(max_FOM)], loc='best')
-        plt.grid()
-
-        plt.subplot(212)
-        plt.semilogy(fomCut, Eff , linewidth = 0.5) # Eff = zip(bkgEff, sigEff)
-
-        # axvspan(xmin, xmax, ymin=0, ymax=1, **kwargs)
-        # Draw a vertical span (rectangle) from xmin to xmax. With the default values of ymin = 0 and ymax = 1.
-        plt.axvspan(fomCut[fomEvo.index(max_FOM)], 1, facecolor='#2ca02c', alpha=0.3)
-
-        # axvline(x=0, ymin=0, ymax=1, **kwargs)
-        # Add a vertical line across the axes.
-        plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
-        plt.title("Efficiency")
-        plt.ylabel("Eff")
-        plt.xlabel("ND")
-        plt.legend(['Background', 'Signal'], loc='best')
-        plt.grid()
-
-        plt.savefig(plots_path+'FOM_EFF_'+model_name+'.pdf', bbox_inches='tight')
-        if args.preview:
-            plt.show()
-        plt.close()
-
-        #SAME BUT ZOOMED IN , NO LOG yscale
-        plt.figure(figsize=(7,6))
-        plt.subplots_adjust(hspace=0.5)
-
-        plt.subplot(211)
-        plt.plot(fomCut, fomEvo, linewidth = 0.3)
-        plt.xlim(0.88, 1.01)
-        plt.xticks(np.arange(0.88 , 1.01, step = 0.01))
-        plt.title("FOM")
-        plt.ylabel("FOM")
-        plt.xlabel("ND")
-        plt.legend(["Max. FOM: {0}".format(max_FOM)], loc='best')
-        plt.grid()
-
-        plt.subplot(212)
-        plt.plot(fomCut, Eff , linewidth = 0.3)
-        plt.xlim(0.88 , 1.01)
-
-        # Get or set the current tick locations and labels of the x-axis.
-        plt.xticks(np.arange(0.88 , 1.01, step = 0.01))
-        plt.axvspan(fomCut[fomEvo.index(max_FOM)], 1, facecolor='#2ca02c', alpha=0.3)
-        plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
-        plt.title("Efficiency")
-        plt.ylabel("Eff")
-        plt.xlabel("ND")
-        plt.legend(['Background', 'Signal'], loc='best')
-        plt.grid()
-
-        plt.savefig(plots_path+'FOM_EFF_zoomed_'+model_name+'.pdf', bbox_inches='tight')
-        if args.preview:
-            plt.show()
-        plt.close()
+    # # PLOTTING FOM AND Efficiency
+    # if args.efficiencyAndFOM:
+    #     from commonFunctions import FullFOM, getYields
+    #
+    #     fomEvo = []
+    #     fomCut = []
+    #
+    #     bkgEff = []
+    #     sigEff = []
+    #
+    #     sig_Init = sig_dataTest.EventWeight.sum() * luminosity * 3
+    #     bkg_Init =  bkg_dataTest.EventWeight.sum() * luminosity * 3
+    #
+    #     for cut in np.arange(0.0, 0.9999, 0.001):
+    #         # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
+    #         sig, bkg = getYields(dataTest, cut=cut, luminosity=luminosity)
+    #         if sig[0] > 0 and bkg[0] > 0:
+    #             fom, fomUnc = FullFOM(sig, bkg) # return (fom, fomErr)
+    #             fomEvo.append(fom)
+    #             fomCut.append(cut)
+    #             bkgEff.append(bkg[0]/bkg_Init) # bkg efficiency ???
+    #             sigEff.append(sig[0]/sig_Init) # sig efficiency ???
+    #
+    #     max_FOM=0.0
+    #
+    #     for k in fomEvo:
+    #         if k>max_FOM:
+    #             max_FOM=k
+    #
+    #     # SAVE VALUES OF FOM EVO AND CUT TO DO A FOM SUMMARY
+    #     f= open(plots_path+"FOM_evo_data.txt","w+")
+    #     f.write("\n".join(map(str,fomEvo)))
+    #     f.close()
+    #
+    #     f= open(plots_path+"FOM_cut_data.txt","w+")
+    #     f.write("\n".join(map(str,fomCut)))
+    #     f.close()
+    #
+    #     Eff = zip(bkgEff, sigEff)
+    #
+    #     if args.verbose:
+    #         print "Maximized FOM:", max_FOM
+    #         if max_FOM != 0.0:
+    #             print "FOM Cut:", fomCut[fomEvo.index(max_FOM)]
+    #         else:
+    #             print "ERROR: An unexpected Value: max_FOM == 0.0"
+    #
+    #         # return ((sigYield, sigYieldUnc), (bkgYield, bkgYieldUnc))
+    #         tmpSig, tmpBkg = getYields(dataTest)
+    #         sigYield, sigYieldUnc = tmpSig
+    #         bkgYield, bkgYieldUnc = tmpBkg
+    #
+    #         selectedTest = dataTest[dataTest.NN>fomCut[fomEvo.index(max_FOM)]]
+    #         selectedSig = selectedTest[selectedTest.category == 1]
+    #         selectedBkg = selectedTest[selectedTest.category == 0]
+    #         sigYield = selectedSig.EventWeight.sum() * luminosity * 3  #The factor 3 comes from the splitting
+    #         bkgYield = selectedBkg.EventWeight.sum() * luminosity * 3
+    #
+    #         print "Selected events left after cut @", fomCut[fomEvo.index(max_FOM)]
+    #         print "   Number of selected Signal Events:", len(selectedSig)
+    #         print "   Number of selected Background Events:", len(selectedBkg)
+    #         print "   Sig Yield:", sigYield
+    #         print "   Bkg Yield:", bkgYield
+    #
+    #     plt.figure(figsize=(7,6))
+    #     plt.subplots_adjust(hspace=0.5)
+    #
+    #     plt.subplot(211)
+    #     plt.plot(fomCut, fomEvo, linewidth = 0.5)
+    #     plt.title("FOM")
+    #     plt.ylabel("FOM")
+    #     plt.xlabel("ND")    # O que significa ND ???
+    #     plt.legend(["Max. FOM: {0}".format(max_FOM)], loc='best')
+    #     plt.grid()
+    #
+    #     plt.subplot(212)
+    #     plt.semilogy(fomCut, Eff , linewidth = 0.5) # Eff = zip(bkgEff, sigEff)
+    #
+    #     # axvspan(xmin, xmax, ymin=0, ymax=1, **kwargs)
+    #     # Draw a vertical span (rectangle) from xmin to xmax. With the default values of ymin = 0 and ymax = 1.
+    #     plt.axvspan(fomCut[fomEvo.index(max_FOM)], 1, facecolor='#2ca02c', alpha=0.3)
+    #
+    #     # axvline(x=0, ymin=0, ymax=1, **kwargs)
+    #     # Add a vertical line across the axes.
+    #     plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
+    #     plt.title("Efficiency")
+    #     plt.ylabel("Eff")
+    #     plt.xlabel("ND")
+    #     plt.legend(['Background', 'Signal'], loc='best')
+    #     plt.grid()
+    #
+    #     plt.savefig(plots_path+'FOM_EFF_'+model_name+'.pdf', bbox_inches='tight')
+    #     if args.preview:
+    #         plt.show()
+    #     plt.close()
+    #
+    #     #SAME BUT ZOOMED IN , NO LOG yscale
+    #     plt.figure(figsize=(7,6))
+    #     plt.subplots_adjust(hspace=0.5)
+    #
+    #     plt.subplot(211)
+    #     plt.plot(fomCut, fomEvo, linewidth = 0.3)
+    #     plt.xlim(0.88, 1.01)
+    #     plt.xticks(np.arange(0.88 , 1.01, step = 0.01))
+    #     plt.title("FOM")
+    #     plt.ylabel("FOM")
+    #     plt.xlabel("ND")
+    #     plt.legend(["Max. FOM: {0}".format(max_FOM)], loc='best')
+    #     plt.grid()
+    #
+    #     plt.subplot(212)
+    #     plt.plot(fomCut, Eff , linewidth = 0.3)
+    #     plt.xlim(0.88 , 1.01)
+    #
+    #     # Get or set the current tick locations and labels of the x-axis.
+    #     plt.xticks(np.arange(0.88 , 1.01, step = 0.01))
+    #     plt.axvspan(fomCut[fomEvo.index(max_FOM)], 1, facecolor='#2ca02c', alpha=0.3)
+    #     plt.axvline(x=fomCut[fomEvo.index(max_FOM)], ymin=0, ymax=1)
+    #     plt.title("Efficiency")
+    #     plt.ylabel("Eff")
+    #     plt.xlabel("ND")
+    #     plt.legend(['Background', 'Signal'], loc='best')
+    #     plt.grid()
+    #
+    #     plt.savefig(plots_path+'FOM_EFF_zoomed_'+model_name+'.pdf', bbox_inches='tight')
+    #     if args.preview:
+    #         plt.show()
+    #     plt.close()
 
     # PLOTTING the ROC function
     if args.areaUnderROC:
@@ -345,10 +351,15 @@ if __name__ == "__main__":
             print "ROC Curve IntegralVal:", roc_integralVal
             print "ROC Curve IntegralTest:", roc_integralTest
 
-        plt.figure()
-        plt.subplots_adjust(hspace=0.5)
+        f.write("ROCAUC Dev: {}     ".format(roc_integralDev))
+        f.write("Val: {}        ".format(roc_integralVal))
+        f.write("Test: {}\n".format(roc_integralTest))
 
-        plt.subplot(211)
+        pdf_pages = PdfPages(plots_path+'ROC_ROC_zoomed_'+model_name+'.pdf')
+        fig = plt.figure(figsize=(8.27, 11.69), dpi=100)
+
+        plt.subplot(2,1,1)
+        plt.subplots_adjust(hspace=0.5)
         plt.plot(fprDev, tprDev, '--')
         plt.plot(fprVal, tprVal, ':')
         plt.plot(fprTest, tprTest, linewidth=0.5)
@@ -356,8 +367,8 @@ if __name__ == "__main__":
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
         plt.title('ROC curve')
-        rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal),"Test Integral: {0}".format(roc_integralTest)]
-        plt.legend(rocLegend, loc='best')
+        rocLegend = ["Dev Integral: {0:0.4f}".format(roc_integralDev),"Val Integral: {0:0.4f}".format(roc_integralVal),"Test Integral: {0:0.4f}".format(roc_integralTest)]
+        plt.legend(rocLegend, loc='lower right')
         # plt.savefig(plots_path+'ROC_'+model_name+'.pdf', bbox_inches='tight')
         # if args.preview:
         #     plt.show()
@@ -373,9 +384,9 @@ if __name__ == "__main__":
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
         plt.title('ROC curve ZOOMED')
-        rocLegend = ["Dev Integral: {0}".format(roc_integralDev),"Val Integral: {0}".format(roc_integralVal),"Test Integral: {0}".format(roc_integralTest)]
-        plt.legend(rocLegend, loc='best')
-        plt.savefig(plots_path+'ROC_ROC_zoomed_'+model_name+'.pdf', bbox_inches='tight')
+        rocLegend = ["Dev Integral: {0:0.4f}".format(roc_integralDev),"Val Integral: {0:0.4f}".format(roc_integralVal),"Test Integral: {0:0.4f}".format(roc_integralTest)]
+        plt.legend(rocLegend, loc='lower right')
+        pdf_pages.savefig(fig)
         if args.preview:
             plt.show()
         plt.close()
@@ -410,7 +421,8 @@ if __name__ == "__main__":
 
         maxWeights = 0
 
-        figure = plt.figure()
+        pdf_pages = PdfPages(plots_path+'Weights_'+model_name+'.pdf') # plots_path = filepath+"/plots_"+model_name+"/"
+        figure = plt.figure(figsize=(8.27, 11.69), dpi=100)
         figure.suptitle("Weights", fontsize=12)
 
         i=1
@@ -442,6 +454,7 @@ if __name__ == "__main__":
             i+=1
 
         plt.tight_layout()
-        plt.savefig(plots_path+'Weights_'+model_name+'.pdf', bbox_inches='tight')
+        pdf_pages.savefig(fig)
         if args.preview:
             plt.show()
+        plt.close()
