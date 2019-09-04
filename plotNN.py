@@ -131,7 +131,7 @@ if __name__ == "__main__":
         plt.close()
 
     scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
-    f = open(plots_path+"score_"+model_name".txt","w")
+    f = open(plots_path+"score_"+model_name+".txt","w")
     f.write("Epochs: {}\n".format(len(loss)-1))
     f.write("Dev_loss: {}   Dev_acc: {}\n".format(loss[-1],acc[-1]))
     f.write("Val_loss: {}   Val_acc: {}\n".format(val_loss[-1],val_acc[-1]))
