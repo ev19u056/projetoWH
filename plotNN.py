@@ -63,8 +63,7 @@ if __name__ == "__main__":
       loaded_model_json = json_file.read()
     model = model_from_json(loaded_model_json)
     model.load_weights(model_name+".h5")
-    new_metrics = ['binary_accuracy']  # for example ['binary_accuracy']
-    model.compile(loss = 'binary_crossentropy', optimizer = 'adam',metrics=model.metrics+new_metrics)
+    model.compile(loss = 'binary_crossentropy', optimizer = 'adam')
 
     if args.verbose:
         print("Getting predictions ...")
@@ -133,13 +132,17 @@ if __name__ == "__main__":
         plt.close()
 
     scoreTest = model.evaluate(XTest, YTest, sample_weight=weightTest, verbose = 0)
-    print(model.metrics_names)
-    print(scoreTest)
     f = open(plots_path+"score_"+model_name+".txt","w")
     f.write("Epochs: {}\n".format(len(loss)-1))
     f.write("Dev_loss: {}   Dev_acc: {}\n".format(loss[-1],acc[-1]))
     f.write("Val_loss: {}   Val_acc: {}\n".format(val_loss[-1],val_acc[-1]))
-    f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
+
+    if hasattr(scoreTest, "__len__"):
+        f.write("Test_loss: {}   Test_acc: {}\n".format(scoreTest[0], scoreTest[1]))
+    else:
+        f.write("Test_loss: {}\n".format(scoreTest))
+
+
 
     # --- Over Training Check --- #
     # Negative bins appear on hist y-axis???
